@@ -8,13 +8,13 @@ const userName = "Zohaibkhattak15";
 export const loginAuthUser = async (userName) => {
   const authUserRecord = await axios
     .get(`${BASE_URL}/users/${userName}`)
-    .then((data) => data?.data);
+    .then((data) => data?.data );
   return authUserRecord;
 };
 
 export const publicGistsRecord = async () => {
   const publicGistsRecords = await axios
-    .get(`${BASE_URL}/gists?per_page=10`)
+    .get(`${BASE_URL}/gists`)
     .then((data) => data?.data);
   return publicGistsRecords;
 };

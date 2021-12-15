@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import 'antd/dist/antd.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./index.css";
+import "antd/dist/antd.css";
+import TabState from "./context/tabs/TabState";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <TabState>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </TabState>,
+  document.getElementById("root")
 );

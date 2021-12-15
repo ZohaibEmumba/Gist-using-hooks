@@ -1,21 +1,23 @@
 import React,{useState , useContext} from 'react'
 import {Button,Form , Input} from './style';
 import {loginAuthUser} from '../../utils/fetchAPIs'; 
-import { screenContext } from '../../App';
+import TabContext from '../../context/tabs/TabContext';
 
 
 const Login = () => {
   const [userName, setUserName] = useState("");
-  const { showPage, setShowPage } = useContext(screenContext);
+  const {setTab} = useContext(TabContext);
+
 
   const login = (e) =>{
       e.preventDefault();
       const val = loginAuthUser(userName).then(data => {
         console.log(data)
         const {login} = data ;
-        if(login === "")
+        if(login === userName)
         {
-          
+          localStorage.setItem("authUserName",JSON.stringify(userName));
+          setTab(3)
         }
       })
 

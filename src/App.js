@@ -1,25 +1,31 @@
 import Navbar from "./components/navbar/Navbar";
-import React, { createContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
+import  TabContext  from "./context/tabs/TabContext";
+import MainPage from "./components/mainpage/MainPage";
+import Login from './components/login/Login'
 import "./App.css";
+import HomePage from "./components/HomePage/HomePage";
 
-export const screenContext = createContext(null);
-export const loginContext = createContext({
-  userName: "Zohaibkhattak15",
-  isLoggedIn: false,
-});
+// export const loginContext = createContext({
+//   userName: "Zohaibkhattak15",
+//   isLoggedIn: false,
+// });
 
 const App = () => {
-  const [showPage, setShowPage] = useState(false);
-  const [userLogin, setUserLogin] = useState(loginContext);
+
+  const {tab} = useContext(TabContext);
+  
+  useEffect(() => {
+    console.log(tab)
+  }, [])
 
   return (
     <>
       <div className="ui container">
-        <screenContext.Provider value={{ showPage, setShowPage }}>
-          <loginContext.Provider value={{ userLogin, setUserLogin }}>
-            <Navbar />{" "}
-          </loginContext.Provider>
-        </screenContext.Provider>
+        <Navbar />{" "}
+        {tab  === 1 && <MainPage /> }
+        {tab  === 2 && <Login /> }
+        {tab === 3 && <HomePage />}
       </div>
     </>
   );

@@ -1,9 +1,7 @@
 import Navbar from "./components/navbar/Navbar";
 import "./App.css";
 import React, { createContext, useState } from "react";
-import GridDisplay from "./components/common/grid/Grid";
-import CreateAGist from "./components/createagist/CreateAGist";
-import GitHubProfilePage from "./components/githubprofilepage/GitHubProfilePage";
+import UniqueGist from "./components/common/uniquegist/UniqueGist";
 
 export const screenContext = createContext(null);
 export const loginContext = createContext({
@@ -25,6 +23,8 @@ const App = () => {
         </screenContext.Provider>
 
       </div>
+
+      <UniqueGist />
     </>
   );
 };

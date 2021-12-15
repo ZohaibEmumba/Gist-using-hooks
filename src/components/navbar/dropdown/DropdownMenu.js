@@ -1,6 +1,5 @@
 import React from "react";
 import { Menu, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 
 const menu = (
@@ -37,7 +36,7 @@ const DropdownMenu = () => {
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
       <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-      <Avatar size={64}  /> <DownOutlined />
+      <Avatar size={64}  /> 
       </a>
     </Dropdown>
   );

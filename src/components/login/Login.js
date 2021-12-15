@@ -11,10 +11,11 @@ const Login = () => {
   const login = (e) =>{
       e.preventDefault();
       const val = loginAuthUser(userName).then(data => {
+        console.log(data)
         const {login} = data ;
-        if(login === "Zohaibkhattak15")
+        if(login === "")
         {
-          setShowPage(true)
+          
         }
       })
 

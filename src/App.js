@@ -1,7 +1,7 @@
 import Navbar from "./components/navbar/Navbar";
-import "./App.css";
 import React, { createContext, useState } from "react";
-import UniqueGist from "./components/common/uniquegist/UniqueGist";
+import MainPage from "./components/mainpage/MainPage";
+import "./App.css";
 
 export const screenContext = createContext(null);
 export const loginContext = createContext({
@@ -22,9 +22,8 @@ const App = () => {
           </loginContext.Provider>
         </screenContext.Provider>
 
+        <MainPage />
       </div>
-
-      <UniqueGist />
     </>
   );
 };

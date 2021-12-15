@@ -1,70 +1,67 @@
-import React, { useState , useEffect } from 'react';
-import { Table, Radio, Divider } from 'antd';
-import {publicGistsRecord} from '../../../utils/fetchAPIs';
-import 'antd/dist/antd.css';
-
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Date',
-    dataIndex: 'date',
-  },
-  {
-    title: 'Time',
-    dataIndex: 'time',
-  },
-  {
-    title: 'Keyword',
-    dataIndex: 'keyword',
-  },
-  {
-    title: 'Notebook Name',
-    dataIndex: 'notebook',
-  },
-];
-
-
-const rowSelection = {
-  onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  getCheckboxProps: (record) => ({
-    disabled: record.name === 'Disabled User',
-    // Column configuration not to be checked
-    name: record.name,
-  }),
-};
+import React, { useState, useEffect } from "react";
+import { publicGistsRecord } from "../../../utils/fetchAPIs";
+import { Table, Th, Td, UserNameSection, Username, Img } from "./style";
 
 const TableData = () => {
-  const [selectionType, setSelectionType] = useState('checkbox');
   const [publicGists, setPublicGists] = useState([]);
+  const date = new Date("2021-01-09T14:56:23");
 
   useEffect(() => {
-    publicGistsRecord().then(data => setPublicGists(data));
-    console.log(publicGists)
-  }, [])
+    publicGistsRecord().then((data) => setPublicGists(data));
+    console.log(publicGists);
+  }, []);
   return (
-    <div>
-      {/* <Radio.Group
-        onChange={({ target: { value } }) => {
-          setSelectionType(value);
-        }}
-        value={selectionType}
-      >
-        <Radio value="checkbox">Checkbox</Radio>
-        <Radio value="radio">radio</Radio>
-      </Radio.Group> */}
-
-      <Divider />
-
-      <Table
-        columns={columns}
-        dataSource={publicGists}
-      />
-    </div>
+    <>
+      <section>
+        <Table>
+          <thead>
+            <tr>
+              <Th>
+                <input type="checkbox" />
+              </Th>
+              <Th>Name</Th>
+              <Th>Date</Th>
+              <Th>Time</Th>
+              <Th>Keyword</Th>
+              <Th>Notebook Name</Th>
+              <Th></Th>
+            </tr>
+          </thead>
+          <tbody>
+            {publicGists.map((gist, index) => (
+              <tr
+                key={index}
+                // onClick={() => {
+                //   showUniqueGistRecord(gist?.id);
+                // }}
+              >
+                <Td>
+                  {" "}
+                  <input type="checkbox" />{" "}
+                </Td>
+                <Td>
+                  <UserNameSection>
+                    <span>
+                      {" "}
+                      <Img
+                        className="profile-img"
+                        src={gist?.owner?.avatar_url}
+                        alt="Profile Pics"
+                      />
+                    </span>
+                    <Username>{gist?.owner?.login}</Username>
+                  </UserNameSection>
+                </Td>
+                <Td>{date.toLocaleDateString()}</Td>
+                <Td>{date.toLocaleTimeString()}</Td>
+                <Td>{Object.keys(gist?.files)[0]}</Td>
+                <Td>{gist?.description}</Td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </section>
+    </>
   );
 };
 export default TableData;

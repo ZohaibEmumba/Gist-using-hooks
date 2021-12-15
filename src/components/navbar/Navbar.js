@@ -25,7 +25,7 @@ const Navbar = () => {
         </Imgdiv>
         <SearchDiv>
           <SearchBar />
-          {"zohaibKhattak15" === "zohaibKhattak15" ? (
+          {"zohaibKhattak15" === "" ? (
               <DropdownMenu />
             ) : (
           <Button onClick={() => setShowPage(true)}>Login</Button>

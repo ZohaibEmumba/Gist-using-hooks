@@ -1,6 +1,5 @@
 import Navbar from "./components/navbar/Navbar";
 import React, { createContext, useState } from "react";
-import MainPage from "./components/mainpage/MainPage";
 import "./App.css";
 
 export const screenContext = createContext(null);
@@ -21,8 +20,6 @@ const App = () => {
             <Navbar />{" "}
           </loginContext.Provider>
         </screenContext.Provider>
-
-        <MainPage />
       </div>
     </>
   );

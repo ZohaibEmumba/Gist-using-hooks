@@ -36,3 +36,18 @@ export const Img = styled.img`
   height: 40px;
   border-radius: 50%;
 `;
+export const GistIcons = styled.div`
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  height: 50px;
+`;
+
+export const Icons = styled.i`
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  cursor: pointer;
+  color: #5acba1;
+
+`;

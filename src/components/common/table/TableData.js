@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { publicGistsRecord } from "../../../utils/fetchAPIs";
-import { Table, Th, Td, UserNameSection, Username, Img } from "./style";
+import React from "react";
+import { Table, Th, Td, UserNameSection, Username, Img , GistIcons , Icons} from "./style";
 
-const TableData = () => {
-  const [publicGists, setPublicGists] = useState([]);
+const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
+  const filledStar = <i className="fas fa-star" />;
+  const unFilledStart = <i className="far fa-star" />;
 
-  useEffect(() => {
-    publicGistsRecord().then((data) => setPublicGists(data));
-    console.log(publicGists);
-  }, []);
+  const showUniqueGistRecord = (id) => {
+    console.log(id);
+  };
+
   return (
     <>
       <section>
@@ -28,36 +28,77 @@ const TableData = () => {
             </tr>
           </thead>
           <tbody>
-            {publicGists.map((gist, index) => (
-              <tr
-                key={index}
-                // onClick={() => {
-                //   showUniqueGistRecord(gist?.id);
-                // }}
-              >
-                <Td>
-                  {" "}
-                  <input type="checkbox" />{" "}
-                </Td>
-                <Td>
-                  <UserNameSection>
-                    <span>
+            {publicGistsDisplay
+              ? publicGistsDisplay.map((gist, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => {
+                      showUniqueGistRecord(gist?.id);
+                    }}
+                  >
+                    <Td>
                       {" "}
-                      <Img
-                        className="profile-img"
-                        src={gist?.owner?.avatar_url}
-                        alt="Profile Pics"
-                      />
-                    </span>
-                    <Username>{gist?.owner?.login}</Username>
-                  </UserNameSection>
-                </Td>
-                <Td>{date.toLocaleDateString()}</Td>
-                <Td>{date.toLocaleTimeString()}</Td>
-                <Td>{Object.keys(gist?.files)[0]}</Td>
-                <Td>{gist?.description}</Td>
-              </tr>
-            ))}
+                      <input type="checkbox" />{" "}
+                    </Td>
+                    <Td>
+                      <UserNameSection>
+                        <span>
+                          {" "}
+                          <Img
+                            className="profile-img"
+                            src={gist?.owner?.avatar_url}
+                            alt="Profile Pics"
+                          />
+                        </span>
+                        <Username>{gist?.owner?.login}</Username>
+                      </UserNameSection>
+                    </Td>
+                    <Td>{date.toLocaleDateString()}</Td>
+                    <Td>{date.toLocaleTimeString()}</Td>
+                    <Td>{Object.keys(gist?.files)[0]}</Td>
+                    <Td>{gist?.description}</Td>
+                    <Td>
+                    <GistIcons>
+                      <Icons className="fas fa-star" />
+                      <Icons className="fas fa-code-branch" />
+                    </GistIcons>
+                    </Td>
+                  </tr>
+                ))
+              : privateGistsDisplay.map((gist, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => {
+                      showUniqueGistRecord(gist?.id);
+                    }}
+                  >
+                    <Td>
+                      {" "}
+                      <input type="checkbox" />{" "}
+                    </Td>
+                    <Td>
+                      <UserNameSection>
+                        <span>
+                          {" "}
+                          <Img
+                            className="profile-img"
+                            src={gist?.owner?.avatar_url}
+                            alt="Profile Pics"
+                          />
+                        </span>
+                        <Username>{gist?.owner?.login}</Username>
+                      </UserNameSection>
+                    </Td>
+                    <Td>{date.toLocaleDateString()}</Td>
+                    <Td>{date.toLocaleTimeString()}</Td>
+                    <Td>{Object.keys(gist?.files)[0]}</Td>
+                    <Td>{gist?.description}</Td>
+                    <Td id="gists-icons">
+                      <i className="fas fa-star" />
+                      <i className="fas fa-code-branch"></i>
+                    </Td>
+                  </tr>
+                ))}
           </tbody>
         </Table>
       </section>

@@ -1,5 +1,14 @@
 import React from "react";
-import { Table, Th, Td, UserNameSection, Username, Img , GistIcons , Icons} from "./style";
+import {
+  Table,
+  Th,
+  Td,
+  UserNameSection,
+  Username,
+  Img,
+  GistIcons,
+  Icons,
+} from "./style";
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
@@ -58,10 +67,10 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{Object.keys(gist?.files)[0]}</Td>
                     <Td>{gist?.description}</Td>
                     <Td>
-                    <GistIcons>
-                      <Icons className="fas fa-star" />
-                      <Icons className="fas fa-code-branch" />
-                    </GistIcons>
+                      <GistIcons>
+                        <Icons className="fas fa-star" />
+                        <Icons className="fas fa-code-branch" />
+                      </GistIcons>
                     </Td>
                   </tr>
                 ))

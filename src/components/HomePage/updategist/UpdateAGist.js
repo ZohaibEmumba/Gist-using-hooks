@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Form , Input , Button , Heading} from '../createagist/style';
+import {Form , Input , Button , Heading} from '../../createagist/style';
 
 const UpdateAGist = () => {
     // const [uniqueData, setUniqueData] = useState("");

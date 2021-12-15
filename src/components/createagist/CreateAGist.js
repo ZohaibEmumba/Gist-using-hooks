@@ -11,7 +11,7 @@ const CreateAGist = () => {
   const [content, setContent] = useState("");
   const [privacy, setPrivacy] = useState(null);
 
-  const creatGist = () => {
+  const creatGist = (e) => {
     e.preventDefault();
     let gistData = {
       description: description,

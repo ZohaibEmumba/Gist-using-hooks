@@ -2,13 +2,13 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
   const authUserRecord = await axios
     .get(`${BASE_URL}/users/${userName}`)
-    .then((data) => data?.data );
+    .then((data) => data?.data);
   return authUserRecord;
 };
 
@@ -57,7 +57,7 @@ export const createAGist = async (data) => {
       },
     })
     .then((data) => data.data);
-    return createGist;
+  return createGist;
 };
 
 export const delAGist = async (id) => {
@@ -139,7 +139,8 @@ export const staredAGist = async (gist_id) => {
         },
       }
     )
-    .then((data) => console.log(data));
+    .then((data) => data)
+    .catch((err) => console.log(err + "Not working"));
   return starAGist;
 };
 

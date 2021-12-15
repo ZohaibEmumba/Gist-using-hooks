@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { GistIcons, Icon1 } from "../../githubprofilepage/style";
+import TabContext from "../../../context/tabs/TabContext";
+import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
 import {
   Div,
   Section,
@@ -14,9 +16,13 @@ import {
   SpanValues,
   Icon,
 } from "./style";
-import TabContext from "../../../context/tabs/TabContext";
-import { getPublicGist , delAGist } from "../../../utils/fetchAPIs";
-import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
+import {
+  getPublicGist,
+  delAGist,
+  staredAGist,
+  unStaredAGist,
+  forkedGist,
+} from "../../../utils/fetchAPIs";
 
 const UniqueGist = () => {
   const [uniqueData, setUniqueData] = useState([]);
@@ -45,6 +51,34 @@ const UniqueGist = () => {
       setLoading(false);
       setUniqueData(data);
     });
+  };
+
+  const starThisGist = async () => {
+    let alreadyStared = 0;
+    if (gistStarValue === 0) {
+      console.log(gistId)
+      const star = await staredAGist(gistId)
+        .then((data) => (alreadyStared = 1))
+        .catch((err) => alreadyStared);
+      setGistStarValue(gistStarValue + 1);
+    } else {
+      const unStar = await unStaredAGist(gistId)
+        .then((data) => (alreadyStared = 1))
+        .catch((err) => alreadyStared);
+      {
+        setGistForkValue(gistStarValue - 1);
+      }
+    }
+  };
+
+  const forkThisGist = async () => {
+    let alreadyFork = 0;
+    let fork = await forkedGist(gistId)
+      .then((data) => (alreadyFork = 1))
+      .catch((err) => alreadyFork);
+    if (alreadyFork) {
+      setGistForkValue(gistForkValue + 1);
+    }
   };
 
   const deleteGist = async () => {
@@ -91,19 +125,30 @@ const UniqueGist = () => {
                 Edit
               </Span>
               <Span>
-                <Icon className="far fa-trash-alt" onClick={() => deleteGist()} /> Delete
+                <Icon
+                  className="far fa-trash-alt"
+                  onClick={() => deleteGist()}
+                />{" "}
+                Delete
               </Span>
             </>
           ) : null}
           <Icon1>
             <Span>
-              <Icon className={"far fa-star"} /> Star
+              <Icon
+                className={gistStarValue === 0 ? "far fa-star" : "fas fa-star"}
+                onClick={() => starThisGist()}
+              />{" "}
+              Star
             </Span>
             <SpanValues>{gistStarValue}</SpanValues>
           </Icon1>
           <Icon1>
             <Span>
-              <Icon className="fas fa-code-branch" style={{ color: "blue" }} />{" "}
+              <Icon
+                className="fas fa-code-branch"
+                onClick={() => forkThisGist()}
+              />{" "}
               Fork
             </Span>
             <SpanValues>{gistForkValue}</SpanValues>

@@ -12,3 +12,4 @@ export const Div = styled.div`
   gap: 15px;
   cursor: pointer;
 `;
+

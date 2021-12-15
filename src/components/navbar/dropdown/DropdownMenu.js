@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Menu, Dropdown } from "antd";
-import Avatar from "antd/lib/avatar/avatar";
 import TabContext from "../../../context/tabs/TabContext";
+import Zohaib from "../../../assets/zohaib.png";
+
 
 const DropdownMenu = () => {
   const { tab, setTab } = useContext(TabContext);
@@ -68,7 +69,7 @@ const DropdownMenu = () => {
           e.preventDefault();
         }}
       >
-        <Avatar size={64} />
+        <img width="50px" height="50px" style={{borderRadius: '50%' , backgroundColor: 'white'}} src={Zohaib}  />
       </a>
     </Dropdown>
   );

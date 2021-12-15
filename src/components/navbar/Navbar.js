@@ -6,10 +6,8 @@ import DropdownMenu from "./dropdown/DropdownMenu";
 import { useContext } from "react/cjs/react.development";
 import TabContext from "../../context/tabs/TabContext";
 
-
 const Navbar = () => {
-
-  const {setTab} = useContext(TabContext);
+  const { setTab } = useContext(TabContext);
 
   return (
     <section>
@@ -21,19 +19,17 @@ const Navbar = () => {
             alt="Emumba"
             width="150px"
             height="30px"
-            onClick={() => console.log("hell")}
+            onClick={() => setTab(1)}
           />{" "}
         </Imgdiv>
         <SearchDiv>
           <SearchBar />
-           {"zohaibKhattak15" === "zohaibKhattak15" ? (
-              <DropdownMenu />
-            ) : (
-          <Button onClick={() => 
-            setTab(2)
-            
-          }>Login</Button>
-            )} 
+          {JSON.parse(localStorage.getItem("authUserName")) ===
+          "Zohaibkhattak15" ? (
+            <DropdownMenu />
+          ) : (
+            <Button onClick={() => setTab(2)}>Login</Button>
+          )}
         </SearchDiv>
       </Nav>
     </section>

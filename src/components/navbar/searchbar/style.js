@@ -17,7 +17,7 @@ export const Input = styled.input`
 
 export const Icon = styled.i`
   position: relative;
-  top: 20px;
+  top: 25px;
   right: 40px;
   cursor: pointer;
   color: white;

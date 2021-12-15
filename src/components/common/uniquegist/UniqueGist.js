@@ -1,112 +1,142 @@
-import React from 'react'
+import React, { useState, useContext, useEffect } from "react";
+import { GistIcons, Icon1 } from "../../githubprofilepage/style";
+import {
+  Div,
+  Section,
+  Profile,
+  ContentBody,
+  CardBody,
+  CardBodyContent,
+  ProfileImage,
+  Heading,
+  Filename,
+  Span,
+  SpanValues,
+  Icon,
+} from "./style";
+import TabContext from "../../../context/tabs/TabContext";
+import { getPublicGist , delAGist } from "../../../utils/fetchAPIs";
+import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
 
-function UniqueGist() {
-    return (
-        <div className="whole-card-section">
-          <section className="card-header-public">
-            <div className="profile-section">
-              <div>
-                <img
-                  src=""
-                  alt="profile"
-                  className="profile-pic"
-                />
-              </div>
-              <div className="">
-                <span className="">
-                  <h4 id="headings">
-                    {uniqueData?.owner?.login}/{filename}{" "}
-                  </h4>
-                  <span>Created 7 housrs Ago</span>
-                  <br />
-                  <span> Broadcast Server</span>
-                </span>
-              </div>
-            </div>
+const UniqueGist = () => {
+  const [uniqueData, setUniqueData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [gistStarValue, setGistStarValue] = useState(0);
+  const [gistForkValue, setGistForkValue] = useState(0);
+  const { gistId, setGistId } = useContext(StoreGistIdContext);
+  const { setTab } = useContext(TabContext);
 
-            <div className="gist-icons">
-              {uniqueData?.owner?.login === myUserName ? (
-                <>
-                  <span style={{ color: "blue" }}>
-                    <i className="far fa-edit" onClick={this.updateGist}></i>{" "}
-                    Edit
+  const { files } = uniqueData;
+  let filename;
+  let content;
+  let myContentArray;
+
+  if (files !== undefined) {
+    Object.values(files).map((file) => {
+      filename = file.filename;
+      content = file.content;
+    });
+    myContentArray = content.split("\n");
+  }
+
+  const getGistData = async () => {
+    setLoading(true);
+    const getGistObj = await getPublicGist(gistId).then((data) => {
+      setLoading(false);
+      setUniqueData(data);
+    });
+  };
+
+  const deleteGist = async () => {
+    let delGist = await delAGist(gistId);
+    setTab(3);
+  };
+
+  const updateGist = (id) => {
+    setTab(11);
+    setGistId(id);
+  };
+
+  useEffect(() => {
+    getGistData();
+  }, []);
+
+  return (
+    <Div>
+      <Section>
+        <Profile>
+          <div>
+            <ProfileImage src={uniqueData?.owner?.avatar_url} alt="profile" />
+          </div>
+          <div className="">
+            <span className="">
+              <Heading>
+                {uniqueData?.owner?.login}/{filename}{" "}
+              </Heading>
+              <span>Created 7 housrs Ago</span>
+              <br />
+              <span> Broadcast Server</span>
+            </span>
+          </div>
+        </Profile>
+
+        <GistIcons>
+          {uniqueData?.owner?.login === "Zohaibkhattak15" ? (
+            <>
+              <Span>
+                <Icon
+                  className="far fa-edit"
+                  onClick={() => updateGist(uniqueData?.id)}
+                />{" "}
+                Edit
+              </Span>
+              <Span>
+                <Icon className="far fa-trash-alt" onClick={() => deleteGist()} /> Delete
+              </Span>
+            </>
+          ) : null}
+          <Icon1>
+            <Span>
+              <Icon className={"far fa-star"} /> Star
+            </Span>
+            <SpanValues>{gistStarValue}</SpanValues>
+          </Icon1>
+          <Icon1>
+            <Span>
+              <Icon className="fas fa-code-branch" style={{ color: "blue" }} />{" "}
+              Fork
+            </Span>
+            <SpanValues>{gistForkValue}</SpanValues>
+          </Icon1>
+        </GistIcons>
+      </Section>
+      <ContentBody>
+        <CardBody>
+          <Icon className="fas fa-code" />
+          <Filename>
+            {"  "} {filename}{" "}
+          </Filename>
+        </CardBody>
+        <CardBodyContent>
+          {myContentArray !== undefined
+            ? myContentArray?.map((content, index) => {
+                return (
+                  <span key={index}>
+                    {" "}
+                    <p>
+                      <span style={{ fontWeight: "700", marginRight: "10px" }}>
+                        {++index}
+                      </span>{" "}
+                      {content}{" "}
+                    </p>{" "}
                   </span>
-                  <span style={{ color: "blue" }}>
-                    <i className="far fa-trash-alt" onClick={this.delGist}></i>{" "}
-                    Delete
-                  </span>
-                </>
-              ) : null}
-              <div className="icons1">
-                <span style={{ color: "blue" }}>
-                  <i
-                    className={
-                      gistStarValue === 0 ? "far fa-star" : "fas fa-star"
-                    }
-                    onClick={this.starGist}
-                  ></i>{" "}
-                  Star
-                </span>
-                <span
-                  style={{
-                    border: "1px solid gray",
-                    padding: "0px 15px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  {gistStarValue}
-                </span>
-              </div>
-              <div className="icons2">
-                <span style={{ color: "blue" }}>
-                  <i
-                    className="fas fa-code-branch"
-                    style={{ color: "blue" }}
-                    onClick={this.forkGist}
-                  ></i>{" "}
-                  Fork
-                </span>
-                <span
-                  style={{
-                    border: "1px solid gray",
-                    padding: "0px 15px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  {gistForkValue}
-                </span>
-              </div>
-            </div>
-          </section>
-          <section className="body">
-            <div className="card-body">
-              <i className="fas fa-code"></i>
-              <span className="file-name">
-                {"  "} {filename}{" "}
-              </span>
-            </div>
-            <div className="card-body-content">
-              {myContentArray !== undefined
-                ? myContentArray?.map((content, index) => {
-                    return (
-                      <span key={index}>
-                        {" "}
-                        <p>
-                          <span
-                            style={{ fontWeight: "700", marginRight: "10px" }}
-                          >
-                            {++index}
-                          </span>{" "}
-                          {content}{" "}
-                        </p>{" "}
-                      </span>
-                    );
-                  })
-                : "No Content There......."}
-            </div>
-          </section>
-        </div>
-    )
-}
+                );
+              })
+            : "No Content There......."}
+        </CardBodyContent>
+      </ContentBody>
+    </Div>
+  );
+};
 
-export default UniqueGist
+export default UniqueGist;

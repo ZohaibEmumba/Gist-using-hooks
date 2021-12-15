@@ -1,28 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import SearchValueContext from "../../context/searchvalue/SearchValueContext";
 import { searchRecords } from "../../utils/fetchAPIs";
+
 import {
   Table,
   Th,
   Td,
   UserNameSection,
   Username,
+  Img,
 } from "../common/table/style";
 
 const FilterGists = () => {
-  //   const [searchRecords, setSearchRecords] = useState([]);
-  //   date = new Date("2021-01-09T14:56:23");
+  const [searchRecordsData, setSearchRecordsData] = useState([]);
+  const date = new Date("2021-01-09T14:56:23");
+  const { searchValue } = useContext(SearchValueContext);
 
   const showUniqueGistRecord = (id) => {
     console.log(id);
   };
 
-  //   const getFilterData = () => {
-  //     const queryParams = new URLSearchParams(window.location.search);
-  //     const userName = queryParams.get("uName");
-  //     searchRecords(userName).then((data) => {
-  //       searchRecords(data);
-  //     });
-  //   };
+  const getFilterData = () => {
+    console.log(searchValue);
+    searchRecords(searchValue).then((data) => {
+      setSearchRecordsData(data);
+    });
+  };
 
   useEffect(() => {
     getFilterData();
@@ -45,8 +48,8 @@ const FilterGists = () => {
           </tr>
         </thead>
         <tbody>
-          {searchRecords ? (
-            searchRecords.map((gist, index) => (
+          {searchRecordsData ? (
+            searchRecordsData.map((gist, index) => (
               <tr
                 key={index}
                 onClick={() => {

@@ -39,3 +39,10 @@ export const Textarea = styled.textarea`
   border-radius: 5px;
   border: 1px solid gray;
 `;
+
+export const Select = styled.select`
+  padding: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+`;

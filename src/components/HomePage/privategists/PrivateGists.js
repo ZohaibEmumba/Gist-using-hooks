@@ -15,12 +15,12 @@ const PrivateGists = () => {
   const TableView = loading ? (
     <Loader />
   ) : (
-    <TableData publicGistsDisplay={privateRecord} />
+    <TableData privateGistsDisplay={privateRecord} />
   );
   const GridView = loading ? (
     <Loader />
   ) : (
-    <GridDisplay publicGistsDisplay={privateRecord} />
+    <GridDisplay privateGistsDisplay={privateRecord} />
   );
 
   const getData = async () => {
@@ -31,7 +31,6 @@ const PrivateGists = () => {
     });
   };
   const listToggle = () => {
-    console.log("clicked");
     setIsListView(true);
     setIsGridView(false);
     setIsActive("list");

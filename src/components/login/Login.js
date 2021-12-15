@@ -7,17 +7,21 @@ import TabContext from '../../context/tabs/TabContext';
 const Login = () => {
   const [userName, setUserName] = useState("");
   const {setTab} = useContext(TabContext);
+  const [token, setToken] = useState("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")
 
 
   const login = (e) =>{
       e.preventDefault();
       const val = loginAuthUser(userName).then(data => {
-        console.log(data)
         const {login} = data ;
         if(login === userName)
         {
-          localStorage.setItem("authUserName",JSON.stringify(userName));
-          setTab(3)
+          localStorage.setItem("authUserName", JSON.stringify(userName));
+          localStorage.setItem("token"       , JSON.stringify(token));
+          setTab(3);
+        }
+        else {
+          alert("sorry Wrong username....");
         }
       })
 

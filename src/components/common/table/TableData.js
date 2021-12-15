@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
+import TabContext from "../../../context/tabs/TabContext";
 import {
   Table,
   Th,
@@ -15,8 +17,12 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const filledStar = <i className="fas fa-star" />;
   const unFilledStart = <i className="far fa-star" />;
 
+  const { setTab } = useContext(TabContext);
+  const { setGistId } = useContext(StoreGistIdContext);
+
   const showUniqueGistRecord = (id) => {
-    console.log(id);
+    setTab(9);
+    setGistId(id);
   };
 
   return (
@@ -66,12 +72,6 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{date.toLocaleTimeString()}</Td>
                     <Td>{Object.keys(gist?.files)[0]}</Td>
                     <Td>{gist?.description}</Td>
-                    <Td>
-                      <GistIcons>
-                        <Icons className="fas fa-star" />
-                        <Icons className="fas fa-code-branch" />
-                      </GistIcons>
-                    </Td>
                   </tr>
                 ))
               : privateGistsDisplay.map((gist, index) => (
@@ -102,9 +102,11 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{date.toLocaleTimeString()}</Td>
                     <Td>{Object.keys(gist?.files)[0]}</Td>
                     <Td>{gist?.description}</Td>
-                    <Td id="gists-icons">
-                      <i className="fas fa-star" />
-                      <i className="fas fa-code-branch"></i>
+                    <Td>
+                      <GistIcons>
+                        <Icons className="fas fa-star" />
+                        <Icons className="fas fa-code-branch" />
+                      </GistIcons>
                     </Td>
                   </tr>
                 ))}

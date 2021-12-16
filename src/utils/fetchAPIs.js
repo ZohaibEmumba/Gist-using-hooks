@@ -2,7 +2,7 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
@@ -72,6 +72,9 @@ export const delAGist = async (id) => {
       .then((data) => data.data);
     return delAGist;
   } 
+  else {
+    alert("Ok....we haven't deleted the Gist ");
+  }
 };
 
 export const updateAGist = async (id, disp) => {

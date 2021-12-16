@@ -1,23 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
-import StoreGistIdContext from "../../context/storeGistId/StoreGistIdContext";
 import { Form, Input, Button } from "../createagist/style";
 import { updateAGist, getGistObj } from "../../utils/fetchAPIs";
-import TabContext from "../../context/tabs/TabContext";
+import { GistContext } from "../../context/GistContext";
 
 const EditAGist = () => {
   const [gistData, setGistData] = useState("");
 
-  const { gistId } = useContext(StoreGistIdContext);
-  const { setTab } = useContext(TabContext);
+  const { state, dispatch } = useContext(GistContext);
+  const { gistID } = state;
 
   const editGist = async () => {
-    const {description} = gistData;
-    let val = await updateAGist(gistId, description);
-    setTab(3);
+    const { description } = gistData;
+    let val = await updateAGist(gistID, description);
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 3,
+        gistID: null,
+      },
+    });
   };
 
   const getAGist = async () => {
-    let gistOBJ = await getGistObj(gistId).then((data) => setGistData(data));
+    let gistOBJ = await getGistObj(gistID).then((data) => setGistData(data));
   };
 
   useEffect(() => {
@@ -30,7 +35,7 @@ const EditAGist = () => {
         <h1 className="create-gist-heading">Update Gist Description</h1>
         <Input
           type="text"
-          onChange={(e) => setGistData( {description : e.target.value})}
+          onChange={(e) => setGistData({ description: e.target.value })}
           placeholder="Enter gist Discription..."
           value={gistData?.description}
         />

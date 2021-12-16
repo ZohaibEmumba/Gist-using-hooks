@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { GistContext } from "../../../context/GistContext";
 import {
   Card,
   Footer,
@@ -9,9 +10,7 @@ import {
 } from "./style";
 
 const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
-
-  // const {setTab} = useContext(TabContext);
-  // const {setGistId} = useContext(StoreGistIdContext);
+  const {dispatch} = useContext(GistContext);
   let publicFiles;
   let privateFiles;
   if (publicGistsDisplay) {
@@ -24,7 +23,13 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
     );
 
     const showUniqueGistRecord = (id) => {
-     console.log("clicked...")
+      dispatch({
+        type:"VISIBLESCREEN",
+        payload : {
+          tab : 9,
+          gistID : id 
+        }
+      })
     };
 
   return (
@@ -84,8 +89,8 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
                 }}
               >
                 <div>
-                  {publicFiles &&
-                    publicFiles?.map((content, index) => {
+                  {privateFiles &&
+                    privateFiles?.map((content, index) => {
                       return (
                         <span key={index}>
                           {" "}

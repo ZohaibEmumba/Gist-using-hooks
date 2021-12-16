@@ -30,8 +30,8 @@ const UniqueGist = () => {
   const [gistStarValue, setGistStarValue] = useState(0);
   const [gistForkValue, setGistForkValue] = useState(0);
 
-  const { state  , dispatch} = useContext(GistContext);
-  const { tab, gistID} = state;
+  const { state, dispatch } = useContext(GistContext);
+  const { tab, gistID } = state;
 
   const { files } = uniqueData;
   let filename;
@@ -43,7 +43,7 @@ const UniqueGist = () => {
       filename = file.filename;
       content = file.content;
     });
-    myContentArray = content.split("\n");
+    myContentArray = content.split(" \n");
   }
 
   const getGistData = async () => {
@@ -59,15 +59,14 @@ const UniqueGist = () => {
 
     if (gistStarValue === 0) {
       const star = await staredAGist(gistID)
-        .then(data => (alreadyStared = 1))
-        .catch(err => alreadyStared);
+        .then((data) => (alreadyStared = 1))
+        .catch((err) => alreadyStared);
       setGistStarValue(gistStarValue + 1);
-    } 
-    else {
+    } else {
       const unStar = await unStaredAGist(gistID)
-        .then(data =>  alreadyStared = 1)
-        .catch(err => alreadyStared)
-         setGistForkValue(gistStarValue - 1);
+        .then((data) => (alreadyStared = 1))
+        .catch((err) => alreadyStared);
+        setGistStarValue(gistStarValue - 1);
     }
   };
 
@@ -81,21 +80,26 @@ const UniqueGist = () => {
     }
   };
 
-  // const deleteGist = async () => {
-  //   let delGist = await delAGist(gistID);
-  //   dispatch({
-  //     type:"VISIBLESCREEN",
-  //     payload : {
-  //       tab : 9,
-  //       gistID : id 
-  //     }
-  //   });
-  // };
+  const deleteGist = async (id) => {
+    let delGist = await delAGist(id);
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 9,
+        gistID: null,
+      },
+    });
+  };
 
-  // const updateGist = (id) => {
-  //   setTab(11);
-  //   setGistId(id);
-  // };
+  const updateGist = (id) => {
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 11,
+        gistID: id,
+      },
+    });
+  };
 
   useEffect(() => {
     getGistData();
@@ -126,14 +130,14 @@ const UniqueGist = () => {
               <Span>
                 <Icon
                   className="far fa-edit"
-                  // onClick={() => updateGist(uniqueData?.id)}
+                  onClick={() => updateGist(uniqueData?.id)}
                 />{" "}
                 Edit
               </Span>
               <Span>
                 <Icon
                   className="far fa-trash-alt"
-                  // onClick={() => deleteGist()}
+                  onClick={() => deleteGist(uniqueData?.id)}
                 />{" "}
                 Delete
               </Span>

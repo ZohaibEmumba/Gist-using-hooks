@@ -1,4 +1,4 @@
-import React, { useContext  } from "react";
+import React, { useState ,useContext  } from "react";
 import { GistContext  } from "../../../context/GistContext";
 import { checkGistStared } from "../../../utils/fetchAPIs";
 import {
@@ -16,7 +16,7 @@ import {
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
   const { dispatch } = useContext(GistContext);
-
+  let check ;
   const filledStar = <i className="fas fa-star" />;
   const unFilledStart = <i className="far fa-star" />;
   
@@ -30,10 +30,14 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
     })
   };
 
-  // const checkStarGist = (id) => {
-  //   let value ;
-  //   checkGistStared(id).then(data => value = data ).catch(err => value = 0);
-  // }
+  const checkStarGist = async (id) => {
+  
+    let value = await checkGistStared(id)
+    .then(data => check = 1)
+    .catch(err => check = 0);
+    check =  value;
+    return check;
+  }
 
   return (
     <>
@@ -87,9 +91,9 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
               : privateGistsDisplay.map((gist, index) => (
                   <tr
                     key={index}
-                    // onClick={() => {
-                    //   showUniqueGistRecord(gist?.id);
-                    // }}
+                    onClick={() => {
+                      showUniqueGistRecord(gist?.id);
+                    }}
                   >
                     <Td>
                       {" "}
@@ -114,7 +118,11 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{gist?.description}</Td>
                     <Td>
                       <GistIcons>
-                        {/* {checkStarGist(gist?.id) ? <Icons className="fas fa-star" /> :<Icons className="far fa-star" />} */}
+                         { 
+                           checkStarGist(gist?.id),
+                           true
+                        ? <Icons className="fas fa-star" />
+                         :<Icons className="far fa-star" />}
                         <Icons className="fas fa-code-branch" />
                       </GistIcons>
                     </Td>

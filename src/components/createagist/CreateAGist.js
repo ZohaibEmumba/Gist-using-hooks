@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Heading, Input, Textarea, Select } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
-import TabContext from "../../context/tabs/TabContext";
+import { GistContext } from "../../context/GistContext";
 
 const CreateAGist = () => {
   const [description, setDescription] = useState("");
@@ -9,7 +9,8 @@ const CreateAGist = () => {
   const [content, setContent] = useState("");
   const [privacy, setPrivacy] = useState(null);
 
-  const creatGist = (e) => {
+  const {dispatch} = useContext(GistContext);
+  const creatGist = () => {
     let gistData = {
       description: description,
       public: !privacy,
@@ -20,6 +21,13 @@ const CreateAGist = () => {
       },
     };
     createAGist(gistData);
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload : {
+        tab : 3 ,
+        gistID: null
+      }
+    })
   };
 
   return (
@@ -53,6 +61,7 @@ const CreateAGist = () => {
           }
         }}
       >
+        <option value=""> </option>
         <option value="public"> Public</option>
         <option value="private">Private</option>
       </Select>

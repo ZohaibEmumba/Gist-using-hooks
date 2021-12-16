@@ -40,6 +40,7 @@ export const CardBodyContent = styled.div`
   width: 95%;
   padding: 40px 0 15px 30px;
   margin: -27px auto;
+  overflow : hidden;
 `;
 
 export const ProfileImage = styled.img`

@@ -3,7 +3,6 @@ import { Menu, Dropdown } from "antd";
 import Zohaib from "../../../assets/zohaib.png";
 import { GistContext } from "../../../context/GistContext";
 
-
 const DropdownMenu = () => {
   const { dispatch } = useContext(GistContext);
   const menu = (
@@ -16,25 +15,43 @@ const DropdownMenu = () => {
       <Menu.Divider />
       <Menu.Item
         key="1"
-        // onClick={() => {
-        //   setTab(4);
-        // }}
+        onClick={() => {
+          dispatch({
+            type: "VISIBLESCREEN",
+            payload: {
+              tab: 3,
+              gistID: null,
+            },
+          });
+        }}
       >
         <p>Your Gists</p>
       </Menu.Item>
       <Menu.Item
         key="2"
-        // onClick={() => {
-        //   setTab(5);
-        // }}
+        onClick={() => {
+          dispatch({
+            type: "VISIBLESCREEN",
+            payload: {
+              tab: 5,
+              gistID: null,
+            },
+          });
+        }}
       >
         <p>Stared Gists</p>
       </Menu.Item>
       <Menu.Item
         key="3"
-        // onClick={() => {
-        //   setTab(6);
-        // }}
+        onClick={() => {
+          dispatch({
+            type: "VISIBLESCREEN",
+            payload: {
+              tab: 6,
+              gistID: null,
+            },
+          });
+        }}
       >
         <p>Create A Gist</p>
       </Menu.Item>
@@ -44,21 +61,27 @@ const DropdownMenu = () => {
       <Menu.Divider />
       <Menu.Item
         key="5"
-        // onClick={() => {
-        //   setTab(7);
-        // }}
+        onClick={() => {
+          dispatch({
+            type: "VISIBLESCREEN",
+            payload: {
+              tab: 7,
+              gistID: null,
+            },
+          });
+        }}
       >
         <p> Your Github Profile</p>
       </Menu.Item>
       <Menu.Item
         key="6"
         onClick={() => {
-         dispatch({
-           type:"LOGOUT",
-           payload : {
-             tab: 8
-           }
-         })
+          dispatch({
+            type: "LOGOUT",
+            payload: {
+              tab: 8,
+            },
+          });
           localStorage.clear();
         }}
       >
@@ -74,7 +97,12 @@ const DropdownMenu = () => {
           e.preventDefault();
         }}
       >
-        <img width="50px" height="50px" style={{borderRadius: '50%' , backgroundColor: 'white'}} src={Zohaib}  />
+        <img
+          width="50px"
+          height="50px"
+          style={{ borderRadius: "50%", backgroundColor: "white" }}
+          src={Zohaib}
+        />
       </a>
     </Dropdown>
   );

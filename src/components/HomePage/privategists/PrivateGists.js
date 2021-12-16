@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { privateGistsRecord } from "../../../utils/fetchAPIs";
+import { privateGistsRecord , checkGistStared } from "../../../utils/fetchAPIs";
 import TableData from "../../common/table/TableData";
 import GridDisplay from "../../common/grid/Grid";
 import Loader from "../../common/spinner/Spinner";

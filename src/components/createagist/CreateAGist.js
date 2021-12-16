@@ -8,7 +8,6 @@ const CreateAGist = () => {
   const [fileName, setFileName] = useState("");
   const [content, setContent] = useState("");
   const [privacy, setPrivacy] = useState(null);
-  const { setTab } = useContext(TabContext);
 
   const creatGist = (e) => {
     let gistData = {
@@ -21,7 +20,6 @@ const CreateAGist = () => {
       },
     };
     createAGist(gistData);
-    setTab(3);
   };
 
   return (

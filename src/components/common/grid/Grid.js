@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
-import TabContext from "../../../context/tabs/TabContext";
 import {
   Card,
   Footer,
@@ -12,8 +10,8 @@ import {
 
 const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
 
-  const {setTab} = useContext(TabContext);
-  const {setGistId} = useContext(StoreGistIdContext);
+  // const {setTab} = useContext(TabContext);
+  // const {setGistId} = useContext(StoreGistIdContext);
   let publicFiles;
   let privateFiles;
   if (publicGistsDisplay) {
@@ -26,8 +24,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
     );
 
     const showUniqueGistRecord = (id) => {
-      setTab(9);
-      setGistId(id);
+     console.log("clicked...")
     };
 
   return (

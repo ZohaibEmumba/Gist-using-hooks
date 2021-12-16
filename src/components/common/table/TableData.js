@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
-import TabContext from "../../../context/tabs/TabContext";
+import React, { useContext  } from "react";
+import { GistContext  } from "../../../context/GistContext";
 import { checkGistStared } from "../../../utils/fetchAPIs";
 import {
   Table,
@@ -16,21 +15,25 @@ import {
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
+  const { dispatch } = useContext(GistContext);
+
   const filledStar = <i className="fas fa-star" />;
   const unFilledStart = <i className="far fa-star" />;
-
-  const { setTab } = useContext(TabContext);
-  const { setGistId } = useContext(StoreGistIdContext);
-
+  
   const showUniqueGistRecord = (id) => {
-    setTab(9);
-    setGistId(id);
+    dispatch({
+      type:"VISIBLESCREEN",
+      payload : {
+        tab : 9,
+        gistID : id 
+      }
+    })
   };
 
-  const checkStarGist = (id) => {
-    let value ;
-    checkGistStared(id).then(data => value = data ).catch(err => value = 0);
-  }
+  // const checkStarGist = (id) => {
+  //   let value ;
+  //   checkGistStared(id).then(data => value = data ).catch(err => value = 0);
+  // }
 
   return (
     <>
@@ -84,9 +87,9 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
               : privateGistsDisplay.map((gist, index) => (
                   <tr
                     key={index}
-                    onClick={() => {
-                      showUniqueGistRecord(gist?.id);
-                    }}
+                    // onClick={() => {
+                    //   showUniqueGistRecord(gist?.id);
+                    // }}
                   >
                     <Td>
                       {" "}
@@ -111,7 +114,7 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{gist?.description}</Td>
                     <Td>
                       <GistIcons>
-                        {checkStarGist(gist?.id) ? <Icons className="fas fa-star" /> :<Icons className="far fa-star" />}
+                        {/* {checkStarGist(gist?.id) ? <Icons className="fas fa-star" /> :<Icons className="far fa-star" />} */}
                         <Icons className="fas fa-code-branch" />
                       </GistIcons>
                     </Td>

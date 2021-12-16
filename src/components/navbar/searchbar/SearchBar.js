@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
-import SearchValueContext from "../../../context/searchvalue/SearchValueContext";
-import TabContext from "../../../context/tabs/TabContext";
+import { GistContext } from "../../../context/GistContext";
 import { Div, Input, Icon } from "./style";
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
-  const { setSearchValue } = useContext(SearchValueContext);
-  const { setTab } = useContext(TabContext);
+  // const { setSearchValue } = useContext(SearchValueContext);
+  // const { setTab } = useContext(TabContext);
+
+  const {dispatch} = useContext(GistContext);
 
   return (
     <Div>
@@ -21,8 +22,13 @@ const SearchBar = () => {
       <Icon
         className="fas fa-search "
         onClick={() => {
-          setSearchValue(value);
-          setTab(10);
+          dispatch({
+            type:"SEARCH",
+            payload :{
+              searchValue: value,
+              tab: 10
+            }
+          })
           setValue("")
         }}
       />

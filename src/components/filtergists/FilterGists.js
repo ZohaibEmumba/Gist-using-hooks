@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import SearchValueContext from "../../context/searchvalue/SearchValueContext";
+import { GistContext } from "../../context/GistContext";
 import { searchRecords } from "../../utils/fetchAPIs";
 
 import {
@@ -14,14 +14,21 @@ import {
 const FilterGists = () => {
   const [searchRecordsData, setSearchRecordsData] = useState([]);
   const date = new Date("2021-01-09T14:56:23");
-  const { searchValue } = useContext(SearchValueContext);
+  const { state , dispatch} = useContext(GistContext);
 
-  const showUniqueGistRecord = (id) => {
-    console.log(id);
+  const {gistID , searchValue} = state;
+
+  const showUniqueGistRecord = (gistID) => {
+    dispatch({
+      type:"VISIBLESCREEN",
+      payload : {
+        tab : 9,
+        gistID : gistID 
+      }
+    })
   };
 
   const getFilterData = () => {
-    console.log(searchValue);
     searchRecords(searchValue).then((data) => {
       setSearchRecordsData(data);
     });

@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { GistIcons, Icon1 } from "../../githubprofilepage/style";
-import TabContext from "../../../context/tabs/TabContext";
-import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
+
 import {
   Div,
   Section,
@@ -23,14 +22,16 @@ import {
   unStaredAGist,
   forkedGist,
 } from "../../../utils/fetchAPIs";
+import { GistContext } from "../../../context/GistContext";
 
 const UniqueGist = () => {
   const [uniqueData, setUniqueData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gistStarValue, setGistStarValue] = useState(0);
   const [gistForkValue, setGistForkValue] = useState(0);
-  const { gistId, setGistId } = useContext(StoreGistIdContext);
-  const { setTab } = useContext(TabContext);
+
+  const { state  , dispatch} = useContext(GistContext);
+  const { tab, gistID} = state;
 
   const { files } = uniqueData;
   let filename;
@@ -47,7 +48,7 @@ const UniqueGist = () => {
 
   const getGistData = async () => {
     setLoading(true);
-    const getGistObj = await getPublicGist(gistId).then((data) => {
+    const getGistObj = await getPublicGist(gistID).then((data) => {
       setLoading(false);
       setUniqueData(data);
     });
@@ -57,21 +58,22 @@ const UniqueGist = () => {
     let alreadyStared = 0;
 
     if (gistStarValue === 0) {
-      const star = await staredAGist(gistId)
+      const star = await staredAGist(gistID)
         .then(data => (alreadyStared = 1))
         .catch(err => alreadyStared);
       setGistStarValue(gistStarValue + 1);
-    } else {
-      const unStar = await unStaredAGist(gistId)
-        .then(data => alreadyStared = 1)
-        .catch(err => alreadyStared);
-        setGistForkValue(gistStarValue - 1);
+    } 
+    else {
+      const unStar = await unStaredAGist(gistID)
+        .then(data =>  alreadyStared = 1)
+        .catch(err => alreadyStared)
+         setGistForkValue(gistStarValue - 1);
     }
   };
 
   const forkThisGist = async () => {
     let alreadyFork = 0;
-    let fork = await forkedGist(gistId)
+    let fork = await forkedGist(gistID)
       .then((data) => (alreadyFork = 1))
       .catch((err) => alreadyFork);
     if (alreadyFork) {
@@ -79,15 +81,21 @@ const UniqueGist = () => {
     }
   };
 
-  const deleteGist = async () => {
-    let delGist = await delAGist(gistId);
-    setTab(3);
-  };
+  // const deleteGist = async () => {
+  //   let delGist = await delAGist(gistID);
+  //   dispatch({
+  //     type:"VISIBLESCREEN",
+  //     payload : {
+  //       tab : 9,
+  //       gistID : id 
+  //     }
+  //   });
+  // };
 
-  const updateGist = (id) => {
-    setTab(11);
-    setGistId(id);
-  };
+  // const updateGist = (id) => {
+  //   setTab(11);
+  //   setGistId(id);
+  // };
 
   useEffect(() => {
     getGistData();
@@ -118,14 +126,14 @@ const UniqueGist = () => {
               <Span>
                 <Icon
                   className="far fa-edit"
-                  onClick={() => updateGist(uniqueData?.id)}
+                  // onClick={() => updateGist(uniqueData?.id)}
                 />{" "}
                 Edit
               </Span>
               <Span>
                 <Icon
                   className="far fa-trash-alt"
-                  onClick={() => deleteGist()}
+                  // onClick={() => deleteGist()}
                 />{" "}
                 Delete
               </Span>

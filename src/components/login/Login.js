@@ -1,46 +1,49 @@
-import React,{useState , useContext} from 'react'
-import {Button,Form , Input} from './style';
-import {loginAuthUser} from '../../utils/fetchAPIs'; 
-import TabContext from '../../context/tabs/TabContext';
-
+import React, { useContext, useState } from "react";
+import { Button, Form, Input } from "./style";
+import { loginAuthUser } from "../../utils/fetchAPIs";
+import { GistContext } from "../../context/GistContext";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
-  const {setTab} = useContext(TabContext);
-  const [token, setToken] = useState("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")
+  const [name, setName] = useState("")
+  const { state , dispatch } = useContext(GistContext);
 
 
-  const login = (e) =>{
-      e.preventDefault();
-      const val = loginAuthUser(userName).then(data => {
-        const {login} = data ;
-        if(login === userName)
-        {
-          localStorage.setItem("authUserName", JSON.stringify(userName));
-          localStorage.setItem("token"       , JSON.stringify(token));
-          setTab(3);
+  const login = (e) => {
+    e.preventDefault();
+    const {PAT} = state;
+    dispatch({
+        type: "LOGIN",
+        payload : {
+          userName : name
         }
-        else {
-          alert("sorry Wrong username....");
-        }
-      })
-
-  }
-    return (
-      <>
-        <Form>
+    })
+    
+    const val = loginAuthUser(name).then((data) => {
+      const { login } = data;
+      if (login === name) {
+        localStorage.setItem("authUserName", JSON.stringify(login));
+        localStorage.setItem("token", JSON.stringify(PAT));
+      } 
+      else {
+        alert("sorry Wrong username....");
+      }
+    });
+  };
+  return (
+    <>
+      <Form>
         <Input
           type="text"
           placeholder="Enter username"
-          onChange={(e) =>  setUserName(e.target.value) }
+          onChange={(e) => setName(e.target.value)}
         />
 
         <Button type="submit" onClick={login}>
           Login
         </Button>
       </Form>
-      </>
-    )
-}
+    </>
+  );
+};
 
 export default Login;

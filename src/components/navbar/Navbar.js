@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Nav, Button, Imgdiv, SearchDiv } from "./style";
 import Logo from "../../assets/emumba-logo.png";
 import SearchBar from "./searchbar/SearchBar";
 import DropdownMenu from "./dropdown/DropdownMenu";
-import { useContext } from "react/cjs/react.development";
-import TabContext from "../../context/tabs/TabContext";
-
+import { GistContext } from "../../context/GistContext";
 
 const Navbar = () => {
-  const { setTab } = useContext(TabContext);
+  const { dispatch } = useContext(GistContext);
 
   return (
     <section>
@@ -20,7 +18,15 @@ const Navbar = () => {
             alt="Emumba"
             width="150px"
             height="30px"
-            onClick={() => setTab(1)}
+            onClick={() =>
+              dispatch({
+                type: "VISIBLESCREEN",
+                payload: {
+                  tab: 1,
+                  gistID: null,
+                },
+              })
+            }
           />{" "}
         </Imgdiv>
         <SearchDiv>
@@ -29,7 +35,17 @@ const Navbar = () => {
           "Zohaibkhattak15" ? (
             <DropdownMenu />
           ) : (
-            <Button onClick={() => setTab(2)}>Login</Button>
+            <Button onClick={() =>
+              {
+                dispatch({
+                  type:"VISIBLESCREEN",
+                  payload: {
+                    tab: 2,
+                    gistID:null
+                  }
+                })
+              } 
+            }>Login</Button>
           )}
         </SearchDiv>
       </Nav>

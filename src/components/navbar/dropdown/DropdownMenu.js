@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
 import { Menu, Dropdown } from "antd";
-import TabContext from "../../../context/tabs/TabContext";
 import Zohaib from "../../../assets/zohaib.png";
 
 
 const DropdownMenu = () => {
-  const { tab, setTab } = useContext(TabContext);
+  // const { tab, setTab } = useContext(TabContext);
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -16,25 +15,25 @@ const DropdownMenu = () => {
       <Menu.Divider />
       <Menu.Item
         key="1"
-        onClick={() => {
-          setTab(4);
-        }}
+        // onClick={() => {
+        //   setTab(4);
+        // }}
       >
         <p>Your Gists</p>
       </Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => {
-          setTab(5);
-        }}
+        // onClick={() => {
+        //   setTab(5);
+        // }}
       >
         <p>Stared Gists</p>
       </Menu.Item>
       <Menu.Item
         key="3"
-        onClick={() => {
-          setTab(6);
-        }}
+        // onClick={() => {
+        //   setTab(6);
+        // }}
       >
         <p>Create A Gist</p>
       </Menu.Item>
@@ -44,18 +43,18 @@ const DropdownMenu = () => {
       <Menu.Divider />
       <Menu.Item
         key="5"
-        onClick={() => {
-          setTab(7);
-        }}
+        // onClick={() => {
+        //   setTab(7);
+        // }}
       >
         <p> Your Github Profile</p>
       </Menu.Item>
       <Menu.Item
         key="6"
-        onClick={() => {
-          setTab(8);
-          localStorage.clear();
-        }}
+        // onClick={() => {
+        //   setTab(8);
+        //   localStorage.clear();
+        // }}
       >
         <p> SignOut</p>
       </Menu.Item>

@@ -20,11 +20,11 @@ export const GistReducer = (state = initialState, action) => {
         userName: action.payload.user,
       };
     case "LOGOUT":
-      localStorage.clear();
       return {
         ...state,
         isAuthenticated: false,
         user: null,
+        tab: action.payload.tab
       };
     case "VISIBLESCREEN":
       return {

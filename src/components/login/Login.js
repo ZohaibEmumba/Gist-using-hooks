@@ -23,6 +23,13 @@ const Login = () => {
       if (login === name) {
         localStorage.setItem("authUserName", JSON.stringify(login));
         localStorage.setItem("token", JSON.stringify(PAT));
+        dispatch({
+          type: "VISIBLESCREEN",
+          payload : {
+            tab: 3,
+            gistID : null
+          }
+        })
       } 
       else {
         alert("sorry Wrong username....");

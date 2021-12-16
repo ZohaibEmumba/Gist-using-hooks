@@ -2,7 +2,7 @@ import Navbar from "./components/navbar/Navbar";
 import React, { useContext, useEffect , useReducer } from "react";
 import MainPage from "./components/mainpage/MainPage";
 import Login from "./components/login/Login";
-// import HomePage from "./components/HomePage/HomePage";
+import HomePage from "./components/HomePage/HomePage";
 // import StaredGists from "./components/stargists/StarGists";
 // import CreateAGist from "./components/createagist/CreateAGist";
 // import GitHubProfilePage from "./components/githubprofilepage/GitHubProfilePage";
@@ -29,14 +29,15 @@ const App = () => {
         {tab === 2 && <Login />}
         {tab === 9 && <UniqueGist />}
         {tab === 10 && <FilterGists />}
-
-        {/*
         {tab === 3 && <HomePage />}
+        {tab === 8 && <MainPage />}
+        {/*
+       
         {tab === 4 && <HomePage />}
         {tab === 5 && <StaredGists />}
         {tab === 6 && <CreateAGist />}
         {tab === 7 && <GitHubProfilePage />}
-        {tab === 8 && <MainPage />}
+       
         
         {tab === 11 && <EditAGist />} */}
       </div>

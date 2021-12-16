@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Menu, Dropdown } from "antd";
 import Zohaib from "../../../assets/zohaib.png";
+import { GistContext } from "../../../context/GistContext";
 
 
 const DropdownMenu = () => {
-  // const { tab, setTab } = useContext(TabContext);
+  const { dispatch } = useContext(GistContext);
   const menu = (
     <Menu>
       <Menu.Item key="0">
@@ -51,10 +52,15 @@ const DropdownMenu = () => {
       </Menu.Item>
       <Menu.Item
         key="6"
-        // onClick={() => {
-        //   setTab(8);
-        //   localStorage.clear();
-        // }}
+        onClick={() => {
+         dispatch({
+           type:"LOGOUT",
+           payload : {
+             tab: 8
+           }
+         })
+          localStorage.clear();
+        }}
       >
         <p> SignOut</p>
       </Menu.Item>

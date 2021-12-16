@@ -38,7 +38,7 @@ export const CardSection = styled.div`
 export const CardHeader = styled.section`
   display: flex;
   flex-direction: column;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 `;
 
 export const LeftSec = styled.div`
@@ -78,7 +78,7 @@ export const CardBody = styled.div`
 
 export const CardBodyContent = styled.div`
   width: 100%;
-  padding: 5px 80px;
+  padding: 40px 80px;
   margin: -27px auto;
 `;
 
@@ -93,3 +93,17 @@ export const ProfilePicSec = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const ProfileImage = styled.img` 
+ align-self: center;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
+`
+export const Img = styled.img` 
+ align-self: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+`

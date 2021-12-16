@@ -1,5 +1,5 @@
-import React, { useState , useContext } from "react";
-import { Form, Button, Heading, Input, Textarea , Select } from "./style";
+import React, { useState, useContext } from "react";
+import { Form, Button, Heading, Input, Textarea, Select } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import TabContext from "../../context/tabs/TabContext";
 
@@ -8,7 +8,7 @@ const CreateAGist = () => {
   const [fileName, setFileName] = useState("");
   const [content, setContent] = useState("");
   const [privacy, setPrivacy] = useState(null);
-  const {setTab} = useContext(TabContext);
+  const { setTab } = useContext(TabContext);
 
   const creatGist = (e) => {
     let gistData = {
@@ -20,7 +20,7 @@ const CreateAGist = () => {
         },
       },
     };
-    createAGist(gistData).then(data => console.log(data));
+    createAGist(gistData);
     setTab(3);
   };
 

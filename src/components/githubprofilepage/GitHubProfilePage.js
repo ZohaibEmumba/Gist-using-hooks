@@ -1,4 +1,6 @@
-import React from "react";
+import { Avatar } from "antd";
+import React, { useState, useEffect } from "react";
+import { loginAuthUser, privateGistsRecord } from "../../utils/fetchAPIs";
 import {
   Section,
   ProlfieLeft,
@@ -14,98 +16,134 @@ import {
   CardBodyContent,
   Icon1,
   ProfilePicSec,
-
+  ProfileImage,
+  Img,
 } from "./style";
+import { Span, SpanValues } from "../common/uniquegist/style";
 
-function GitHubProfilePage() {
+const GitHubProfilePage = () => {
+  const [authUserRecord, setAuthUserRecord] = useState();
+  const [ownerRecord, setOwnerRecord] = useState({});
+  const [gists, setGists] = useState("");
+
+  const getLoginData = async () => {
+    const userName = "Zohaibkhattak15";
+    let authData = await loginAuthUser(userName).then((data) =>
+      setAuthUserRecord(data)
+    );
+  };
+  const getGists = async () => {
+    const getAuthGists = await privateGistsRecord().then((data) =>
+      setGists(data)
+    );
+  };
+
+  const { files } = gists;
+  let filename;
+  let content;
+  let myContentArray;
+
+  if (files !== undefined) {
+    Object.values(files).map((file) => {
+      filename = file.filename;
+      content = file.content;
+    });
+    myContentArray = content.split("\n");
+  }
+
+  useEffect(() => {
+    getLoginData();
+    getGists();
+  }, []);
+
   return (
     <>
       <Section>
         <ProlfieLeft>
           <ProfilePicSec>
-            <img id="profile-pic" src="" alt="zohaib" />
+            <ProfileImage
+              id="profile-pic"
+              src={authUserRecord?.avatar_url}
+              alt="zohaib"
+            />
           </ProfilePicSec>
           <Heading>
-            <h5>Muhammad Zohaib</h5>
+            <h5>{authUserRecord?.login}</h5>
           </Heading>
           <Button>View GitHub Profile</Button>
         </ProlfieLeft>
 
         <CardSection>
-          <CardHeader>
-            <LeftSec>
-              <ProfileCol>
-                <img src="" alt="profile" className="profile-pic" />
-                <div>
-                  <span>
-                    <h4>Muhammad Zohaib</h4>
-                    <span>Created 7 housrs Ago</span>
-                    <br />
-                    <span> Broadcast Server</span>
-                  </span>
-                </div>
-              </ProfileCol>
-              <GistIcons>
-                <Icon1>
-                  <span style={{ color: "lightblue" }}>
-                    <i className="far fa-star"></i> Star
-                  </span>
-                  <span
-                    style={{
-                      border: "1px solid gray",
-                      padding: "0px 15px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    0
-                  </span>
-                </Icon1>
-                <Icon1>
-                  <span style={{ color: "lightblue" }}>
-                    <i
-                      className="fas fa-code-branch"
-                      style={{ color: "lightblue" }}
-                    ></i>{" "}
-                    Fork
-                  </span>
-                  <span
-                    style={{
-                      border: "1px solid gray",
-                      padding: "0px 15px",
-                      borderRadius: "5px",
-                    }}
-                  >
-                    0
-                  </span>
-                </Icon1>
-              </GistIcons>
-            </LeftSec>
+          {gists &&
+            gists.map((item, index) => (
+              <CardHeader key={index}>
+                <LeftSec>
+                  <ProfileCol>
+                    <Img src={item?.owner?.avatar_url} alt="profile" />
+                    <div>
+                      <span>
+                        <h4>
+                          {item?.owner?.login}/{Object.keys(item?.files)[0]}
+                        </h4>
+                        <span>Created 7 housrs Ago</span>
+                        <br />
+                        <span> Broadcast Server</span>
+                      </span>
+                    </div>
+                  </ProfileCol>
+                  <GistIcons>
+                    <Icon1>
+                      <Span>
+                        <i className="far fa-star"></i> Star
+                      </Span>
+                      <SpanValues>0</SpanValues>
+                    </Icon1>
+                    <Icon1>
+                      <Span>
+                        <i className="fas fa-code-branch"></i> Fork
+                      </Span>
+                      <SpanValues>0</SpanValues>
+                    </Icon1>
+                  </GistIcons>
+                </LeftSec>
 
-            <ContentBody>
-              <CardBody>
-                <i className="fas fa-code"></i>
-                <span className="file-name">Package.json</span>
-              </CardBody>
-              <CardBodyContent>
-                <span>
-                  {" "}
-                  <p>
-                    <span
-                      style={{
-                        fontWeight: "700",
-                        marginRight: "10px",
-                      }}
-                    ></span>{" "}
-                  </p>{" "}
-                </span>
-              
-              </CardBodyContent>
-            </ContentBody>
-          </CardHeader>
+                <ContentBody>
+                  <CardBody>
+                    <i className="fas fa-code"></i>
+                    <span style={{ paddingBottom: "20px" }}>
+                      {" "}
+                      {"  "} {Object.keys(item?.files)[0]}
+                    </span>
+                  </CardBody>
+                  <CardBodyContent>
+                    {myContentArray !== undefined
+                      ? myContentArray?.map((content, index) => {
+                          return (
+                            <span>
+                              {" "}
+                              <p>
+                                <span
+                                  style={{
+                                    fontWeight: "700",
+                                    marginRight: "10px",
+                                  }}
+                                >
+                                  {++index}
+                                </span>{" "}
+                                {content}
+                              </p>{" "}
+                            </span>
+                          );
+                        })
+                      : "No Content There......."}
+                  </CardBodyContent>
+                </ContentBody>
+              </CardHeader>
+            ))}
         </CardSection>
       </Section>
     </>
   );
-}
+};
 
 export default GitHubProfilePage;

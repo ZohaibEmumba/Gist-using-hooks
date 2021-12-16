@@ -55,19 +55,17 @@ const UniqueGist = () => {
 
   const starThisGist = async () => {
     let alreadyStared = 0;
+
     if (gistStarValue === 0) {
-      console.log(gistId)
       const star = await staredAGist(gistId)
-        .then((data) => (alreadyStared = 1))
-        .catch((err) => alreadyStared);
+        .then(data => (alreadyStared = 1))
+        .catch(err => alreadyStared);
       setGistStarValue(gistStarValue + 1);
     } else {
       const unStar = await unStaredAGist(gistId)
-        .then((data) => (alreadyStared = 1))
-        .catch((err) => alreadyStared);
-      {
+        .then(data => alreadyStared = 1)
+        .catch(err => alreadyStared);
         setGistForkValue(gistStarValue - 1);
-      }
     }
   };
 

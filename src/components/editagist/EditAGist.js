@@ -6,20 +6,14 @@ import TabContext from "../../context/tabs/TabContext";
 
 const EditAGist = () => {
   const [gistData, setGistData] = useState("");
-  const [description, setDescription] = useState("");
 
   const { gistId } = useContext(StoreGistIdContext);
   const { setTab } = useContext(TabContext);
 
-  const editGist = async (e) => {
-    e.preventDefault();
-
-    const { description } = gistData;
-    console.log(description);
-    let val = await updateAGist(gistId, description).then((data) =>
-      console.log(data)
-    );
-    setTab(11);
+  const editGist = async () => {
+    const {description} = gistData;
+    let val = await updateAGist(gistId, description);
+    setTab(3);
   };
 
   const getAGist = async () => {
@@ -36,7 +30,7 @@ const EditAGist = () => {
         <h1 className="create-gist-heading">Update Gist Description</h1>
         <Input
           type="text"
-          onChange={(e) => setGistData(e.target.value)}
+          onChange={(e) => setGistData( {description : e.target.value})}
           placeholder="Enter gist Discription..."
           value={gistData?.description}
         />

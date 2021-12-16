@@ -2,7 +2,7 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
@@ -89,8 +89,7 @@ export const updateAGist = async (id, disp) => {
           Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
         },
       }
-    )
-    .then((data) => console.log(data));
+    );
   return updateGists;
 };
 export const getGistObj = async (id) => {
@@ -121,27 +120,32 @@ export const checkGistStared = async (uniqueId) => {
       headers: {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
-    })
-    .then((data) => data?.status);
+    });
   return checkStar;
 };
 
 export const staredAGist = async (gist_id) => {
-  const starAGist = await axios
-    .put(
-      `${BASE_URL}/gists/${gist_id}/star`,
-      {
-        gist_id: gist_id,
+  const starAGist = await axios.put(
+    `${BASE_URL}/gists/${gist_id}/star`,
+    {
+      gist_id: gist_id,
+    },
+    {
+      headers: {
+        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
-      {
-        headers: {
-          Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
-        },
-      }
-    )
-    .then((data) => data)
-    .catch((err) => console.log(err + "Not working"));
+    }
+  );
   return starAGist;
+};
+
+export const unStaredAGist = async (gist_id) => {
+  const unStarAGist = await axios.delete(`${BASE_URL}/gists/${gist_id}/star`, {
+    headers: {
+      Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+    },
+  });
+  return unStarAGist;
 };
 
 export const forkedGist = async (gist_id) => {
@@ -159,21 +163,4 @@ export const forkedGist = async (gist_id) => {
     )
     .then((data) => data?.status);
   return forkAGist;
-};
-
-export const unStaredAGist = async (gist_id) => {
-  const unStarAGist = await axios
-    .delete(
-      `${BASE_URL}/gists/${gist_id}/star`,
-      {
-        gist_id: gist_id,
-      },
-      {
-        headers: {
-          Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
-        },
-      }
-    )
-    .then((data) => data?.status);
-  return unStarAGist;
 };

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import StoreGistIdContext from "../../../context/storeGistId/StoreGistIdContext";
 import TabContext from "../../../context/tabs/TabContext";
+import { checkGistStared } from "../../../utils/fetchAPIs";
 import {
   Table,
   Th,
@@ -11,6 +12,7 @@ import {
   GistIcons,
   Icons,
 } from "./style";
+
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
@@ -24,6 +26,11 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
     setTab(9);
     setGistId(id);
   };
+
+  const checkStarGist = (id) => {
+    let value ;
+    checkGistStared(id).then(data => value = data ).catch(err => value = 0);
+  }
 
   return (
     <>
@@ -104,7 +111,7 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                     <Td>{gist?.description}</Td>
                     <Td>
                       <GistIcons>
-                        <Icons className="fas fa-star" />
+                        {checkStarGist(gist?.id) ? <Icons className="fas fa-star" /> :<Icons className="far fa-star" />}
                         <Icons className="fas fa-code-branch" />
                       </GistIcons>
                     </Td>

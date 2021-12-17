@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext , useCallback } from "react";
 import { GistContext } from "../../context/GistContext";
 import { getStaredGists } from "../../utils/fetchAPIs";
 import Loader from "../common/spinner/Spinner";
@@ -12,20 +12,25 @@ import {
   Icons,
   GistIcons,
 } from "../common/table/style";
+import { Section } from "./style";
 
 const StaredGists = () => {
   const [staredGists, setStaredGists] = useState([]);
   const [loading, setLoading] = useState(false);
-  const date = new Date("2021-01-09T14:56:23");
   const {dispatch} = useContext(GistContext);
+  const date = new Date("2021-01-09T14:56:23");
 
-  const getStared = async () => {
-    setLoading(true);
-    let val = await getStaredGists().then((data) => {
-      setStaredGists(data);
-      setLoading(false);
-    });
-  };
+
+  const getStared = useCallback(
+    async () => {
+      setLoading(true);
+      let val = await getStaredGists().then((data) => {
+        setStaredGists(data);
+        setLoading(false);
+      });
+    },
+    [getStaredGists],
+  );
   const showUniqueGistRecord = (id) => {
     dispatch({
       type:"VISIBLESCREEN",
@@ -45,7 +50,7 @@ const StaredGists = () => {
       {loading ? (
         <Loader />
       ) : (
-        <section style={{ marginTop: "100px" }}>
+        <Section >
           <Table>
             <thead>
               <tr>
@@ -101,7 +106,7 @@ const StaredGists = () => {
                 : "No Stared Gists Found there"}
             </tbody>
           </Table>
-        </section>
+        </Section>
       )}
     </>
   );

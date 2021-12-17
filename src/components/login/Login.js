@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Button, Form, Input } from "./style";
+import { Form } from "./style";
 import { loginAuthUser } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
+import { Button , Input } from "antd";
+
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -39,11 +41,11 @@ const Login = () => {
       <Form>
         <Input
           type="text"
+          size="large"
           placeholder="Enter username"
           onChange={(e) => setName(e.target.value)}
         />
-
-        <Button type="submit" onClick={login}>
+        <Button type="primary" size="large" onClick={login}>
           Login
         </Button>
       </Form>

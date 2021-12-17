@@ -20,6 +20,17 @@ export const Form = styled.form`
   margin: 150px auto;
   padding: 50px 50px;
   border: 2px solid #5acba1;
+  
+  Input{  
+    margin: 20px auto;
+    &:hover{
+    border : 1px solid #5acba1
+  }
+  }
+  Button{
+    background: #5acba1;
+    border: none;
+  }
 `;
 
 export const Input = styled.input`

@@ -59,6 +59,7 @@ const PublicGists = () => {
             }
             onClick={() => listToggle()}
           ></i>
+{/* <UnorderedListOutlined className={layout=== "list" ? "list-active" : null}  onClick={() => listToggle()}/>  */}
         </span>
         <span style={{ border: "1px solid #5acba1" }}></span>
         <span>

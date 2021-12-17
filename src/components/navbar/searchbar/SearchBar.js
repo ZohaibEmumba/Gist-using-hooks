@@ -41,7 +41,7 @@ const SearchBar = () => {
           setValue("")
         }}
       /> */}
-      <Search placeholder="Enter search text" onChange={(e) => setValue(e.target.value)}  onSearch={searchGists} />
+      <Search placeholder="Enter search text" size="large" onChange={(e) => setValue(e.target.value)}  onSearch={searchGists} />
     </Div>
   );
 };

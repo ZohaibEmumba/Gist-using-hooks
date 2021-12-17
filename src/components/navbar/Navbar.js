@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Nav, Button, Imgdiv, SearchDiv } from "./style";
+import { Nav,  Imgdiv, SearchDiv } from "./style";
 import Logo from "../../assets/emumba-logo.png";
 import SearchBar from "./searchbar/SearchBar";
 import DropdownMenu from "./dropdown/DropdownMenu";
 import { GistContext } from "../../context/GistContext";
+import { Button } from "antd";
+
 
 const Navbar = () => {
   const { dispatch } = useContext(GistContext);
@@ -34,8 +36,26 @@ const Navbar = () => {
           {JSON.parse(localStorage.getItem("authUserName")) ===
           "Zohaibkhattak15" ? (
             <DropdownMenu />
-          ) : (
-            <Button onClick={() =>
+          ) : <Button type="primary" size="large" onClick={() =>
+              {
+                dispatch({
+                  type:"VISIBLESCREEN",
+                  payload: {
+                    tab: 2,
+                    gistID:null
+                  }
+                })
+              }}
+               >Login </Button> }
+        </SearchDiv>
+      </Nav>
+    </section>
+  );
+};
+export default Navbar;
+
+
+ {/* <Button onClick={() =>
               {
                 dispatch({
                   type:"VISIBLESCREEN",
@@ -45,11 +65,6 @@ const Navbar = () => {
                   }
                 })
               } 
-            }>Login</Button>
-          )}
-        </SearchDiv>
-      </Nav>
-    </section>
-  );
-};
-export default Navbar;
+            }>Login</Button> */}
+
+            

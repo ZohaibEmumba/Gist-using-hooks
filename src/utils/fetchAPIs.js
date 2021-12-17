@@ -2,7 +2,7 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
@@ -41,7 +41,7 @@ export const privateGistsRecord = async () => {
 
 export const searchRecords = async (userName) => {
   const searchedUserRecords = await axios
-    .get(`${BASE_URL}/users/${userName}/gists?per_page=10`, {
+    .get(`${BASE_URL}/users/${userName}/gists`, {
       username: userName,
     })
     .then((data) => data.data);

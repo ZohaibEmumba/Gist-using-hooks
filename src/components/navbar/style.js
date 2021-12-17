@@ -6,6 +6,17 @@ export const Nav = styled.nav`
   padding: 20px 30px;
   background-color: #5acba1;
   box-shadow: 0px 5px 18px #888888;
+  
+  Button{
+    background: white;
+    color: #5acba1;
+    border: 1px solid #5acba1;
+    &:hover{
+      background: #5acba1;
+      border: 1px solid white;
+    }
+  }
+ 
 `;
 
 export const Button = styled.button`

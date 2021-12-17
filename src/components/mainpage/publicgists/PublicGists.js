@@ -6,8 +6,8 @@ import Loader from "../../common/spinner/Spinner";
 import { Section, Div } from "./style";
 
 const PublicGists = () => {
-  const [loading, setLoading] = useState(false);
   const [publicRecord, setPublicRecord] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [isListView, setIsListView] = useState(true);
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");

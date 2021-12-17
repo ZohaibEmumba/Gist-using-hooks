@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { GistContext } from "../../context/GistContext";
 import { getStaredGists } from "../../utils/fetchAPIs";
 import Loader from "../common/spinner/Spinner";
 import {
@@ -16,6 +17,7 @@ const StaredGists = () => {
   const [staredGists, setStaredGists] = useState([]);
   const [loading, setLoading] = useState(false);
   const date = new Date("2021-01-09T14:56:23");
+  const {dispatch} = useContext(GistContext);
 
   const getStared = async () => {
     setLoading(true);
@@ -25,7 +27,13 @@ const StaredGists = () => {
     });
   };
   const showUniqueGistRecord = (id) => {
-    console.log(id);
+    dispatch({
+      type:"VISIBLESCREEN",
+      payload : {
+        tab : 9,
+        gistID : id 
+      }
+    })
   };
 
   useEffect(() => {

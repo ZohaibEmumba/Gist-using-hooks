@@ -23,7 +23,6 @@ import { Span, SpanValues } from "../common/uniquegist/style";
 
 const GitHubProfilePage = () => {
   const [authUserRecord, setAuthUserRecord] = useState();
-  const [ownerRecord, setOwnerRecord] = useState({});
   const [gists, setGists] = useState("");
 
   const getLoginData = async () => {

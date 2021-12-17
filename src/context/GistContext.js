@@ -12,31 +12,29 @@ export const initialState = {
 };
 
 export const GistReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const {type , payload: {user , gistID , searchValue , tab } } = action;
+  switch (type) {
     case "LOGIN":
       return {
         ...state,
         isLoggedin: true,
-        userName: action.payload.user,
+        userName: user,
       };
     case "LOGOUT":
-      return {
-        ...state,
-        isAuthenticated: false,
-        user: null,
-        tab: action.payload.tab
-      };
+      
+      return initialState;
+
     case "VISIBLESCREEN":
       return {
         ...state,
-        tab: action.payload.tab,
-        gistID: action.payload.gistID,
+        tab: tab,
+        gistID: gistID,
       };
     case "SEARCH":
       return {
         ...state,
-        searchValue: action.payload.searchValue,
-        tab: action.payload.tab,
+        searchValue: searchValue,
+        tab: tab,
       };
     default:
       return state;

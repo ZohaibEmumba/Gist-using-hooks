@@ -21,14 +21,15 @@ import {
   staredAGist,
   unStaredAGist,
   forkedGist,
+  checkGistStared
 } from "../../../utils/fetchAPIs";
 import { GistContext } from "../../../context/GistContext";
 
 const UniqueGist = () => {
   const [uniqueData, setUniqueData] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [gistStarValue, setGistStarValue] = useState(0);
   const [gistForkValue, setGistForkValue] = useState(0);
+  const [starValue, setStarValue] = useState(null);
 
   const { state, dispatch } = useContext(GistContext);
   const { tab, gistID } = state;
@@ -47,15 +48,12 @@ const UniqueGist = () => {
   }
 
   const getGistData = async () => {
-    setLoading(true);
     const getGistObj = await getPublicGist(gistID).then((data) => {
-      setLoading(false);
       setUniqueData(data);
     });
   };
 
   const starThisGist = async () => {
-
     if (gistStarValue === 0) {
       const star = await staredAGist(gistID)
         .then((data) => (setGistStarValue(gistStarValue + 1)))
@@ -64,7 +62,6 @@ const UniqueGist = () => {
       const unStar = await unStaredAGist(gistID)
         .then((data) => setGistStarValue(gistStarValue - 1))
         .catch((err) => err);
-
     }
   };
 
@@ -99,8 +96,13 @@ const UniqueGist = () => {
     });
   };
 
+  const checkGist = () => {
+      checkGistStared(gistID).then(data => setGistStarValue(data?.status));
+  }
+
   useEffect(() => {
     getGistData();
+    checkGist();
   }, []);
 
   return (
@@ -143,10 +145,13 @@ const UniqueGist = () => {
           ) : null}
           <Icon1>
             <Span>
-              <Icon
+              
+                <Icon
                 className={gistStarValue === 0 ? "far fa-star" : "fas fa-star"}
                 onClick={() => starThisGist()}
-              />{" "}
+              />
+              
+              {" "}
               Star
             </Span>
             <SpanValues>{gistStarValue}</SpanValues>

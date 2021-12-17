@@ -16,7 +16,7 @@ import {
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
   const { dispatch } = useContext(GistContext);
-  let check ;
+
   const filledStar = <i className="fas fa-star" />;
   const unFilledStart = <i className="far fa-star" />;
   
@@ -31,12 +31,10 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   };
 
   const checkStarGist = async (id) => {
-  
     let value = await checkGistStared(id)
-    .then(data => check = 1)
-    .catch(err => check = 0);
-    check =  value;
-    return check;
+    .then(data => data)
+    .catch(err => err);
+    return value;
   }
 
   return (
@@ -120,9 +118,7 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
                       <GistIcons>
                          { 
                            checkStarGist(gist?.id),
-                           true
-                        ? <Icons className="fas fa-star" />
-                         :<Icons className="far fa-star" />}
+                           true ? <Icons className="fas fa-star" /> :<Icons className="far fa-star" />}
                         <Icons className="fas fa-code-branch" />
                       </GistIcons>
                     </Td>

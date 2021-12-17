@@ -2,7 +2,7 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
@@ -162,6 +162,6 @@ export const forkedGist = async (gist_id) => {
         },
       }
     )
-    .then((data) => data?.status);
+    .then((data) => data?.status).catch(err => console.log(err));
   return forkAGist;
 };

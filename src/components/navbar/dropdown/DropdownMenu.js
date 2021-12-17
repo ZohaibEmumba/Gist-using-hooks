@@ -91,7 +91,7 @@ const DropdownMenu = () => {
   );
   return (
     <Dropdown overlay={menu} trigger={["click"]}>
-      <a
+      <p
         className="ant-dropdown-link"
         onClick={(e) => {
           e.preventDefault();
@@ -103,7 +103,7 @@ const DropdownMenu = () => {
           style={{ borderRadius: "50%", backgroundColor: "white" }}
           src={Zohaib}
         />
-      </a>
+      </p>
     </Dropdown>
   );
 };

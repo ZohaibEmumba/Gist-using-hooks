@@ -3,7 +3,7 @@ import { publicGistsRecord } from "../../../utils/fetchAPIs";
 import TableData from "../../common/table/TableData";
 import GridDisplay from "../../common/grid/Grid";
 import Loader from "../../common/spinner/Spinner";
-import { Section, Div ,  Icon} from "./style";
+import { Section, Div } from "./style";
 
 const PublicGists = () => {
   const [loading, setLoading] = useState(false);

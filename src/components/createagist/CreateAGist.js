@@ -1,7 +1,12 @@
 import React, { useState, useContext } from "react";
-import { Form, Button, Heading, Input, Textarea, Select } from "./style";
+import { Form,  Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
+import { Input , Select , Button } from "antd";
+
+const { TextArea } = Input;
+const { Option } = Select;
+
 
 const CreateAGist = () => {
   const [description, setDescription] = useState("");
@@ -37,20 +42,26 @@ const CreateAGist = () => {
         type="text"
         placeholder="Enter gist Discription..."
         onChange={(e) => setDescription(e.target.value)}
+        size="large"
       />
 
       <Input
         type="text"
         placeholder="Enter File name..."
         onChange={(e) => setFileName(e.target.value)}
+        size="large"
+
       />
-      <Textarea
+      <TextArea
         name=""
         rows={4}
         placeholder="Enter File Content..."
         onChange={(e) => setContent(e.target.value)}
+        size="large"
+
       />
       <Select
+      size="large"
         onChange={(e) => {
           if (e.target.value === "public") {
             setPrivacy(false);
@@ -61,12 +72,12 @@ const CreateAGist = () => {
           }
         }}
       >
-        <option value=""> </option>
-        <option value="public"> Public</option>
-        <option value="private">Private</option>
+        <Option value=""> </Option>
+        <Option value="public"> Public</Option>
+        <Option value="private">Private</Option>
       </Select>
 
-      <Button onClick={() => creatGist()}> Create Gist </Button>
+      <Button size="large" onClick={() => creatGist()}> Create Gist </Button>
     </Form>
   );
 };

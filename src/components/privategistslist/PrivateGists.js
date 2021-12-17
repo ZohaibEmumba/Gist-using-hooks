@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { publicGistsRecord } from "../../../utils/fetchAPIs";
-import TableData from "../../common/table/TableData";
-import GridDisplay from "../../common/grid/Grid";
-import Loader from "../../common/spinner/Spinner";
-import { Section, Div } from "./style";
+import React, { useEffect, useState , useCallback } from "react";
+import { privateGistsRecord, checkGistStared } from "../../utils/fetchAPIs";
+import TableData from "../common/table/TableData";
+import GridDisplay from "../common/grid/Grid";
+import Loader from "../common/spinner/Spinner";
+import { Section, Div } from "../publicgistslist/style";
 
-const PublicGists = () => {
-  const [publicRecord, setPublicRecord] = useState([]);
+const PrivateGists = () => {
   const [loading, setLoading] = useState(false);
+  const [privateGistsList, setPrivateGistsList] = useState([]);
   const [isListView, setIsListView] = useState(true);
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");
@@ -15,21 +15,22 @@ const PublicGists = () => {
   const TableView = loading ? (
     <Loader />
   ) : (
-    <TableData publicGistsDisplay={publicRecord} />
+    <TableData privateGistsDisplay={privateGistsList} />
   );
   const GridView = loading ? (
     <Loader />
   ) : (
-    <GridDisplay publicGistsDisplay={publicRecord} />
+    <GridDisplay privateGistsDisplay={privateGistsList} />
   );
 
-  const getData = async () => {
+  const getPrivateGists = useCallback(async () => {
     setLoading(true);
-    let val = await publicGistsRecord().then((data) => {
+    let val = await privateGistsRecord().then((data) => {
       setLoading(false);
-      setPublicRecord(data);
+      setPrivateGistsList(data);
     });
-  };
+  }, [privateGistsRecord]);
+
   const listToggle = () => {
     setIsListView(true);
     setIsGridView(false);
@@ -43,7 +44,7 @@ const PublicGists = () => {
   };
 
   useEffect(() => {
-    getData();
+    getPrivateGists();
   }, []);
 
   return (
@@ -76,4 +77,4 @@ const PublicGists = () => {
   );
 };
 
-export default PublicGists;
+export default PrivateGists;

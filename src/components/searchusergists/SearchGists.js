@@ -11,7 +11,7 @@ import {
   Img,
 } from "../common/table/style";
 
-const FilterGists = () => {
+const SearchGists = () => {
   const [searchRecordsData, setSearchRecordsData] = useState([]);
   const date = new Date("2021-01-09T14:56:23");
   const { state , dispatch} = useContext(GistContext);
@@ -95,4 +95,4 @@ const FilterGists = () => {
   );
 };
 
-export default FilterGists;
+export default SearchGists;

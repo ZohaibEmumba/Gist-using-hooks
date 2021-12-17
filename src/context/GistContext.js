@@ -12,7 +12,10 @@ export const initialState = {
 };
 
 export const GistReducer = (state = initialState, action) => {
-  const {type , payload: {user , gistID , searchValue , tab } } = action;
+  const {
+    type,
+    payload: { user, gistID, searchValue, tab },
+  } = action;
   switch (type) {
     case "LOGIN":
       return {
@@ -21,7 +24,6 @@ export const GistReducer = (state = initialState, action) => {
         userName: user,
       };
     case "LOGOUT":
-      
       return initialState;
 
     case "VISIBLESCREEN":

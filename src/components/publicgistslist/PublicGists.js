@@ -1,49 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { privateGistsRecord , checkGistStared } from "../../../utils/fetchAPIs";
-import TableData from "../../common/table/TableData";
-import GridDisplay from "../../common/grid/Grid";
-import Loader from "../../common/spinner/Spinner";
-import { Section, Div } from "../../mainpage/publicgists/style";
+import React, { useEffect, useState, useCallback } from "react";
+import { publicGistsRecord } from "../../utils/fetchAPIs";
+import TableData from "../common/table/TableData";
+import GridDisplay from "../common/grid/Grid";
+import Loader from "../common/spinner/Spinner";
+import { Section, Div } from "./style";
 
-const PrivateGists = () => {
+const PublicGists = () => {
+  const [publicGistsList, setPublicGistsList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [privateRecord, setPrivateRecord] = useState([]);
   const [isListView, setIsListView] = useState(true);
   const [isGridView, setIsGridView] = useState(false);
-  const [isActive, setIsActive] = useState("list");
+  const [layout, setLayout] = useState("list");
 
   const TableView = loading ? (
     <Loader />
   ) : (
-    <TableData privateGistsDisplay={privateRecord} />
+    <TableData publicGistsDisplay={publicGistsList} />
   );
   const GridView = loading ? (
     <Loader />
   ) : (
-    <GridDisplay privateGistsDisplay={privateRecord} />
+    <GridDisplay publicGistsDisplay={publicGistsList} />
   );
 
-  const getData = async () => {
+  const getPublicGists = useCallback(async () => {
     setLoading(true);
-    let val = await privateGistsRecord().then((data) => {
+    let val = await publicGistsRecord().then((data) => {
       setLoading(false);
-      setPrivateRecord(data);
+      setPublicGistsList(data);
     });
-  };
+  }, [publicGistsRecord]);
+
   const listToggle = () => {
     setIsListView(true);
     setIsGridView(false);
-    setIsActive("list");
+    setLayout("list");
   };
 
   const gridToggle = () => {
     setIsListView(false);
     setIsGridView(true);
-    setIsActive("grid");
+    setLayout("grid");
   };
 
   useEffect(() => {
-    getData();
+    getPublicGists();
   }, []);
 
   return (
@@ -52,7 +53,7 @@ const PrivateGists = () => {
         <span>
           <i
             className={
-              isActive === "list"
+              layout === "list"
                 ? "fas fa-list fa-2x list-active"
                 : "fas fa-list fa-2x"
             }
@@ -63,7 +64,7 @@ const PrivateGists = () => {
         <span>
           <i
             className={
-              isActive === "grid"
+              layout === "grid"
                 ? "fas fa-th-large fa-2x grid-active"
                 : "fas fa-th-large fa-2x"
             }
@@ -76,4 +77,4 @@ const PrivateGists = () => {
   );
 };
 
-export default PrivateGists;
+export default PublicGists;

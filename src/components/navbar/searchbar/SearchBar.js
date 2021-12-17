@@ -1,17 +1,26 @@
 import React, { useState, useContext } from "react";
 import { GistContext } from "../../../context/GistContext";
-import { Div, Input, Icon } from "./style";
+import { Div  } from "./style";
+import { Input } from 'antd';
+
+const { Search } = Input;
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
-  // const { setSearchValue } = useContext(SearchValueContext);
-  // const { setTab } = useContext(TabContext);
 
   const {dispatch} = useContext(GistContext);
-
+  const searchGists = () => {
+    dispatch({
+      type:"SEARCH",
+      payload :{
+        searchValue: value,
+        tab: 10
+      }
+    })
+  }
   return (
     <Div>
-      <Input
+      {/* <Input
         type="text"
         placeholder="Search Notes.."
         onChange={(e) => {
@@ -31,7 +40,8 @@ const SearchBar = () => {
           })
           setValue("")
         }}
-      />
+      /> */}
+      <Search placeholder="Enter search text" onChange={(e) => setValue(e.target.value)}  onSearch={searchGists} />
     </Div>
   );
 };

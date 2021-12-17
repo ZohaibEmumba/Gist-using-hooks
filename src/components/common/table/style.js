@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+
+export const Section = styled.section`
+  width: 80%;
+  margin: 15px auto;
+
+`
+
 export const Table = styled.table`
   display: table;
   width: 80%;

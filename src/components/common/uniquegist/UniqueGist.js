@@ -97,7 +97,7 @@ const UniqueGist = () => {
   };
 
   const checkGist = () => {
-      checkGistStared(gistID).then(data => setGistStarValue(data?.status));
+      checkGistStared(gistID).then(data => setGistStarValue(1));
   }
 
   useEffect(() => {
@@ -112,8 +112,8 @@ const UniqueGist = () => {
           <div>
             <ProfileImage src={uniqueData?.owner?.avatar_url} alt="profile" />
           </div>
-          <div className="">
-            <span className="">
+          <div>
+            <span>
               <Heading>
                 {uniqueData?.owner?.login}/{filename}{" "}
               </Heading>
@@ -145,7 +145,6 @@ const UniqueGist = () => {
           ) : null}
           <Icon1>
             <Span>
-              
                 <Icon
                 className={gistStarValue === 0 ? "far fa-star" : "fas fa-star"}
                 onClick={() => starThisGist()}

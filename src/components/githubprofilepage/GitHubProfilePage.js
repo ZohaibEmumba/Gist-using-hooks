@@ -1,6 +1,12 @@
 import { Avatar } from "antd";
-import React, { useState, useEffect } from "react";
-import { loginAuthUser, privateGistsRecord } from "../../utils/fetchAPIs";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  loginAuthUser,
+  privateGistsRecord,
+  checkGistStared,
+  staredAGist,
+  unStaredAGist,
+} from "../../utils/fetchAPIs";
 import {
   Section,
   ProlfieLeft,
@@ -18,12 +24,18 @@ import {
   ProfilePicSec,
   ProfileImage,
   Img,
+  Span1,
 } from "./style";
-import { Span, SpanValues } from "../common/uniquegist/style";
+import { Span, SpanValues, Icon } from "../common/uniquegist/style";
+import { GistContext } from "../../context/GistContext";
 
 const GitHubProfilePage = () => {
   const [authUserRecord, setAuthUserRecord] = useState();
   const [gists, setGists] = useState("");
+  const [gistStarValue, setGistStarValue] = useState(0);
+
+  const { state, dispatch } = useContext(GistContext);
+  const { tab, gistID } = state;
 
   const getLoginData = async () => {
     const userName = "Zohaibkhattak15";
@@ -50,9 +62,26 @@ const GitHubProfilePage = () => {
     myContentArray = content.split("\n");
   }
 
+  const starThisGist = async () => {
+    if (gistStarValue === 0) {
+      const star = await staredAGist(gistID)
+        .then((data) => setGistStarValue(gistStarValue + 1))
+        .catch((err) => err);
+    } else {
+      const unStar = await unStaredAGist(gistID)
+        .then((data) => setGistStarValue(gistStarValue - 1))
+        .catch((err) => err);
+    }
+  };
+
+  const checkGist = () => {
+    checkGistStared(gistID).then((data) => setGistStarValue(1));
+  };
+
   useEffect(() => {
     getLoginData();
     getGists();
+    checkGist();
   }, []);
 
   return (
@@ -93,13 +122,19 @@ const GitHubProfilePage = () => {
                   <GistIcons>
                     <Icon1>
                       <Span>
-                        <i className="far fa-star"></i> Star
+                        <Icon
+                          className={
+                            gistStarValue === 0 ? "far fa-star" : "fas fa-star"
+                          }
+                          onClick={() => starThisGist()}
+                        />{" "}
+                        Star
                       </Span>
                       <SpanValues>0</SpanValues>
                     </Icon1>
                     <Icon1>
                       <Span>
-                        <i className="fas fa-code-branch"></i> Fork
+                        <Icon className="fas fa-code-branch" /> Fork
                       </Span>
                       <SpanValues>0</SpanValues>
                     </Icon1>
@@ -109,7 +144,7 @@ const GitHubProfilePage = () => {
                 <ContentBody>
                   <CardBody>
                     <i className="fas fa-code"></i>
-                    <span style={{ paddingBottom: "20px" }}>
+                    <span>
                       {" "}
                       {"  "} {Object.keys(item?.files)[0]}
                     </span>
@@ -121,15 +156,7 @@ const GitHubProfilePage = () => {
                             <span>
                               {" "}
                               <p>
-                                <span
-                                  style={{
-                                    fontWeight: "700",
-                                    marginRight: "10px",
-                                  }}
-                                >
-                                  {++index}
-                                </span>{" "}
-                                {content}
+                                <Span1>{++index}</Span1> {content}
                               </p>{" "}
                             </span>
                           );

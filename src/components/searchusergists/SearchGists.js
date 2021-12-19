@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { GistContext } from "../../context/GistContext";
 import { searchRecords } from "../../utils/fetchAPIs";
+import { Section  } from "./style";
+import Spinner from '../common/spinner/Spinner'
 
 import {
   Table,
@@ -15,6 +17,7 @@ const SearchGists = () => {
   const [searchRecordsData, setSearchRecordsData] = useState([]);
   const date = new Date("2021-01-09T14:56:23");
   const { state , dispatch} = useContext(GistContext);
+  const [loading, setLoading] = useState(false);
 
   const {gistID , searchValue} = state;
 
@@ -29,7 +32,9 @@ const SearchGists = () => {
   };
 
   const getFilterData = () => {
+    setLoading(true)
     searchRecords(searchValue).then((data) => {
+      setLoading(false);
       setSearchRecordsData(data);
     });
   };
@@ -39,8 +44,8 @@ const SearchGists = () => {
   }, []);
 
   return (
-    <section style={{ marginTop: "120px" }}>
-      <Table>
+     <Section>
+      {loading ? <Spinner />  : <Table>
         <thead>
           <tr>
             <Th>
@@ -90,8 +95,8 @@ const SearchGists = () => {
             <h1>No record foound for that user.......</h1>
           )}
         </tbody>
-      </Table>
-    </section>
+      </Table>}
+    </Section>
   );
 };
 

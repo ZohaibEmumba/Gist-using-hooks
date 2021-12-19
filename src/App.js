@@ -11,9 +11,6 @@ import PrivateGists from "./components/privategistslist/PrivateGists";
 import PublicGists from "./components/publicgistslist/PublicGists";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
 import "./App.css";
-import { and } from 'ramda'
-
-
 
 const App = () => {
   const [state, dispatch] = useReducer(GistReducer, initialState);
@@ -25,21 +22,18 @@ const App = () => {
         <div className="ui container">
           <Navbar />
           {/* {and(tab , 1) => <PublicGists />} */}
-           { tab=== 1 &&  <PublicGists />}
-          {tab === 2 &&  <Login />}
-          {tab === 3 &&  <PrivateGists />}
-          {tab === 5 &&  <StaredGists />}
-          {tab === 6 &&  <CreateAGist />}
-          {tab === 7 &&  <GitHubProfilePage />}
-          {tab === 8 &&  <PublicGists />}
-          {tab === 9 &&  <UniqueGist />}
+          {tab === 1 && <PublicGists />}
+          {tab === 2 && <Login />}
+          {tab === 3 && <PrivateGists />}
+          {tab === 5 && <StaredGists />}
+          {tab === 6 && <CreateAGist />}
+          {tab === 7 && <GitHubProfilePage />}
+          {tab === 8 && <PublicGists />}
+          {tab === 9 && <UniqueGist />}
           {tab === 10 && <SearchGists />}
           {tab === 11 && <EditAGist />}
         </div>
       </GistContext.Provider>
-      {/*       
-        {tab === 4 && <HomePage />}
-         */}
     </>
   );
 };

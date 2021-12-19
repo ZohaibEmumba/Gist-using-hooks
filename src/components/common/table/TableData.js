@@ -3,15 +3,7 @@ import { GistContext } from "../../../context/GistContext";
 import { checkGistStared } from "../../../utils/fetchAPIs";
 import { Table } from "antd";
 
-
-import {
-  Section,
-  UserNameSection,
-  Username,
-  Img,
- 
-} from "./style";
-
+import { Section, UserNameSection, Username, Img } from "./style";
 
 const columns = [
   {
@@ -31,8 +23,6 @@ const columns = [
       );
     },
     width: "20%",
-  
-    
   },
   {
     key: "2",
@@ -62,12 +52,9 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const date = new Date("2021-01-09T14:56:23");
   const { dispatch } = useContext(GistContext);
   const [pagination, setPagination] = useState({
-      current  : 1,
-      pageSize :  10,
-  })
-
-  const filledStar = <i className="fas fa-star" />;
-  const unFilledStart = <i className="far fa-star" />;
+    current: 1,
+    pageSize: 10,
+  });
 
   const showUniqueGistRecord = (id) => {
     dispatch({
@@ -90,18 +77,19 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
     <>
       <Section>
         <Table
-          rowKey={record => record?.id}
+          rowKey={(record) => record?.id}
           columns={columns}
-          dataSource={publicGistsDisplay ? publicGistsDisplay : privateGistsDisplay}
+          dataSource={
+            publicGistsDisplay ? publicGistsDisplay : privateGistsDisplay
+          }
           rowSelection
           onRow={(record, rowIndex) => {
             return {
               onClick: () => {
-                showUniqueGistRecord(record?.id)
-              }, 
+                showUniqueGistRecord(record?.id);
+              },
             };
           }}
-          
         />
       </Section>
     </>

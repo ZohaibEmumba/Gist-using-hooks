@@ -8,8 +8,6 @@ import {
   UserNameSection,
   Img,
   Username,
-  GistIcons,
-  Icons,
 } from "../common/table/style";
 import { Section } from "./style";
 
@@ -71,7 +69,6 @@ const StaredGists = () => {
   const [staredGists, setStaredGists] = useState([]);
   const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(GistContext);
-  const date = new Date("2021-01-09T14:56:23");
 
   const getStared = useCallback(async () => {
     setLoading(true);

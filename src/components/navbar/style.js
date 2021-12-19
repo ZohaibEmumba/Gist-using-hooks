@@ -7,6 +7,7 @@ export const Nav = styled.nav`
   background-color: #5acba1;
   box-shadow: 0px 5px 18px #888888;
   
+
   Button{
     background: white;
     color: #5acba1;
@@ -16,6 +17,7 @@ export const Nav = styled.nav`
       border: 1px solid white;
     }
   }
+
  
 `;
 

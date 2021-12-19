@@ -4,6 +4,7 @@ import styled from "styled-components";
 export const Section = styled.section`
   width: 80%;
   margin: 15px auto;
+  padding-bottom: 200px;
 
 `
 

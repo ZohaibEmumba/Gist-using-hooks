@@ -7,10 +7,12 @@ import {
   ProfileFooter,
   Profile,
   ProfilePic,
+  Span1,
 } from "./style";
+import { Row, Col } from "antd";
 
 const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
-  const {dispatch} = useContext(GistContext);
+  const { dispatch } = useContext(GistContext);
   let publicFiles;
   let privateFiles;
   if (publicGistsDisplay) {
@@ -22,64 +24,57 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
       (files) => Object.keys(files.files)[0]
     );
 
-    const showUniqueGistRecord = (id) => {
-      dispatch({
-        type:"VISIBLESCREEN",
-        payload : {
-          tab : 9,
-          gistID : id 
-        }
-      })
-    };
+  const showUniqueGistRecord = (id) => {
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 9,
+        gistID: id,
+      },
+    });
+  };
 
   return (
     <>
-      <Card>
+      <Row gutter={[16, 100]}>
         {publicGistsDisplay
           ? publicGistsDisplay.map((gist, index) => (
-              <Grid
-                key={index}
-                onClick={() => {
-                  showUniqueGistRecord(gist?.id);
-                }}
-              >
-                <div>
-                  {publicFiles &&
-                    publicFiles?.map((content, index) => {
-                      return (
-                        <span key={index}>
-                          {" "}
-                          <p>
-                            <span
-                              style={{
-                                fontWeight: "700",
-                                marginRight: "10px",
-                              }}
-                            >
-                              {++index}
-                            </span>{" "}
-                            {content}{" "}
-                          </p>{" "}
-                        </span>
-                      );
-                    })}
-                </div>
-                <Footer>
+              <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
+                <Grid
+                  onClick={() => {
+                    showUniqueGistRecord(gist?.id);
+                  }}
+                >
                   <div>
-                    <ProfilePic src={gist.owner.avatar_url} alt="profile" />
+                    {publicFiles &&
+                      publicFiles?.map((content, index) => {
+                        return (
+                          <span key={index}>
+                            {" "}
+                            <p>
+                              <Span1>{++index}</Span1> {content}{" "}
+                            </p>{" "}
+                          </span>
+                        );
+                      })}
                   </div>
-                  <Profile>
-                    <ProfileFooter>
-                      <h4>
-                        {gist.owner.login} / {Object.keys(gist.files)[0]}{" "}
-                      </h4>
-                      <span>Created 7 housrs Ago</span>
-                      <br />
-                      <span> Broadcast Server</span>
-                    </ProfileFooter>
-                  </Profile>
-                </Footer>
-              </Grid>
+                  <Footer>
+                    <div>
+                      <ProfilePic src={gist.owner.avatar_url} alt="profile" />
+                    </div>
+                    <Profile>
+                      <ProfileFooter>
+                        <h4>
+                          {gist.owner.login} / {Object.keys(gist.files)[0]}{" "}
+                        </h4>
+                        <span>Created 7 housrs Ago</span>
+                        <br />
+                        <span> Broadcast Server</span>
+                      </ProfileFooter>
+                    </Profile>
+                  </Footer>
+                </Grid>
+              </Col>
             ))
           : privateGistsDisplay.map((gist, index) => (
               <Grid
@@ -95,15 +90,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
                         <span key={index}>
                           {" "}
                           <p>
-                            <span
-                              style={{
-                                fontWeight: "700",
-                                marginRight: "10px",
-                              }}
-                            >
-                              {++index}
-                            </span>{" "}
-                            {content}{" "}
+                            <Span1>{++index}</Span1> {content}{" "}
                           </p>{" "}
                         </span>
                       );
@@ -126,7 +113,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
                 </Footer>
               </Grid>
             ))}
-      </Card>
+      </Row>
     </>
   );
 };

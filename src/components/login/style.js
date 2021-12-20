@@ -1,18 +1,7 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
-  margin: 10px auto;
-  padding: 5px 40px 5px 40px;
-  height: 40px;
-  border-radius: 5px;
-  border: none;
-  background-color: #5acba1;
-  color: white;
-  cursor: pointer;
-  align-items: center;
-  align-self: center;
-`;
-export const Form = styled.form`
+
+export const FormDiv = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -30,12 +19,6 @@ export const Form = styled.form`
   Button{
     background: #5acba1;
     border: none;
+    width:100%;
   }
-`;
-
-export const Input = styled.input`
-  margin: 30px auto;
-  padding: 15px 170px 15px 20px;
-  border: 2px solid lightgray;
-  align-self: center;
 `;

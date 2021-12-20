@@ -1,16 +1,15 @@
 import React, { useContext, useState } from "react";
-import { Form } from "./style";
+import { FormDiv } from "./style";
 import { loginAuthUser } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
-import { Button , Input } from "antd";
-
+import { Button, Input, Form , Alert} from "antd";
 
 const Login = () => {
   const [name, setName] = useState("");
   const { state, dispatch } = useContext(GistContext);
+  const [showError, setShowError] = useState(false);
 
-  const login = (e) => {
-    e.preventDefault();
+  const loginAuth = () => {
     const { PAT } = state;
     dispatch({
       type: "LOGIN",
@@ -34,21 +33,42 @@ const Login = () => {
           });
         }
       })
-      .catch((error) => alert("Wrong username............."));
+      .catch((error) => setShowError(true));
   };
   return (
     <>
-      <Form>
-        <Input
-          type="text"
-          size="large"
-          placeholder="Enter username"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Button type="primary" size="large" onClick={login}>
-          Login
-        </Button>
-      </Form>
+      <FormDiv>
+        <Form onFinish={loginAuth}
+        autoComplete="off"
+        >
+          {showError ? <Alert message="Wrong Username..." type="error" /> : null}
+          <Form.Item
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+          >
+            <Input
+              size="large"
+              placeholder="Enter username"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onFocus={()=> {
+                setName("");
+                setShowError(false);
+              }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" size="large" htmlType="submit">
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+      </FormDiv>
     </>
   );
 };

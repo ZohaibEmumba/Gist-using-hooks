@@ -10,6 +10,7 @@ import EditAGist from "./components/editagist/EditAGist";
 import PrivateGists from "./components/privategistslist/PrivateGists";
 import PublicGists from "./components/publicgistslist/PublicGists";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
+import * as R from 'ramda'
 import "./App.css";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
       <GistContext.Provider value={{ state, dispatch }}>
         <div className="ui container">
           <Navbar />
-          {/* {and(tab , 1) => <PublicGists />} */}
+          {/* {R.and(tab , 1) && <PublicGists />} */}
           {tab === 1 && <PublicGists />}
           {tab === 2 && <Login />}
           {tab === 3 && <PrivateGists />}

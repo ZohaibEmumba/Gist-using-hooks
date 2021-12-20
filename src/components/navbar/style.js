@@ -12,6 +12,8 @@ export const Nav = styled.nav`
     background: white;
     color: #5acba1;
     border: 1px solid #5acba1;
+    width: 150px;
+    border-radius: 10px;
     &:hover{
       background: #5acba1;
       border: 1px solid white;

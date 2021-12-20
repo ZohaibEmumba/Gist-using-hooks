@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GistContext } from "../../../context/GistContext";
 import {
-  Card,
+
   Footer,
   Grid,
   ProfileFooter,

@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { GistContext } from "../../../context/GistContext";
 import { checkGistStared } from "../../../utils/fetchAPIs";
-import { Table } from "antd";
-
+import { Col, Table, Row } from "antd";
 import { Section, UserNameSection, Username, Img } from "./style";
+import { StarOutlined, ForkOutlined } from "@ant-design/icons/lib/icons";
 
 const columns = [
   {
@@ -45,6 +45,23 @@ const columns = [
     key: "5",
     title: "Notebok Name",
     dataIndex: "description",
+  },
+  {
+    key: "6",
+    title: "Actions",
+    dataIndex: "",
+    render: () => {
+      return (
+        <Row gutter={[16, 16]}>
+          <Col>
+            <StarOutlined />
+          </Col>
+          <Col>
+            <ForkOutlined />
+          </Col>
+        </Row>
+      );
+    },
   },
 ];
 

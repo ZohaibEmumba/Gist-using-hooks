@@ -12,8 +12,10 @@ export const FormDiv = styled.div`
   
   Input{  
     margin: 20px auto;
+    border-radius: 10px;
     &:hover{
-    border : 1px solid #5acba1
+    border : 1px solid #5acba1;
+
   }
   }
   Button{

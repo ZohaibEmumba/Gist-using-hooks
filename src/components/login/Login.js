@@ -2,12 +2,22 @@ import React, { useContext, useState } from "react";
 import { FormDiv } from "./style";
 import { loginAuthUser } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
-import { Button, Input, Form , Alert} from "antd";
+import { Button, Input, Form , Alert ,notification } from "antd";
 
 const Login = () => {
   const [name, setName] = useState("");
   const { state, dispatch } = useContext(GistContext);
   const [showError, setShowError] = useState(false);
+
+  const openNotification = () => {
+    const args = {
+      message: 'Login',
+      description:
+        'Login Successfully...',
+      duration: 0,
+    };
+    notification.success(args);
+  };
 
   const loginAuth = () => {
     const { PAT } = state;
@@ -24,6 +34,7 @@ const Login = () => {
         if (login === name) {
           localStorage.setItem("authUserName", JSON.stringify(login));
           localStorage.setItem("token", JSON.stringify(PAT));
+          openNotification();
           dispatch({
             type: "VISIBLESCREEN",
             payload: {

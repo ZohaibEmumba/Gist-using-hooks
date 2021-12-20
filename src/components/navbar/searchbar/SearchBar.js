@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
 import { GistContext } from "../../../context/GistContext";
 import { Div } from "./style";
-import { Input } from "antd";
+import { Input , Tooltip} from "antd";
 
 const { Search } = Input;
 
 const SearchBar = () => {
   const [value, setValue] = useState("");
-
   const { dispatch } = useContext(GistContext);
   const searchGists = () => {
     dispatch({
@@ -21,12 +20,14 @@ const SearchBar = () => {
   };
   return (
     <Div>
+     <Tooltip placement="topLeft" title={"Search User"}>
       <Search
         placeholder="Enter search text"
         size="large"
         onChange={(e) => setValue(e.target.value)}
         onSearch={searchGists}
       />
+      </Tooltip>
     </Div>
   );
 };

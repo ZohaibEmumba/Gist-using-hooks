@@ -10,6 +10,7 @@ export const FormDiv = styled.div`
 
   Input {
     margin-top:20px;
+    border-radius: 20px;
   }
   TextArea{
     margin-top:20px;

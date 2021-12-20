@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Input, Button } from "../createagist/style";
+import { FormDiv, Heading } from "../createagist/style";
 import { updateAGist, getGistObj } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
+import { Form, Input, Button } from "antd";
 
 const EditAGist = () => {
   const [gistData, setGistData] = useState("");
-
   const { state, dispatch } = useContext(GistContext);
   const { gistID } = state;
 
@@ -31,16 +31,26 @@ const EditAGist = () => {
 
   return (
     <section>
-      <Form onSubmit={(e) => e.preventDefault()}>
-        <h1 className="create-gist-heading">Update Gist Description</h1>
-        <Input
-          type="text"
-          onChange={(e) => setGistData({ description: e.target.value })}
-          placeholder="Enter gist Discription..."
-          value={gistData?.description}
-        />
-        <Button onClick={() => editGist()}>Save Gist</Button>
-      </Form>
+      <FormDiv>
+        <Form onFinish={editGist}>
+          <Heading className="create-gist-heading">
+            Update Gist Description
+          </Heading>
+          <Form.Item>
+            <Input
+              size="large"
+              onChange={(e) => setGistData({ description: e.target.value })}
+              placeholder="Enter gist Discription..."
+              value={gistData?.description}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button size="large" htmlType="submit">
+              Save Gist
+            </Button>
+          </Form.Item>
+        </Form>
+      </FormDiv>
     </section>
   );
 };

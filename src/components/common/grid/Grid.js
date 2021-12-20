@@ -77,6 +77,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
               </Col>
             ))
           : privateGistsDisplay.map((gist, index) => (
+            <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
               <Grid
                 key={index}
                 onClick={() => {
@@ -112,6 +113,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
                   </Profile>
                 </Footer>
               </Grid>
+              </Col>
             ))}
       </Row>
     </>

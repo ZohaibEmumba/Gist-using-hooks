@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { privateGistsRecord, checkGistStared } from "../../utils/fetchAPIs";
 import TableData from "../common/table/TableData";
 import GridDisplay from "../common/grid/Grid";
@@ -12,13 +12,17 @@ const PrivateGists = () => {
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");
 
+  const LoaderCallback = useMemo(() => {
+    return <Loader />;
+  }, [Loader]);
+
   const TableView = loading ? (
-    <Loader />
+    LoaderCallback
   ) : (
     <TableData privateGistsDisplay={privateGistsList} />
   );
   const GridView = loading ? (
-    <Loader />
+    LoaderCallback
   ) : (
     <GridDisplay privateGistsDisplay={privateGistsList} />
   );
@@ -31,17 +35,17 @@ const PrivateGists = () => {
     });
   }, [privateGistsRecord]);
 
-  const listToggle = () => {
+  const listToggle = useCallback(() => {
     setIsListView(true);
     setIsGridView(false);
     setIsActive("list");
-  };
+  }, [isGridView, isListView, isActive]);
 
-  const gridToggle = () => {
+  const gridToggle = useCallback(() => {
     setIsListView(false);
     setIsGridView(true);
     setIsActive("grid");
-  };
+  }, [isGridView, isListView, isActive]);
 
   useEffect(() => {
     getPrivateGists();

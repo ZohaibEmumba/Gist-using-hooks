@@ -80,7 +80,7 @@ const UniqueGist = () => {
     dispatch({
       type: "VISIBLESCREEN",
       payload: {
-        tab: 9,
+        tab: 3,
         gistID: null,
       },
     });

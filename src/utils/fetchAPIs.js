@@ -2,7 +2,7 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
@@ -61,36 +61,29 @@ export const createAGist = async (data) => {
 };
 
 export const delAGist = async (id) => {
-  let check = window.confirm("Are You sure to want to delete the gist?");
-  if (check) {
-    const delAGist = axios
-      .delete(`${BASE_URL}/gists/${id}`, {
-        headers: {
-          Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
-        },
-      })
-      .then((data) => data.data);
-    return delAGist;
-  } 
-  else {
-    alert("Ok....we haven't deleted the Gist ");
-  }
+  const delAGist = axios
+    .delete(`${BASE_URL}/gists/${id}`, {
+      headers: {
+        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+      },
+    })
+    .then((data) => data.data);
+  return delAGist;
 };
 
 export const updateAGist = async (id, disp) => {
-  const updateGists = await axios
-    .patch(
-      `${BASE_URL}/gists/${id}`,
-      {
-        id: id,
-        description: disp,
+  const updateGists = await axios.patch(
+    `${BASE_URL}/gists/${id}`,
+    {
+      id: id,
+      description: disp,
+    },
+    {
+      headers: {
+        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
-      {
-        headers: {
-          Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
-        },
-      }
-    );
+    }
+  );
   return updateGists;
 };
 export const getGistObj = async (id) => {
@@ -116,12 +109,11 @@ export const getStaredGists = async () => {
 };
 
 export const checkGistStared = async (uniqueId) => {
-  const checkStar = await axios
-    .get(`${BASE_URL}/gists/${uniqueId}/star`, {
-      headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
-      },
-    });
+  const checkStar = await axios.get(`${BASE_URL}/gists/${uniqueId}/star`, {
+    headers: {
+      Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+    },
+  });
   return checkStar;
 };
 
@@ -162,6 +154,7 @@ export const forkedGist = async (gist_id) => {
         },
       }
     )
-    .then((data) => data?.status).catch(err => console.log(err));
+    .then((data) => data?.status)
+    .catch((err) => console.log(err));
   return forkAGist;
 };

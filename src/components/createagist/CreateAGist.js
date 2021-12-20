@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
-import { Form, Input, Select, Button } from "antd";
+import { Form, Input, Select, Button, notification } from "antd";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -25,6 +25,7 @@ const CreateAGist = () => {
       },
     };
     createAGist(gistData);
+    openNotification();
     dispatch({
       type: "VISIBLESCREEN",
       payload: {
@@ -32,6 +33,15 @@ const CreateAGist = () => {
         gistID: null,
       },
     });
+  };
+
+  const openNotification = () => {
+    const args = {
+      message: "Gist Created",
+      description: "Your gist has been created.",
+      duration: 0,
+    };
+    notification.success(args);
   };
 
   return (

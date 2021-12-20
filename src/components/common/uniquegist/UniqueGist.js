@@ -21,15 +21,18 @@ import {
   staredAGist,
   unStaredAGist,
   forkedGist,
-  checkGistStared
+  checkGistStared,
 } from "../../../utils/fetchAPIs";
 import { GistContext } from "../../../context/GistContext";
+import { Modal } from "antd";
+import { ExclamationCircleOutlined , DeleteFilled} from "@ant-design/icons";
+
+const { confirm } = Modal;
 
 const UniqueGist = () => {
   const [uniqueData, setUniqueData] = useState([]);
   const [gistStarValue, setGistStarValue] = useState(0);
   const [gistForkValue, setGistForkValue] = useState(0);
-  const [starValue, setStarValue] = useState(null);
 
   const { state, dispatch } = useContext(GistContext);
   const { tab, gistID } = state;
@@ -56,7 +59,7 @@ const UniqueGist = () => {
   const starThisGist = async () => {
     if (gistStarValue === 0) {
       const star = await staredAGist(gistID)
-        .then((data) => (setGistStarValue(gistStarValue + 1)))
+        .then((data) => setGistStarValue(gistStarValue + 1))
         .catch((err) => err);
     } else {
       const unStar = await unStaredAGist(gistID)
@@ -75,13 +78,29 @@ const UniqueGist = () => {
     }
   };
 
-  const deleteGist = async (id) => {
-    let delGist = await delAGist(id);
-    dispatch({
-      type: "VISIBLESCREEN",
-      payload: {
-        tab: 3,
-        gistID: null,
+  const deleteGist = (id) => {
+    confirm({
+      title: "Do you Want to delete these Gist?",
+      icon: <ExclamationCircleOutlined />,
+      content: "",
+      onOk() { 
+        delAGist(id);
+        dispatch({
+          type: "VISIBLESCREEN",
+          payload: {
+            tab: 3,
+            gistID: null,
+          },
+        });
+      },
+      onCancel() {
+        dispatch({
+          type: "VISIBLESCREEN",
+          payload: {
+            tab: 9,
+            gistID: null,
+          },
+        });
       },
     });
   };
@@ -97,8 +116,8 @@ const UniqueGist = () => {
   };
 
   const checkGist = () => {
-      checkGistStared(gistID).then(data => setGistStarValue(1));
-  }
+    checkGistStared(gistID).then((data) => setGistStarValue(1));
+  };
 
   useEffect(() => {
     getGistData();
@@ -145,12 +164,10 @@ const UniqueGist = () => {
           ) : null}
           <Icon1>
             <Span>
-                <Icon
+              <Icon
                 className={gistStarValue === 0 ? "far fa-star" : "fas fa-star"}
                 onClick={() => starThisGist()}
-              />
-              
-              {" "}
+              />{" "}
               Star
             </Span>
             <SpanValues>{gistStarValue}</SpanValues>

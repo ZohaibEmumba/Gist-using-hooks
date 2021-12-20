@@ -90,7 +90,7 @@ const DropdownMenu = () => {
     </Menu>
   );
   return (
-    <Dropdown overlay={menu} trigger={["click"]}>
+    <Dropdown overlay={menu} trigger={["click"]} >
       <p
         className="ant-dropdown-link"
         onClick={(e) => {

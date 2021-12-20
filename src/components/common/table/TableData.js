@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
 import { GistContext } from "../../../context/GistContext";
-import { checkGistStared } from "../../../utils/fetchAPIs";
 import { Col, Table, Row } from "antd";
 import { Section, UserNameSection, Username, Img } from "./style";
 import { StarOutlined, ForkOutlined } from "@ant-design/icons/lib/icons";
+import { checkGistStared } from "../../../utils/fetchAPIs";
 
 const columns = [
   {
@@ -54,10 +54,10 @@ const columns = [
       return (
         <Row gutter={[16, 16]}>
           <Col>
-            <StarOutlined />
+            <StarOutlined style={{ color: "#5acba1" }} />
           </Col>
           <Col>
-            <ForkOutlined />
+            <ForkOutlined style={{ color: "#5acba1" }} />
           </Col>
         </Row>
       );
@@ -66,12 +66,7 @@ const columns = [
 ];
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
-  const date = new Date("2021-01-09T14:56:23");
   const { dispatch } = useContext(GistContext);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize: 10,
-  });
 
   const showUniqueGistRecord = (id) => {
     dispatch({
@@ -95,9 +90,11 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
       <Section>
         <Table
           rowKey={(record) => record?.id}
-          columns={columns}
+          columns={[...columns]}
           dataSource={
-            publicGistsDisplay ? publicGistsDisplay : privateGistsDisplay
+            publicGistsDisplay
+              ? [...publicGistsDisplay]
+              : [...privateGistsDisplay]
           }
           rowSelection
           onRow={(record, rowIndex) => {

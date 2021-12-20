@@ -17,15 +17,16 @@ export const Grid = styled.section`
   padding: 20px 20px;
   border-radius: 15px;
   box-shadow: 0px 5px 18px #c9c7c7;
-  transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
-  overflow : hidden;
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
+    0.3s box-shadow,
+    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
+  overflow: hidden;
 
-  &:hover{
+  &:hover {
     transform: scale(1.01);
-  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
-  cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
   }
-
 `;
 
 export const Footer = styled.div`
@@ -37,7 +38,6 @@ export const Profile = styled.div`
   justify-content: center;
   align-items: center;
   align-self: center;
-  
 `;
 
 export const ProfileFooter = styled.span`
@@ -57,6 +57,6 @@ export const ProfilePic = styled.img`
 `;
 
 export const Span1 = styled.span`
-  fontweight: "700";
-  marginright: "10px";
+  font-weight: 900;
+  margin-right: 10px;
 `;

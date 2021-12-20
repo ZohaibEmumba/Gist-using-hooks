@@ -9,17 +9,14 @@ export const FormDiv = styled.div`
   padding: 100px 100px 100px 100px;
 
   Input {
-    margin-top:20px;
-    border-radius: 20px;
+    border-radius: 10px;
   }
   TextArea{
-    margin-top:20px;
-    margin-bottom:20px;
+    border-radius: 10px;
   }
   Button{
     background : #5acba1;
     border: none;
-    margin-top:20px;
     width:100%;
     color:white;
     &:hover{

@@ -114,6 +114,6 @@ export const Img = styled.img`
 `
 
 export const Span1 = styled.span`
-     fontWeight: "700";
-     marginRight: "10px";
+     font-Weight: "700";
+     margin-Right: "10px";
 `

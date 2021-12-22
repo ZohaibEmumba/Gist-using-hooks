@@ -23,4 +23,8 @@ export const Div = styled.div`
   }
 `;
 
+export const SpanBorder = styled.span`
+   border : 1px solid #5acba1 ;
+`
+
 

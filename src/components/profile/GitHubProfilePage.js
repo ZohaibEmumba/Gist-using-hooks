@@ -1,4 +1,3 @@
-import { Avatar } from "antd";
 import React, { useState, useEffect, useContext } from "react";
 import {
   loginAuthUser,
@@ -26,27 +25,26 @@ import {
   Img,
   Span1,
 } from "./style";
-import { Span, SpanValues, Icon } from "../common/uniquegist/style";
+import { Span, SpanValues, Icon } from "../uniquegist/style";
 import { GistContext } from "../../context/GistContext";
 
 const GitHubProfilePage = () => {
   const [authUserRecord, setAuthUserRecord] = useState();
   const [gists, setGists] = useState("");
   const [gistStarValue, setGistStarValue] = useState(0);
+  const userName = "Zohaibkhattak15";
+  const starType = gistStarValue === 0 ? "far fa-star" : "fas fa-star";
 
   const { state, dispatch } = useContext(GistContext);
   const { tab, gistID } = state;
 
   const getLoginData = async () => {
-    const userName = "Zohaibkhattak15";
-    let authData = await loginAuthUser(userName).then((data) =>
-      setAuthUserRecord(data)
-    );
+    let authResp = await loginAuthUser(userName);
+    setAuthUserRecord(authResp);
   };
   const getGists = async () => {
-    const getAuthGists = await privateGistsRecord().then((data) =>
-      setGists(data)
-    );
+    const getAuthGistsResp = await privateGistsRecord();
+    setGists(getAuthGistsResp);
   };
 
   const { files } = gists;
@@ -113,9 +111,9 @@ const GitHubProfilePage = () => {
                         <h4>
                           {item?.owner?.login}/{Object.keys(item?.files)[0]}
                         </h4>
-                        <span>Created 7 housrs Ago</span>
+                        <span>{item?.updated_at}</span>
                         <br />
-                        <span> Broadcast Server</span>
+                        <span></span>
                       </span>
                     </div>
                   </ProfileCol>
@@ -123,11 +121,9 @@ const GitHubProfilePage = () => {
                     <Icon1>
                       <Span>
                         <Icon
-                          className={
-                            gistStarValue === 0 ? "far fa-star" : "fas fa-star"
-                          }
+                          className={starType}
                           onClick={() => starThisGist()}
-                        />{" "}
+                        />
                         Star
                       </Span>
                       <SpanValues>0</SpanValues>
@@ -144,20 +140,16 @@ const GitHubProfilePage = () => {
                 <ContentBody>
                   <CardBody>
                     <i className="fas fa-code"></i>
-                    <span>
-                      {" "}
-                      {"  "} {Object.keys(item?.files)[0]}
-                    </span>
+                    <span>{Object.keys(item?.files)[0]}</span>
                   </CardBody>
                   <CardBodyContent>
-                    {myContentArray !== undefined
+                    {myContentArray
                       ? myContentArray?.map((content, index) => {
                           return (
                             <span>
-                              {" "}
                               <p>
                                 <Span1>{++index}</Span1> {content}
-                              </p>{" "}
+                              </p>
                             </span>
                           );
                         })

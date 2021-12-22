@@ -33,10 +33,9 @@ const SearchGists = () => {
 
   const getFilterData = () => {
     setLoading(true)
-    searchRecords(searchValue).then((data) => {
+   const resp = searchRecords(searchValue)
       setLoading(false);
-      setSearchRecordsData(data);
-    });
+      setSearchRecordsData(resp);
   };
 
   useEffect(() => {

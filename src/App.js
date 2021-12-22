@@ -3,14 +3,14 @@ import Navbar from "./components/navbar/Navbar";
 import Login from "./components/login/Login";
 import StaredGists from "./components/stargists/StarGists";
 import CreateAGist from "./components/createagist/CreateAGist";
-import GitHubProfilePage from "./components/githubprofilepage/GitHubProfilePage";
-import UniqueGist from "./components/common/uniquegist/UniqueGist";
+import GitHubProfilePage from "./components/profile/GitHubProfilePage";
+import UniqueGist from "./components/uniquegist/UniqueGist";
 import SearchGists from "./components/searchusergists/SearchGists";
 import EditAGist from "./components/editagist/EditAGist";
 import PrivateGists from "./components/privategistslist/PrivateGists";
 import PublicGists from "./components/publicgistslist/PublicGists";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
-import * as R from 'ramda'
+import * as R from "ramda";
 import "./App.css";
 
 const App = () => {

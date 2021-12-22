@@ -14,7 +14,6 @@ const Navbar = () => {
       <Col span={24}>
         <Nav>
           <Imgdiv>
-            {" "}
             <img
               src={Logo}
               alt="Emumba"
@@ -29,7 +28,7 @@ const Navbar = () => {
                   },
                 })
               }
-            />{" "}
+            />
           </Imgdiv>
           <SearchDiv>
             <SearchBar />

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { GistIcons, Icon1 } from "../../githubprofilepage/style";
+import { GistIcons, Icon1 } from "../profile/style";
 
 import {
   Div,
@@ -22,8 +22,8 @@ import {
   unStaredAGist,
   forkedGist,
   checkGistStared,
-} from "../../../utils/fetchAPIs";
-import { GistContext } from "../../../context/GistContext";
+} from "../../utils/fetchAPIs";
+import { GistContext } from "../../context/GistContext";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined , DeleteFilled} from "@ant-design/icons";
 

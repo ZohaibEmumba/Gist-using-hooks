@@ -39,8 +39,8 @@ const EditAGist = () => {
           <Form.Item>
             <Input
               size="large"
-              onChange={(e) => setGistData({ description: e.target.value })}
               placeholder="Enter gist Discription..."
+              onChange={(e) => setGistData({ description: e.target.value })}
               value={gistData?.description}
             />
           </Form.Item>

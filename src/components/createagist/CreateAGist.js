@@ -2,7 +2,9 @@ import React, { useState, useContext } from "react";
 import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
-import { Form, Input, Select, Button, notification } from "antd";
+import { Form, Input, Select, Button } from "antd";
+import { openNotification } from "../../utils/createGistUtilis";
+import * as R from "ramda";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -35,25 +37,26 @@ const CreateAGist = () => {
     });
   };
 
-  const openNotification = () => {
-    const args = {
-      message: "Gist Created",
-      description: "Your gist has been created.",
-      duration: 0,
-    };
-    notification.success(args);
+  const getStatus = (value) => {
+    if (value === "public") {
+      setPrivacy(false);
+    } else if (value === "private") {
+      setPrivacy(true);
+    } else {
+      return privacy;
+    }
   };
 
   return (
     <FormDiv>
       <Form onFinish={creatGist} autoComplete="off">
-        <Heading className="create-gist-heading">Create A Gist</Heading>
+        <Heading>Create A Gist</Heading>
         <Form.Item
           name="description"
           rules={[
             {
               required: true,
-              message: "Please input your description!",
+              message: `Please input your name!`,
             },
           ]}
         >
@@ -96,18 +99,7 @@ const CreateAGist = () => {
           />
         </Form.Item>
         <Form.Item>
-          <Select
-            size="large"
-            onChange={(value) => {
-              if (value === "public") {
-                setPrivacy(false);
-              } else if (value === "private") {
-                setPrivacy(true);
-              } else {
-                return privacy;
-              }
-            }}
-          >
+          <Select size="large" onChange={(value) => getStatus(value)}>
             <Option value=""> </Option>
             <Option value="public"> Public</Option>
             <Option value="private">Private</Option>

@@ -25,7 +25,8 @@ import {
 } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Modal } from "antd";
-import { ExclamationCircleOutlined , DeleteFilled} from "@ant-design/icons";
+import { ExclamationCircleOutlined, DeleteFilled } from "@ant-design/icons";
+import { UserName } from "../../constants/Constants";
 
 const { confirm } = Modal;
 
@@ -51,10 +52,11 @@ const UniqueGist = () => {
   }
 
   const getGistData = async () => {
-    const getGistObj = await getPublicGist(gistID).then((data) => {
-      setUniqueData(data);
-    });
+    const resp = await getPublicGist(gistID);
+    setUniqueData(resp);
   };
+
+  const { owner } = uniqueData;
 
   const starThisGist = async () => {
     if (gistStarValue === 0) {
@@ -83,7 +85,7 @@ const UniqueGist = () => {
       title: "Do you Want to delete these Gist?",
       icon: <ExclamationCircleOutlined />,
       content: "",
-      onOk() { 
+      onOk() {
         delAGist(id);
         dispatch({
           type: "VISIBLESCREEN",
@@ -119,6 +121,43 @@ const UniqueGist = () => {
     checkGistStared(gistID).then((data) => setGistStarValue(1));
   };
 
+  let dispDelandUpdIcons =
+    owner?.login === UserName ? (
+      <>
+        <Span>
+          <Icon
+            className="far fa-edit"
+            onClick={() => updateGist(uniqueData?.id)}
+          />
+          Edit
+        </Span>
+        <Span>
+          <Icon
+            className="far fa-trash-alt"
+            onClick={() => deleteGist(uniqueData?.id)}
+          />
+          Delete
+        </Span>
+      </>
+    ) : null;
+  const UserFileContent =
+    myContentArray !== undefined
+      ? myContentArray?.map((content, index) => {
+          return (
+            <span key={index}>
+              {" "}
+              <p>
+                <span style={{ fontWeight: "700", marginRight: "10px" }}>
+                  {++index}
+                </span>{" "}
+                {content}{" "}
+              </p>{" "}
+            </span>
+          );
+        })
+      : "No Content There.......";
+  const starClass = gistStarValue === 0 ? "far fa-star" : "fas fa-star";
+
   useEffect(() => {
     getGistData();
     checkGist();
@@ -129,45 +168,24 @@ const UniqueGist = () => {
       <Section>
         <Profile>
           <div>
-            <ProfileImage src={uniqueData?.owner?.avatar_url} alt="profile" />
+            <ProfileImage src={owner?.avatar_url} alt="profile" />
           </div>
           <div>
             <span>
               <Heading>
-                {uniqueData?.owner?.login}/{filename}{" "}
+                {owner?.login}/{filename}{" "}
               </Heading>
-              <span>Created 7 housrs Ago</span>
+              <span>{uniqueData?.created_at}</span>
               <br />
-              <span> Broadcast Server</span>
             </span>
           </div>
         </Profile>
 
         <GistIcons>
-          {uniqueData?.owner?.login === "Zohaibkhattak15" ? (
-            <>
-              <Span>
-                <Icon
-                  className="far fa-edit"
-                  onClick={() => updateGist(uniqueData?.id)}
-                />{" "}
-                Edit
-              </Span>
-              <Span>
-                <Icon
-                  className="far fa-trash-alt"
-                  onClick={() => deleteGist(uniqueData?.id)}
-                />{" "}
-                Delete
-              </Span>
-            </>
-          ) : null}
+          {dispDelandUpdIcons}
           <Icon1>
             <Span>
-              <Icon
-                className={gistStarValue === 0 ? "far fa-star" : "fas fa-star"}
-                onClick={() => starThisGist()}
-              />{" "}
+              <Icon className={starClass} onClick={() => starThisGist()} />
               Star
             </Span>
             <SpanValues>{gistStarValue}</SpanValues>
@@ -187,27 +205,9 @@ const UniqueGist = () => {
       <ContentBody>
         <CardBody>
           <Icon className="fas fa-code" />
-          <Filename>
-            {"  "} {filename}{" "}
-          </Filename>
+          <Filename>{filename}</Filename>
         </CardBody>
-        <CardBodyContent>
-          {myContentArray !== undefined
-            ? myContentArray?.map((content, index) => {
-                return (
-                  <span key={index}>
-                    {" "}
-                    <p>
-                      <span style={{ fontWeight: "700", marginRight: "10px" }}>
-                        {++index}
-                      </span>{" "}
-                      {content}{" "}
-                    </p>{" "}
-                  </span>
-                );
-              })
-            : "No Content There......."}
-        </CardBodyContent>
+        <CardBodyContent>{UserFileContent}</CardBodyContent>
       </ContentBody>
     </Div>
   );

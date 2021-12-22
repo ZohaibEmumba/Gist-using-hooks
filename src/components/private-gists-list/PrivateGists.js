@@ -3,7 +3,7 @@ import { privateGistsRecord, checkGistStared } from "../../utils/fetchAPIs";
 import TableData from "../common/table/TableData";
 import GridDisplay from "../common/grid/Grid";
 import Loader from "../common/spinner/Spinner";
-import { Section, Div } from "../publicgistslist/style";
+import { Section, Div, SpanBorder } from "../public-gists-list/style";
 
 const PrivateGists = () => {
   const [loading, setLoading] = useState(false);
@@ -12,27 +12,18 @@ const PrivateGists = () => {
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");
 
-  const LoaderCallback = useMemo(() => {
+  const LoaderCallback = useCallback(() => {
     return <Loader />;
   }, [Loader]);
 
-  const TableView = loading ? (
-    LoaderCallback
-  ) : (
-    <TableData privateGistsDisplay={privateGistsList} />
-  );
-  const GridView = loading ? (
-    LoaderCallback
-  ) : (
-    <GridDisplay privateGistsDisplay={privateGistsList} />
-  );
+  const TableView = loading ? (LoaderCallback) : (<TableData privateGistsDisplay={privateGistsList} />);
+  const GridView = loading ? (LoaderCallback) : (<GridDisplay privateGistsDisplay={privateGistsList} />);
 
   const getPrivateGists = useCallback(async () => {
     setLoading(true);
-    let val = await privateGistsRecord().then((data) => {
+    const resp = await privateGistsRecord();     
       setLoading(false);
-      setPrivateGistsList(data);
-    });
+      setPrivateGistsList(resp); 
   }, [privateGistsRecord]);
 
   const listToggle = useCallback(() => {
@@ -47,6 +38,10 @@ const PrivateGists = () => {
     setIsActive("grid");
   }, [isGridView, isListView, isActive]);
 
+  const listView = isActive === "list"  ? "fas fa-list fa-2x list-active"     : "fas fa-list fa-2x";
+  const gridView = isActive === "grid"  ? "fas fa-th-large fa-2x grid-active" : "fas fa-th-large fa-2x";
+  const views = isListView === true && isGridView === false ? TableView : GridView;
+
   useEffect(() => {
     getPrivateGists();
   }, []);
@@ -55,28 +50,14 @@ const PrivateGists = () => {
     <Section>
       <Div>
         <span>
-          <i
-            className={
-              isActive === "list"
-                ? "fas fa-list fa-2x list-active"
-                : "fas fa-list fa-2x"
-            }
-            onClick={() => listToggle()}
-          ></i>
+          <i className={listView} onClick={() => listToggle()} />
         </span>
-        <span style={{ border: "1px solid #5acba1" }}></span>
+        <SpanBorder></SpanBorder>
         <span>
-          <i
-            className={
-              isActive === "grid"
-                ? "fas fa-th-large fa-2x grid-active"
-                : "fas fa-th-large fa-2x"
-            }
-            onClick={() => gridToggle()}
-          ></i>
+          <i className={gridView} onClick={() => gridToggle()} />
         </span>
       </Div>
-      {isListView === true && isGridView === false ? TableView : GridView}
+      {views}
     </Section>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FormDiv, Heading } from "../createagist/style";
+import { FormDiv, Heading } from "../create-gist-form/style";
 import { updateAGist, getGistObj } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Form, Input, Button } from "antd";
@@ -22,7 +22,8 @@ const EditAGist = () => {
   };
 
   const getAGist = async () => {
-    let gistOBJ = await getGistObj(gistID).then((data) => setGistData(data));
+    const resp = await getGistObj(gistID);
+    setGistData(resp);
   };
 
   useEffect(() => {

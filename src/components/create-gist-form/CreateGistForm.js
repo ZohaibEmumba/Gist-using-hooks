@@ -108,8 +108,7 @@ const CreateAGist = () => {
 
         <Form.Item>
           <Button size="large" htmlType="submit">
-            {" "}
-            Create Gist{" "}
+            Create Gist
           </Button>
         </Form.Item>
       </Form>

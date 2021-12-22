@@ -4,11 +4,7 @@ import React, { useState, useEffect, useContext, useCallback } from "react";
 import { GistContext } from "../../context/GistContext";
 import { getStaredGists } from "../../utils/fetchAPIs";
 import Loader from "../common/spinner/Spinner";
-import {
-  UserNameSection,
-  Img,
-  Username,
-} from "../common/table/style";
+import { UserNameSection, Img, Username } from "../common/table/style";
 import { Section } from "./style";
 
 const columns = [
@@ -72,11 +68,11 @@ const StaredGists = () => {
 
   const getStared = useCallback(async () => {
     setLoading(true);
-    let val = await getStaredGists().then((data) => {
-      setStaredGists(data);
-      setLoading(false);
-    });
+    let resp = await getStaredGists();
+    setStaredGists(resp);
+    setLoading(false);
   }, [getStaredGists]);
+
   const showUniqueGistRecord = (id) => {
     dispatch({
       type: "VISIBLESCREEN",
@@ -93,25 +89,21 @@ const StaredGists = () => {
 
   return (
     <>
-      {loading ? (
+      {loading ? 
         <Loader />
-      ) : (
+       : 
         <Section>
           <Table
             rowKey={(record) => record?.id}
             columns={columns}
-            dataSource={staredGists}
+            dataSource={[...staredGists]}
             rowSelection
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: () => {
-                  showUniqueGistRecord(record?.id);
-                },
-              };
+            onRow={(record) => {
+              return { onClick: () => showUniqueGistRecord(record?.id) };
             }}
           />
         </Section>
-      )}
+      }
     </>
   );
 };

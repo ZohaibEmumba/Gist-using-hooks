@@ -1,14 +1,16 @@
 import React, { useReducer } from "react";
 import Navbar from "./components/navbar/Navbar";
-import Login from "./components/login/Login";
-import StaredGists from "./components/stargists/StarGists";
-import CreateAGist from "./components/createagist/CreateAGist";
-import GitHubProfilePage from "./components/profile/GitHubProfilePage";
-import UniqueGist from "./components/uniquegist/UniqueGist";
-import SearchGists from "./components/searchusergists/SearchGists";
-import EditAGist from "./components/editagist/EditAGist";
-import PrivateGists from "./components/privategistslist/PrivateGists";
-import PublicGists from "./components/publicgistslist/PublicGists";
+import CreateGistForm from "./pages/CreateGistScreen";
+import LoginScreen from "./pages/LoginScreen";
+import EdistGistScreen from "./pages/EdistGistScreen";
+import StarGistScreen from "./pages/StarGistScreen";
+import UniqueGistScreen from "./pages/UniqueGistScreen";
+import GistProfileScreen from "./pages/GistProfileScreen";
+
+
+import SearchGists from "./components/search-user-gists/SearchGists";
+import PrivateGists from "./components/private-gists-list/PrivateGists";
+import PublicGists from "./components/public-gists-list/PublicGists";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
 import * as R from "ramda";
 import "./App.css";
@@ -22,17 +24,16 @@ const App = () => {
       <GistContext.Provider value={{ state, dispatch }}>
         <div className="ui container">
           <Navbar />
-          {/* {R.and(tab , 1) && <PublicGists />} */}
           {tab === 1 && <PublicGists />}
-          {tab === 2 && <Login />}
+          {tab === 2 && <LoginScreen />}
           {tab === 3 && <PrivateGists />}
-          {tab === 5 && <StaredGists />}
-          {tab === 6 && <CreateAGist />}
-          {tab === 7 && <GitHubProfilePage />}
+          {tab === 5 && <StarGistScreen />}
+          {tab === 6 && <CreateGistForm />}
+          {tab === 7 && <GistProfileScreen />}
           {tab === 8 && <PublicGists />}
-          {tab === 9 && <UniqueGist />}
+          {tab === 9 && <UniqueGistScreen />}
           {tab === 10 && <SearchGists />}
-          {tab === 11 && <EditAGist />}
+          {tab === 11 && <EdistGistScreen />}
         </div>
       </GistContext.Provider>
     </>

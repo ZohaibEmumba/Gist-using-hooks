@@ -69,5 +69,5 @@ export const SpanValues = styled.span`
 `;
 
 export const Icon = styled.i` 
-cursor: pointer;
+  cursor: pointer;
 `

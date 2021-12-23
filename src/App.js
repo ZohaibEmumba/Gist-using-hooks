@@ -6,32 +6,50 @@ import EdistGistScreen from "./pages/EdistGistScreen";
 import StarGistScreen from "./pages/StarGistScreen";
 import UniqueGistScreen from "./pages/UniqueGistScreen";
 import GistProfileScreen from "./pages/GistProfileScreen";
-
-
-import PrivateGists from "./components/private-gists-list/PrivateGists";
-import PublicGists from "./components/public-gists-list/PublicGists";
+import ListPrivateGistsScreen from "./pages/ListPrivateGistsScreen";
+import SearchGistScreen from "./pages/SearchGistScreen";
+import ListsPublicGistScreen from "./pages/ListsPublicGistScreen";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
 import "./App.css";
-import SearchGistScreen from "./pages/SearchGistScreen";
 
 const App = () => {
   const [state, dispatch] = useReducer(GistReducer, initialState);
   const { tab } = state;
+
+  const displayScreenTabs = (() => {
+            
+    switch (tab) {
+      case 1:
+        return <ListsPublicGistScreen />;
+      case 2:
+        return <LoginScreen />;
+      case 3:
+        return <ListPrivateGistsScreen />;
+      case 5:
+        return <StarGistScreen />;
+      case 6:
+        return <CreateGistForm />;
+      case 7:
+        return <GistProfileScreen />;
+      case 8:
+        return <ListsPublicGistScreen />;
+      case 9:
+        return <UniqueGistScreen />;
+      case 10:
+        return <SearchGistScreen />;
+      case 11:
+        return<EdistGistScreen />;
+      default:
+        return <ListsPublicGistScreen />;
+    }
+  })();
+
   return (
     <>
       <GistContext.Provider value={{ state, dispatch }}>
         <div className="ui container">
           <Navbar />
-          {tab === 1 && <PublicGists />}
-          {tab === 2 && <LoginScreen />}
-          {tab === 3 && <PrivateGists />}
-          {tab === 5 && <StarGistScreen />}
-          {tab === 6 && <CreateGistForm />}
-          {tab === 7 && <GistProfileScreen />}
-          {tab === 8 && <PublicGists />}
-          {tab === 9 && <UniqueGistScreen />}
-          {tab === 10 && <SearchGistScreen />}
-          {tab === 11 && <EdistGistScreen />}
+          {displayScreenTabs}
         </div>
       </GistContext.Provider>
     </>

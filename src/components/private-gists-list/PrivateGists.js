@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { privateGistsRecord, checkGistStared } from "../../utils/fetchAPIs";
+import { privateGistsRecord } from "../../utils/fetchAPIs";
 import TableData from "../common/table/TableData";
 import GridDisplay from "../common/grid/Grid";
 import Loader from "../common/spinner/Spinner";
 import { Section, Div, SpanBorder } from "../public-gists-list/style";
+import * as R from "ramda";
 
 const PrivateGists = () => {
   const [loading, setLoading] = useState(false);
@@ -12,12 +13,8 @@ const PrivateGists = () => {
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");
 
-  const LoaderCallback = useCallback(() => {
-    return <Loader />;
-  }, [Loader]);
-
-  const TableView = loading ? (LoaderCallback) : (<TableData privateGistsDisplay={privateGistsList} />);
-  const GridView = loading ? (LoaderCallback) : (<GridDisplay privateGistsDisplay={privateGistsList} />);
+  const TableView = loading ? <Loader /> : <TableData privateGistsDisplay={privateGistsList} />;
+  const GridView = loading ? <Loader /> : <GridDisplay privateGistsDisplay={privateGistsList} />;
 
   const getPrivateGists = useCallback(async () => {
     setLoading(true);

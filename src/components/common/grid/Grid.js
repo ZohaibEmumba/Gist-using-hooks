@@ -12,6 +12,7 @@ import { Row, Col } from "antd";
 
 const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const { dispatch } = useContext(GistContext);
+  
   let publicFiles;
   let privateFiles;
   if (publicGistsDisplay) {
@@ -22,7 +23,30 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
     privateFiles = privateGistsDisplay.map(
       (files) => Object.keys(files.files)[0]
     );
+  const dispPrivateFiles = 
+  privateFiles &&
+    privateFiles?.map((content, index) => {
+      return (
+        <span key={index}>
+          {" "}
+          <p>
+            <Span1>{++index}</Span1> {content}{" "}
+          </p>{" "}
+        </span>
+      );
+    });
 
+    const dispPublicFiles = publicFiles &&
+      publicFiles?.map((content, index) => {
+        return (
+          <span key={index}>
+            <p>
+              <Span1>{++index}</Span1> {content}
+            </p>
+          </span>
+        );
+      });
+  
   const showUniqueGistRecord = (id) => {
     dispatch({
       type: "VISIBLESCREEN",
@@ -40,35 +64,22 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
           ? publicGistsDisplay.map((gist, index) => (
               <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
                 <Grid
-                  onClick={() => {
-                    showUniqueGistRecord(gist?.id);
-                  }}
+                  onClick={() => showUniqueGistRecord(gist?.id)}
                 >
                   <div>
-                    {publicFiles &&
-                      publicFiles?.map((content, index) => {
-                        return (
-                          <span key={index}>
-                            {" "}
-                            <p>
-                              <Span1>{++index}</Span1> {content}{" "}
-                            </p>{" "}
-                          </span>
-                        );
-                      })}
+                    {dispPublicFiles}
                   </div>
                   <Footer>
                     <div>
-                      <ProfilePic src={gist.owner.avatar_url} alt="profile" />
+                      <ProfilePic src={gist?.owner?.avatar_url} alt="profile" />
                     </div>
                     <Profile>
                       <ProfileFooter>
                         <h4>
-                          {gist.owner.login} / {Object.keys(gist.files)[0]}{" "}
+                          {gist?.owner?.login} / {Object.keys(gist?.files)[0]}{" "}
                         </h4>
-                        <span>Created 7 housrs Ago</span>
+                        <span>{gist?.created_at}</span>
                         <br />
-                        <span> Broadcast Server</span>
                       </ProfileFooter>
                     </Profile>
                   </Footer>
@@ -79,35 +90,22 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
             <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
               <Grid
                 key={index}
-                onClick={() => {
-                  showUniqueGistRecord(gist?.id);
-                }}
+                onClick={() => showUniqueGistRecord(gist?.id)}
               >
                 <div>
-                  {privateFiles &&
-                    privateFiles?.map((content, index) => {
-                      return (
-                        <span key={index}>
-                          {" "}
-                          <p>
-                            <Span1>{++index}</Span1> {content}{" "}
-                          </p>{" "}
-                        </span>
-                      );
-                    })}
+                {dispPrivateFiles}
                 </div>
                 <Footer>
                   <div>
-                    <ProfilePic src={gist.owner.avatar_url} alt="profile" />
+                    <ProfilePic src={gist?.owner?.avatar_url} alt="profile" />
                   </div>
                   <Profile>
                     <ProfileFooter>
                       <h4>
-                        {gist.owner.login} / {Object.keys(gist.files)[0]}{" "}
+                        {gist?.owner?.login} / {Object.keys(gist.files)[0]}{" "}
                       </h4>
-                      <span>Created 7 housrs Ago</span>
+                      <span>{gist?.created_at}</span>
                       <br />
-                      <span> Broadcast Server</span>
                     </ProfileFooter>
                   </Profile>
                 </Footer>

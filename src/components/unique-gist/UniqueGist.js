@@ -26,7 +26,7 @@ import {
 import { GistContext } from "../../context/GistContext";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined, DeleteFilled } from "@ant-design/icons";
-import { UserName } from "../../constants/Constants";
+import { NoContent, UserName } from "../../constants/Constants";
 
 const { confirm } = Modal;
 
@@ -155,7 +155,7 @@ const UniqueGist = () => {
             </span>
           );
         })
-      : "No Content There.......";
+      : NoContent;
   const starClass = gistStarValue === 0 ? "far fa-star" : "fas fa-star";
 
   useEffect(() => {

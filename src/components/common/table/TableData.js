@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext , useCallback} from "react";
 import { GistContext } from "../../../context/GistContext";
 import { Col, Table, Row } from "antd";
 import { Section, UserNameSection, Username, Img } from "./style";
@@ -66,17 +66,23 @@ const columns = [
 ];
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
-  const { dispatch } = useContext(GistContext);
 
-  const showUniqueGistRecord = (id) => {
-    dispatch({
-      type: "VISIBLESCREEN",
-      payload: {
-        tab: 9,
-        gistID: id,
-      },
-    });
-  };
+  const { dispatch } = useContext(GistContext);
+  const dataSource = publicGistsDisplay ? [...publicGistsDisplay] : [...privateGistsDisplay];
+
+
+  const showUniqueGistRecord = useCallback(
+    (id) => {
+      dispatch({
+        type: "VISIBLESCREEN",
+        payload: {
+          tab: 9,
+          gistID: id,
+        },
+      });
+    },
+    [dispatch],
+  );
 
   // const checkStarGist = async (id) => {
   //   let value = await checkGistStared(id)
@@ -91,13 +97,9 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
         <Table
           rowKey={(record) => record?.id}
           columns={[...columns]}
-          dataSource={
-            publicGistsDisplay
-              ? [...publicGistsDisplay]
-              : [...privateGistsDisplay]
-          }
+          dataSource={dataSource}
           rowSelection
-          onRow={(record, rowIndex) => {
+          onRow={(record) => {
             return {
               onClick: () => {
                 showUniqueGistRecord(record?.id);

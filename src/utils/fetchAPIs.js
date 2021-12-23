@@ -2,20 +2,20 @@ import axios from "axios";
 
 //auth user API loginng in
 const BASE_URL = "https://api.github.com";
-const PAT = "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";
+const PAT = "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";
 const userName = "Zohaibkhattak15";
 
 export const loginAuthUser = async (userName) => {
   const authUserRecord = await axios
     .get(`${BASE_URL}/users/${userName}`)
-    .then((data) => data?.data);
+    .then((resp) => resp?.data);
   return authUserRecord;
 };
 
 export const publicGistsRecord = async () => {
   const publicGistsRecords = await axios
     .get(`${BASE_URL}/gists`)
-    .then((data) => data?.data);
+    .then((resp) => resp?.data);
   return publicGistsRecords;
 };
 
@@ -24,7 +24,7 @@ export const getPublicGist = async (id) => {
     .get(`${BASE_URL}/gists/${id}`, {
       id: id,
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return getPublicGistObj;
 };
 
@@ -35,7 +35,7 @@ export const privateGistsRecord = async () => {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return privateGistsRecord;
 };
 
@@ -56,7 +56,7 @@ export const createAGist = async (data) => {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return createGist;
 };
 
@@ -67,7 +67,7 @@ export const delAGist = async (id) => {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return delAGist;
 };
 
@@ -93,7 +93,7 @@ export const getGistObj = async (id) => {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return getGists;
 };
 
@@ -104,7 +104,7 @@ export const getStaredGists = async () => {
         Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
       },
     })
-    .then((data) => data.data);
+    .then((resp) => resp.data);
   return getStaredGists;
 };
 
@@ -154,7 +154,7 @@ export const forkedGist = async (gist_id) => {
         },
       }
     )
-    .then((data) => data?.status)
+    .then((resp) => resp?.status)
     .catch((err) => console.log(err));
   return forkAGist;
 };

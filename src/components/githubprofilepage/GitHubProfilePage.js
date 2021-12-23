@@ -2,9 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   loginAuthUser,
   privateGistsRecord,
-  checkGistStared,
-  staredAGist,
-  unStaredAGist,
 } from "../../utils/fetchAPIs";
 import {
   Section,
@@ -26,27 +23,19 @@ import {
   Span1,
 } from "./style";
 import { Span, SpanValues, Icon } from "../unique-gist/style";
-import { GistContext } from "../../context/GistContext";
+import { UserName, NoContent } from "../../constants/Constants";
 
 const GitHubProfilePage = () => {
   const [authUserRecord, setAuthUserRecord] = useState();
   const [gists, setGists] = useState("");
-  const [gistStarValue, setGistStarValue] = useState(0);
-  const userName = "Zohaibkhattak15";
-  const starType = gistStarValue === 0 ? "far fa-star" : "fas fa-star";
-
-  const { state, dispatch } = useContext(GistContext);
-  const { tab, gistID } = state;
 
   const getLoginData = async () => {
-    let authData = await loginAuthUser(userName).then((data) =>
-      setAuthUserRecord(data)
-    );
+    let authData = await loginAuthUser(UserName);
+    setAuthUserRecord(authData);
   };
   const getGists = async () => {
-    const getAuthGists = await privateGistsRecord().then((data) =>
-      setGists(data)
-    );
+    const resp = await privateGistsRecord();
+    setGists(resp);
   };
 
   const { files } = gists;
@@ -62,21 +51,17 @@ const GitHubProfilePage = () => {
     myContentArray = content.split("\n");
   }
 
-  const starThisGist = async () => {
-    if (gistStarValue === 0) {
-      const star = await staredAGist(gistID)
-        .then((data) => setGistStarValue(gistStarValue + 1))
-        .catch((err) => err);
-    } else {
-      const unStar = await unStaredAGist(gistID)
-        .then((data) => setGistStarValue(gistStarValue - 1))
-        .catch((err) => err);
-    }
-  };
-
-  const checkGist = () => {
-    checkGistStared(gistID).then((data) => setGistStarValue(1));
-  };
+  const UserBodyContent = myContentArray
+    ? myContentArray?.map((content, index) => {
+        return (
+          <span>
+            <p>
+              <Span1>{++index}</Span1> {content}
+            </p>
+          </span>
+        );
+      })
+    : NoContent;
 
   useEffect(() => {
     getLoginData();
@@ -113,19 +98,15 @@ const GitHubProfilePage = () => {
                         <h4>
                           {item?.owner?.login}/{Object.keys(item?.files)[0]}
                         </h4>
-                        <span>Created 7 housrs Ago</span>
+                        <span>{item?.created_at}</span>
                         <br />
-                        <span> Broadcast Server</span>
                       </span>
                     </div>
                   </ProfileCol>
                   <GistIcons>
                     <Icon1>
                       <Span>
-                        <Icon
-                          className={starType}
-                          onClick={() => starThisGist()}
-                        />
+                        <Icon className={starType} />
                         Star
                       </Span>
                       <SpanValues>0</SpanValues>
@@ -141,22 +122,10 @@ const GitHubProfilePage = () => {
 
                 <ContentBody>
                   <CardBody>
-                    <i className="fas fa-code"></i>
+                    <i className="fas fa-code" />
                     <span>{Object.keys(item?.files)[0]}</span>
                   </CardBody>
-                  <CardBodyContent>
-                    {myContentArray
-                      ? myContentArray?.map((content, index) => {
-                          return (
-                            <span>
-                              <p>
-                                <Span1>{++index}</Span1> {content}
-                              </p>
-                            </span>
-                          );
-                        })
-                      : "No Content There......."}
-                  </CardBodyContent>
+                  <CardBodyContent>{UserBodyContent}</CardBodyContent>
                 </ContentBody>
               </CardHeader>
             ))}

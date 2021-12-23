@@ -8,17 +8,15 @@ import UniqueGistScreen from "./pages/UniqueGistScreen";
 import GistProfileScreen from "./pages/GistProfileScreen";
 
 
-import SearchGists from "./components/search-user-gists/SearchGists";
 import PrivateGists from "./components/private-gists-list/PrivateGists";
 import PublicGists from "./components/public-gists-list/PublicGists";
 import { GistReducer, initialState, GistContext } from "./context/GistContext";
-import * as R from "ramda";
 import "./App.css";
+import SearchGistScreen from "./pages/SearchGistScreen";
 
 const App = () => {
   const [state, dispatch] = useReducer(GistReducer, initialState);
   const { tab } = state;
-
   return (
     <>
       <GistContext.Provider value={{ state, dispatch }}>
@@ -32,7 +30,7 @@ const App = () => {
           {tab === 7 && <GistProfileScreen />}
           {tab === 8 && <PublicGists />}
           {tab === 9 && <UniqueGistScreen />}
-          {tab === 10 && <SearchGists />}
+          {tab === 10 && <SearchGistScreen />}
           {tab === 11 && <EdistGistScreen />}
         </div>
       </GistContext.Provider>

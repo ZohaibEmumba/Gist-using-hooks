@@ -7,7 +7,7 @@ import { openNotification, loginInputFormRules } from "../../utils/loginUtils";
 
 const Login = () => {
   const [name, setName] = useState("");
-  const { state, dispatch } = useContext(GistContext);
+  const {state, dispatch } = useContext(GistContext);
   const [showError, setShowError] = useState(false);
 
   const handleInputChange = (e) => {

@@ -3,48 +3,61 @@ import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Form, Input, Select, Button } from "antd";
-import { openNotification, formInputRules } from "../../utils/createGistUtilis";
+import {  formInputRules } from "../../utils/createGistUtilis";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateAGist = () => {
-  const [description, setDescription] = useState("");
-  const [fileName, setFileName] = useState("");
-  const [content, setContent] = useState("");
+  // const [description, setDescription] = useState("");
+  // const [fileName, setFileName] = useState("");
+  // const [content, setContent] = useState("");
   const [privacy, setPrivacy] = useState(null);
+
+  const [gistFormData, setGistFormData] = useState({
+    description: "" ,
+    fileName : "" ,
+    content : "" ,
+  })
+
+  const changeDescription = (e) => {
+    setGistFormData({
+      description: e.target.value
+      });
+ };
+  const changeFileName = (e) => {
+    setGistFormData({
+      [e.target.name]: e.target.value
+      });
+  };
+  const changeContent = (e) => {
+    setGistFormData({
+      [e.target.name]: e.target.value
+      });
+  };
 
   const { dispatch } = useContext(GistContext);
   const creatGist = useCallback(() => {
-    const gistData = {
-      description: description,
-      public: !privacy,
+    let gistData = {
+      description: gistFormData.description,
       files: {
-        [fileName]: {
-          content: content,
+        [gistFormData.fileName]: {
+          content: gistFormData.content,
         },
       },
     }
-    createAGist(gistData);
-    openNotification();
-    dispatch({
-      type: "VISIBLESCREEN",
-      payload: {
-        tab: 3,
-        gistID: null,
-      },
-    });
-  }, [dispatch]);
+    console.log(gistData)
+    // createAGist(gistData);
+    // openNotification();
+    // dispatch({
+    //   type: "VISIBLESCREEN",
+    //   payload: {
+    //     tab: 3,
+    //     gistID: null,
+    //   },
+    // });
+  }, []);
 
-  const changeFileName = (e) => {
-    setFileName(e.target.value);
-  };
-  const chnageDescription = (e) => {
-    setDescription(e.target.value);
-  };
-  const changeContent = (e) => {
-    setContent(e.target.value);
-  };
 
   const getStatus = (value) => {
     if (value === "public") {
@@ -61,29 +74,30 @@ const CreateAGist = () => {
       <Form onFinish={creatGist} autoComplete="off">
         <Heading>Create A Gist</Heading>
         <Form.Item
-          name="description"
           rules={formInputRules(true, "description")}
         >
           <Input
             size="large"
             placeholder="Enter gist Discription..."
-            onChange={chnageDescription}
+            onChange={changeDescription}
+            name="description"
           />
         </Form.Item>
-        <Form.Item name="filename" rules={formInputRules(true, "filename")}>
+        <Form.Item  rules={formInputRules(true, "filename")}>
           <Input
-            type="text"
             placeholder="Enter File name..."
             onChange={changeFileName}
             size="large"
+            name="filename"
           />
         </Form.Item>
-        <Form.Item name="content" rules={formInputRules(true, "content")}>
+        <Form.Item  rules={formInputRules(true, "content")}>
           <TextArea
             rows={4}
             placeholder="Enter File Content..."
             onChange={changeContent}
             size="large"
+            name="content"
           />
         </Form.Item>
         <Form.Item>

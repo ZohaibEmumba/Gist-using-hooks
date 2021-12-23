@@ -41,13 +41,13 @@ const Navbar = () => {
               alt="Emumba"
               width="150px"
               height="30px"
-              onClick={() =>GoToHomeScreen()}
+              onClick={GoToHomeScreen}
             />
           </Imgdiv>
           <SearchDiv>
             <SearchBar />
             {checkUserName ?  <DropdownMenu /> : 
-            <Button type="primary" size="large" onClick={() => GoToLoginScreen()}>
+            <Button type="primary" size="large" onClick={GoToLoginScreen}>
               Login
             </Button>}
           </SearchDiv>

@@ -71,17 +71,20 @@ const StaredGists = () => {
     let resp = await getStaredGists();
     setStaredGists(resp);
     setLoading(false);
-  }, [getStaredGists]);
+  }, [staredGists]);
 
-  const showUniqueGistRecord = (id) => {
-    dispatch({
-      type: "VISIBLESCREEN",
-      payload: {
-        tab: 9,
-        gistID: id,
-      },
-    });
-  };
+  const showUniqueGistRecord = useCallback(
+    (id) => {
+      dispatch({
+        type: "VISIBLESCREEN",
+        payload: {
+          tab: 9,
+          gistID: id,
+        },
+      });
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     getStared();
@@ -89,9 +92,9 @@ const StaredGists = () => {
 
   return (
     <>
-      {loading ? 
+      {loading ? (
         <Loader />
-       : 
+      ) : (
         <Section>
           <Table
             rowKey={(record) => record?.id}
@@ -103,7 +106,7 @@ const StaredGists = () => {
             }}
           />
         </Section>
-      }
+      )}
     </>
   );
 };

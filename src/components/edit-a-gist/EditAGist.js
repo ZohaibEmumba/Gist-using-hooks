@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { FormDiv, Heading } from "../create-gist-form/style";
 import { updateAGist, getGistObj } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
@@ -9,9 +9,9 @@ const EditAGist = () => {
   const { state, dispatch } = useContext(GistContext);
   const { gistID } = state;
 
-  const editGist = async () => {
+  const editGist = useCallback(async () => {
     const { description } = gistData;
-    let val = await updateAGist(gistID, description);
+    await updateAGist(gistID, description);
     dispatch({
       type: "VISIBLESCREEN",
       payload: {
@@ -19,12 +19,14 @@ const EditAGist = () => {
         gistID: null,
       },
     });
-  };
+  }, [updateAGist]);
 
-  const getAGist = async () => {
+  const getAGist = useCallback(async () => {
     const resp = await getGistObj(gistID);
     setGistData(resp);
-  };
+  }, [gistData]);
+
+  const handleInputChange = (e) => setGistData({ description: e.target.value });
 
   useEffect(() => {
     getAGist();
@@ -41,7 +43,7 @@ const EditAGist = () => {
             <Input
               size="large"
               placeholder="Enter gist Discription..."
-              onChange={(e) => setGistData({ description: e.target.value })}
+              onChange={handleInputChange}
               value={gistData?.description}
             />
           </Form.Item>

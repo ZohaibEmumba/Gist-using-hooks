@@ -8,3 +8,12 @@ export const openNotification = () => {
     };
     notification.success(args);
   };
+
+  export const loginInputFormRules = (required  , name ) =>{
+    return ([
+       {
+         required: required,
+         message: `Please input your ${name}!`,
+       },
+     ])
+   }

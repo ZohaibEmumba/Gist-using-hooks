@@ -1,23 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { GistContext } from "../../context/GistContext";
 import { searchRecords } from "../../utils/fetchAPIs";
 import { Section } from "./style";
 import Spinner from "../common/spinner/Spinner";
-
-import {
-  Table,
-  Th,
-  Td,
-  UserNameSection,
-  Username,
-  Img,
-} from "../common/table/style";
-import { NoContent } from "../../constants/Constants";
+import { Table, Th } from "../common/table/style";
 import { Input } from "antd";
+import SearchedData from "./SearchedData";
 
 const SearchGists = () => {
   const [searchRecordsData, setSearchRecordsData] = useState([]);
-  const date = new Date("2021-01-09T14:56:23");
   const { state, dispatch } = useContext(GistContext);
   const [loading, setLoading] = useState(false);
 
@@ -33,45 +24,13 @@ const SearchGists = () => {
     });
   };
 
-  const getFilterData = () => {
+  const getFilterData = useCallback(() => {
     setLoading(true);
-    const resp = searchRecords(searchValue);
-    setLoading(false);
-    setSearchRecordsData(resp);
-  };
-
-  const SearchedUserData = searchRecordsData ? (
-    searchRecordsData.map((gist, index) => (
-      <tr
-        key={index}
-        onClick={() => {
-          showUniqueGistRecord(gist?.id);
-        }}
-      >
-        <Td>
-          <input type="checkbox" />{" "}
-        </Td>
-        <Td>
-          <UserNameSection>
-            <span>
-              <Img
-                className="profile-img"
-                src={gist?.owner?.avatar_url}
-                alt="Profile Pics"
-              />
-            </span>
-            <Username>{gist?.owner?.login}</Username>
-          </UserNameSection>
-        </Td>
-        <Td>{date.toLocaleDateString()}</Td>
-        <Td>{date.toLocaleTimeString()}</Td>
-        <Td>{Object.keys(gist?.files)[0]}</Td>
-        <Td>{gist?.description}</Td>
-      </tr>
-    ))
-  ) : (
-    <h1>{NoContent}</h1>
-  );
+    const resp = searchRecords(searchValue).then((response) => {
+      setLoading(false);
+      setSearchRecordsData(response);
+    });
+  }, [searchRecords]);
 
   useEffect(() => {
     getFilterData();
@@ -96,7 +55,12 @@ const SearchGists = () => {
               <Th></Th>
             </tr>
           </thead>
-          <tbody>{SearchedUserData}</tbody>
+          <tbody>
+            <SearchedData
+              searchRecordsData={searchRecordsData}
+              showUniqueGistRecord={showUniqueGistRecord}
+            />
+          </tbody>
         </Table>
       )}
     </Section>

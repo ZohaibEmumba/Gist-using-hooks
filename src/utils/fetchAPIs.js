@@ -1,13 +1,11 @@
 import axios from "axios";
 
 //auth user API loginng in
-const BASE_URL = "https://api.github.com";
-const PAT = "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";
-const userName = "Zohaibkhattak15";
+import {PAT , UserName , BASE_URL } from '../constants/Constants'
 
-export const loginAuthUser = async (userName) => {
+export const loginAuthUser = async (UserName) => {
   const authUserRecord = await axios
-    .get(`${BASE_URL}/users/${userName}`)
+    .get(`${BASE_URL}/users/${UserName}`)
     .then((resp) => resp?.data);
   return authUserRecord;
 };
@@ -32,17 +30,17 @@ export const privateGistsRecord = async () => {
   const privateGistsRecord = await axios
     .get(`${BASE_URL}/gists?per_page=10`, {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     })
     .then((resp) => resp.data);
   return privateGistsRecord;
 };
 
-export const searchRecords = async (userName) => {
+export const searchRecords = async (UserName) => {
   const searchedUserRecords = await axios
-    .get(`${BASE_URL}/users/${userName}/gists`, {
-      username: userName,
+    .get(`${BASE_URL}/users/${UserName}/gists`, {
+      UserName: UserName,
     })
     .then((resp) => resp.data);
   return searchedUserRecords;
@@ -53,7 +51,7 @@ export const createAGist = async (data) => {
   const createGist = axios
     .post(`${BASE_URL}/gists`, json, {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     })
     .then((resp) => resp.data);
@@ -64,7 +62,7 @@ export const delAGist = async (id) => {
   const delAGist = axios
     .delete(`${BASE_URL}/gists/${id}`, {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     })
     .then((resp) => resp.data);
@@ -80,7 +78,7 @@ export const updateAGist = async (id, disp) => {
     },
     {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     }
   );
@@ -90,7 +88,7 @@ export const getGistObj = async (id) => {
   const getGists = await axios
     .get(`${BASE_URL}/gists/${id} `, {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     })
     .then((resp) => resp.data);
@@ -101,7 +99,7 @@ export const getStaredGists = async () => {
   const getStaredGists = await axios
     .get(`https://api.github.com/gists/starred`, {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     })
     .then((resp) => resp.data);
@@ -111,7 +109,7 @@ export const getStaredGists = async () => {
 export const checkGistStared = async (uniqueId) => {
   const checkStar = await axios.get(`${BASE_URL}/gists/${uniqueId}/star`, {
     headers: {
-      Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+      Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
     },
   });
   return checkStar;
@@ -125,7 +123,7 @@ export const staredAGist = async (gist_id) => {
     },
     {
       headers: {
-        Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+        Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
       },
     }
   );
@@ -135,7 +133,7 @@ export const staredAGist = async (gist_id) => {
 export const unStaredAGist = async (gist_id) => {
   const unStarAGist = await axios.delete(`${BASE_URL}/gists/${gist_id}/star`, {
     headers: {
-      Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+      Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
     },
   });
   return unStarAGist;
@@ -150,7 +148,7 @@ export const forkedGist = async (gist_id) => {
       },
       {
         headers: {
-          Authorization: `Basic ${btoa(`${userName}:${PAT}`)}`,
+          Authorization: `Basic ${btoa(`${UserName}:${PAT}`)}`,
         },
       }
     )

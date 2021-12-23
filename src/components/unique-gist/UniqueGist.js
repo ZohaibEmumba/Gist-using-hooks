@@ -1,19 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
-import { GistIcons, Icon1 } from "../profile/style";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 
 import {
   Div,
   Section,
-  Profile,
   ContentBody,
-  CardBody,
-  CardBodyContent,
-  ProfileImage,
-  Heading,
-  Filename,
-  Span,
-  SpanValues,
-  Icon,
 } from "./style";
 import {
   getPublicGist,
@@ -25,8 +15,9 @@ import {
 } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Modal } from "antd";
-import { ExclamationCircleOutlined, DeleteFilled } from "@ant-design/icons";
-import { NoContent, UserName } from "../../constants/Constants";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import ProfileSection from "./ProfileSection";
+import FileContent from "./FileContent";
 
 const { confirm } = Modal;
 
@@ -34,38 +25,24 @@ const UniqueGist = () => {
   const [uniqueData, setUniqueData] = useState([]);
   const [gistStarValue, setGistStarValue] = useState(0);
   const [gistForkValue, setGistForkValue] = useState(0);
-
   const { state, dispatch } = useContext(GistContext);
   const { tab, gistID } = state;
-
-  const { files } = uniqueData;
   let filename;
-  let content;
-  let myContentArray;
 
-  if (files !== undefined) {
-    Object.values(files).map((file) => {
-      filename = file.filename;
-      content = file.content;
-    });
-    myContentArray = content.split(" \n");
-  }
-
+  
   const getGistData = async () => {
     const resp = await getPublicGist(gistID);
     setUniqueData(resp);
   };
 
-  const { owner } = uniqueData;
-
   const starThisGist = async () => {
     if (gistStarValue === 0) {
-      const star = await staredAGist(gistID)
-        .then((data) => setGistStarValue(gistStarValue + 1))
+      await staredAGist(gistID)
+        .then(() => setGistStarValue(gistStarValue + 1))
         .catch((err) => err);
     } else {
-      const unStar = await unStaredAGist(gistID)
-        .then((data) => setGistStarValue(gistStarValue - 1))
+      await unStaredAGist(gistID)
+        .then(() => setGistStarValue(gistStarValue - 1))
         .catch((err) => err);
     }
   };
@@ -73,8 +50,8 @@ const UniqueGist = () => {
   const forkThisGist = async () => {
     let alreadyFork = 0;
     let fork = await forkedGist(gistID)
-      .then((data) => (alreadyFork = 1))
-      .catch((err) => alreadyFork);
+      .then(() => (alreadyFork = 1))
+      .catch(() => alreadyFork);
     if (alreadyFork) {
       setGistForkValue(gistForkValue + 1);
     }
@@ -107,7 +84,7 @@ const UniqueGist = () => {
     });
   };
 
-  const updateGist = (id) => {
+  const updateGist = useCallback((id) => {
     dispatch({
       type: "VISIBLESCREEN",
       payload: {
@@ -115,48 +92,11 @@ const UniqueGist = () => {
         gistID: id,
       },
     });
-  };
+  },[dispatch]);
 
-  const checkGist = () => {
-    checkGistStared(gistID).then((data) => setGistStarValue(1));
-  };
-
-  let dispDelandUpdIcons =
-    owner?.login === UserName ? (
-      <>
-        <Span>
-          <Icon
-            className="far fa-edit"
-            onClick={() => updateGist(uniqueData?.id)}
-          />
-          Edit
-        </Span>
-        <Span>
-          <Icon
-            className="far fa-trash-alt"
-            onClick={() => deleteGist(uniqueData?.id)}
-          />
-          Delete
-        </Span>
-      </>
-    ) : null;
-  const UserFileContent =
-    myContentArray !== undefined
-      ? myContentArray?.map((content, index) => {
-          return (
-            <span key={index}>
-              {" "}
-              <p>
-                <span style={{ fontWeight: "700", marginRight: "10px" }}>
-                  {++index}
-                </span>{" "}
-                {content}{" "}
-              </p>{" "}
-            </span>
-          );
-        })
-      : NoContent;
-  const starClass = gistStarValue === 0 ? "far fa-star" : "fas fa-star";
+  const checkGist = useCallback(() => {
+    checkGistStared(gistID).then(() => setGistStarValue(1));
+  },[checkGistStared]);
 
   useEffect(() => {
     getGistData();
@@ -166,48 +106,22 @@ const UniqueGist = () => {
   return (
     <Div>
       <Section>
-        <Profile>
-          <div>
-            <ProfileImage src={owner?.avatar_url} alt="profile" />
-          </div>
-          <div>
-            <span>
-              <Heading>
-                {owner?.login}/{filename}{" "}
-              </Heading>
-              <span>{uniqueData?.created_at}</span>
-              <br />
-            </span>
-          </div>
-        </Profile>
-
-        <GistIcons>
-          {dispDelandUpdIcons}
-          <Icon1>
-            <Span>
-              <Icon className={starClass} onClick={() => starThisGist()} />
-              Star
-            </Span>
-            <SpanValues>{gistStarValue}</SpanValues>
-          </Icon1>
-          <Icon1>
-            <Span>
-              <Icon
-                className="fas fa-code-branch"
-                onClick={() => forkThisGist()}
-              />{" "}
-              Fork
-            </Span>
-            <SpanValues>{gistForkValue}</SpanValues>
-          </Icon1>
-        </GistIcons>
+            <ProfileSection  
+            data={uniqueData} 
+            filename={filename}  
+            updateGist={updateGist}  
+            deleteGist={deleteGist}
+            starThisGist={starThisGist}
+            forkThisGist={forkThisGist}
+            gistStarValue={gistStarValue}  
+            gistForkValue={gistForkValue}
+            />
       </Section>
       <ContentBody>
-        <CardBody>
-          <Icon className="fas fa-code" />
-          <Filename>{filename}</Filename>
-        </CardBody>
-        <CardBodyContent>{UserFileContent}</CardBodyContent>
+            <FileContent 
+            filename={filename}
+            uniqueData={uniqueData}
+            />
       </ContentBody>
     </Div>
   );

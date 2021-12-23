@@ -70,7 +70,6 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const { dispatch } = useContext(GistContext);
   const dataSource = publicGistsDisplay ? [...publicGistsDisplay] : [...privateGistsDisplay];
 
-
   const showUniqueGistRecord = useCallback(
     (id) => {
       dispatch({

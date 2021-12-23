@@ -1,15 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { FormDiv } from "./style";
 import { loginAuthUser } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Button, Input, Form, Alert } from "antd";
-import {openNotification} from '../../utils/loginUtils'
+import { openNotification, loginInputFormRules } from "../../utils/loginUtils";
 
 const Login = () => {
   const [name, setName] = useState("");
   const { state, dispatch } = useContext(GistContext);
   const [showError, setShowError] = useState(false);
 
+  const handleInputChange = (e) => {
+    setName(e.target.value);
+  };
   const loginAuth = () => {
     const { PAT } = state;
     dispatch({
@@ -19,11 +22,10 @@ const Login = () => {
       },
     });
 
-    const val = loginAuthUser(name)
+    loginAuthUser(name)
       .then((resp) => {
-        const { login } = resp;
-        if (login === name) {
-          localStorage.setItem("authUserName", JSON.stringify(login));
+        if (resp?.login === name) {
+          localStorage.setItem("authUserName", JSON.stringify(resp?.login));
           localStorage.setItem("token", JSON.stringify(PAT));
           openNotification();
           dispatch({
@@ -35,14 +37,17 @@ const Login = () => {
           });
         }
       })
-      .catch((error) => setShowError(true));
+      .catch(() => setShowError(true));
   };
-  const clearInput = () => {
+  const clearInput = useCallback(() => {
     setName("");
     setShowError(false);
-  };
-  const displayError = showError ? ( <Alert message="Wrong Username..." type="error" /> ) : null;
-  
+  }, [name, showError]);
+
+  const displayError = showError ? (
+    <Alert message="Wrong Username..." type="error" />
+  ) : null;
+
   return (
     <>
       <FormDiv>
@@ -50,19 +55,14 @@ const Login = () => {
           {displayError}
           <Form.Item
             name="username"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
+            rules={loginInputFormRules(true, "username")}
           >
             <Input
               size="large"
               placeholder="Enter username"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              onFocus={() => clearInput()}
+              onChange={handleInputChange}
+              onFocus={clearInput}
             />
           </Form.Item>
           <Form.Item>

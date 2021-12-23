@@ -4,7 +4,6 @@ import TableData from "../common/table/TableData";
 import GridDisplay from "../common/grid/Grid";
 import Loader from "../common/spinner/Spinner";
 import { Section, Div, SpanBorder } from "../public-gists-list/style";
-import * as R from "ramda";
 
 const PrivateGists = () => {
   const [loading, setLoading] = useState(false);
@@ -13,14 +12,11 @@ const PrivateGists = () => {
   const [isGridView, setIsGridView] = useState(false);
   const [isActive, setIsActive] = useState("list");
 
-  const TableView = loading ? <Loader /> : <TableData privateGistsDisplay={privateGistsList} />;
-  const GridView = loading ? <Loader /> : <GridDisplay privateGistsDisplay={privateGistsList} />;
-
   const getPrivateGists = useCallback(async () => {
     setLoading(true);
-    const resp = await privateGistsRecord();     
-      setLoading(false);
-      setPrivateGistsList(resp); 
+    const resp = await privateGistsRecord();
+    setLoading(false);
+    setPrivateGistsList(resp);
   }, [privateGistsRecord]);
 
   const listToggle = useCallback(() => {
@@ -35,9 +31,16 @@ const PrivateGists = () => {
     setIsActive("grid");
   }, [isGridView, isListView, isActive]);
 
-  const listView = isActive === "list"  ? "fas fa-list fa-2x list-active"     : "fas fa-list fa-2x";
-  const gridView = isActive === "grid"  ? "fas fa-th-large fa-2x grid-active" : "fas fa-th-large fa-2x";
-  const views = isListView === true && isGridView === false ? TableView : GridView;
+  const listView = isActive === "list" ? "fas fa-list fa-2x list-active" : "fas fa-list fa-2x";
+  const gridView = isActive === "grid" ? "fas fa-th-large fa-2x grid-active" : "fas fa-th-large fa-2x";
+
+  const views = loading ? (
+    <Loader />
+  ) : isListView === true ? (
+    <TableData privateGistsDisplay={privateGistsList} />
+  ) : (
+    <GridDisplay privateGistsDisplay={privateGistsList} />
+  );
 
   useEffect(() => {
     getPrivateGists();
@@ -47,11 +50,11 @@ const PrivateGists = () => {
     <Section>
       <Div>
         <span>
-          <i className={listView} onClick={() => listToggle()} />
+          <i className={listView} onClick={listToggle} />
         </span>
         <SpanBorder></SpanBorder>
         <span>
-          <i className={gridView} onClick={() => gridToggle()} />
+          <i className={gridView} onClick={gridToggle} />
         </span>
       </Div>
       {views}

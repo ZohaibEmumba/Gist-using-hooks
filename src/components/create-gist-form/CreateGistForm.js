@@ -1,10 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Form, Input, Select, Button } from "antd";
-import { openNotification } from "../../utils/createGistUtilis";
-import * as R from "ramda";
+import { openNotification, formInputRules } from "../../utils/createGistUtilis";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -16,8 +15,8 @@ const CreateAGist = () => {
   const [privacy, setPrivacy] = useState(null);
 
   const { dispatch } = useContext(GistContext);
-  const creatGist = () => {
-    let gistData = {
+  const creatGist = useCallback(() => {
+    const gistData = {
       description: description,
       public: !privacy,
       files: {
@@ -25,7 +24,7 @@ const CreateAGist = () => {
           content: content,
         },
       },
-    };
+    }
     createAGist(gistData);
     openNotification();
     dispatch({
@@ -35,6 +34,16 @@ const CreateAGist = () => {
         gistID: null,
       },
     });
+  }, [dispatch]);
+
+  const changeFileName = (e) => {
+    setFileName(e.target.value);
+  };
+  const chnageDescription = (e) => {
+    setDescription(e.target.value);
+  };
+  const changeContent = (e) => {
+    setContent(e.target.value);
   };
 
   const getStatus = (value) => {
@@ -53,53 +62,36 @@ const CreateAGist = () => {
         <Heading>Create A Gist</Heading>
         <Form.Item
           name="description"
-          rules={[
-            {
-              required: true,
-              message: `Please input your name!`,
-            },
-          ]}
+          rules={formInputRules(true, "description")}
         >
           <Input
             size="large"
             placeholder="Enter gist Discription..."
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={chnageDescription}
           />
         </Form.Item>
-        <Form.Item
-          name="filename"
-          rules={[
-            {
-              required: true,
-              message: "Please input your filename!",
-            },
-          ]}
-        >
+        <Form.Item name="filename" rules={formInputRules(true, "filename")}>
           <Input
             type="text"
             placeholder="Enter File name..."
-            onChange={(e) => setFileName(e.target.value)}
+            onChange={changeFileName}
             size="large"
           />
         </Form.Item>
-        <Form.Item
-          name="content"
-          rules={[
-            {
-              required: true,
-              message: "Please input your content!",
-            },
-          ]}
-        >
+        <Form.Item name="content" rules={formInputRules(true, "content")}>
           <TextArea
             rows={4}
             placeholder="Enter File Content..."
-            onChange={(e) => setContent(e.target.value)}
+            onChange={changeContent}
             size="large"
           />
         </Form.Item>
         <Form.Item>
-          <Select size="large" onChange={(value) => getStatus(value)}>
+          <Select
+            value={privacy}
+            size="large"
+            onChange={(value) => getStatus(value)}
+          >
             <Option value=""> </Option>
             <Option value="public"> Public</Option>
             <Option value="private">Private</Option>

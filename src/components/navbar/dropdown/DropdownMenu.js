@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Menu, Dropdown } from "antd";
 import Zohaib from "../../../assets/zohaib.png";
 import { GistContext } from "../../../context/GistContext";
+import {Img} from './style';
 
 const DropdownMenu = () => {
   const { dispatch } = useContext(GistContext);
@@ -91,16 +92,10 @@ const DropdownMenu = () => {
   );
   return (
     <Dropdown overlay={menu} trigger={["click"]} >
-      <p
-        className="ant-dropdown-link"
-        onClick={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <img
+      <p className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+        <Img
           width="50px"
           height="50px"
-          style={{ borderRadius: "50%", backgroundColor: "white" }}
           src={Zohaib}
         />
       </p>

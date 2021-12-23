@@ -37,14 +37,11 @@ const Login = () => {
       })
       .catch((error) => setShowError(true));
   };
-
   const clearInput = () => {
     setName("");
     setShowError(false);
   };
-  const displayError = showError ? (
-    <Alert message="Wrong Username..." type="error" />
-  ) : null;
+  const displayError = showError ? ( <Alert message="Wrong Username..." type="error" /> ) : null;
   
   return (
     <>

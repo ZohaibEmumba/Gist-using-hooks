@@ -5,9 +5,31 @@ import SearchBar from "./searchbar/SearchBar";
 import DropdownMenu from "./dropdown/DropdownMenu";
 import { GistContext } from "../../context/GistContext";
 import { Button, Col, Row } from "antd";
+import { UserName } from "../../constants/Constants";
 
 const Navbar = () => {
   const { dispatch } = useContext(GistContext);
+  const checkUserName = JSON.parse(localStorage.getItem("authUserName")) === UserName;
+
+  const GoToHomeScreen = () => {
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 1,
+        gistID: null,
+      },
+    })
+  }
+  const GoToLoginScreen = () => {
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 2,
+        gistID: null,
+      },
+    });
+  }
+  
 
   return (
     <Row>
@@ -19,41 +41,15 @@ const Navbar = () => {
               alt="Emumba"
               width="150px"
               height="30px"
-              onClick={() =>
-                dispatch({
-                  type: "VISIBLESCREEN",
-                  payload: {
-                    tab: 1,
-                    gistID: null,
-                  },
-                })
-              }
+              onClick={() =>GoToHomeScreen()}
             />
           </Imgdiv>
           <SearchDiv>
             <SearchBar />
-            {JSON.parse(localStorage.getItem("authUserName")) ===
-            "Zohaibkhattak15" ? (
-              <DropdownMenu />
-            ) : (
-             
-              <Button
-                type="primary"
-                size="large"
-                onClick={() => {
-                  dispatch({
-                    type: "VISIBLESCREEN",
-                    payload: {
-                      tab: 2,
-                      gistID: null,
-                    },
-                  });
-                }}
-              >
-                Login{" "}
-              </Button>
-             
-            )}
+            {checkUserName ?  <DropdownMenu /> : 
+            <Button type="primary" size="large" onClick={() => GoToLoginScreen()}>
+              Login
+            </Button>}
           </SearchDiv>
         </Nav>
       </Col>

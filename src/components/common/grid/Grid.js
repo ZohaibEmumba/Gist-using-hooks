@@ -1,18 +1,13 @@
 import React, { useContext } from "react";
 import { GistContext } from "../../../context/GistContext";
-import {
-  Footer,
-  Grid,
-  ProfileFooter,
-  Profile,
-  ProfilePic,
-  Span1,
-} from "./style";
-import { Row, Col } from "antd";
+import { Span1 } from "./style";
+import { Row } from "antd";
+import PublicGistsGrid from "./PublicGistsGrid";
+import PrivateGistsGrid from "./PrivateGistsGrid";
 
 const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
   const { dispatch } = useContext(GistContext);
-  
+
   let publicFiles;
   let privateFiles;
   if (publicGistsDisplay) {
@@ -23,30 +18,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
     privateFiles = privateGistsDisplay.map(
       (files) => Object.keys(files.files)[0]
     );
-  const dispPrivateFiles = 
-  privateFiles &&
-    privateFiles?.map((content, index) => {
-      return (
-        <span key={index}>
-          {" "}
-          <p>
-            <Span1>{++index}</Span1> {content}{" "}
-          </p>{" "}
-        </span>
-      );
-    });
 
-    const dispPublicFiles = publicFiles &&
-      publicFiles?.map((content, index) => {
-        return (
-          <span key={index}>
-            <p>
-              <Span1>{++index}</Span1> {content}
-            </p>
-          </span>
-        );
-      });
-  
   const showUniqueGistRecord = (id) => {
     dispatch({
       type: "VISIBLESCREEN",
@@ -60,58 +32,19 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
   return (
     <>
       <Row gutter={[16, 100]}>
-        {publicGistsDisplay
-          ? publicGistsDisplay.map((gist, index) => (
-              <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
-                <Grid
-                  onClick={() => showUniqueGistRecord(gist?.id)}
-                >
-                  <div>
-                    {dispPublicFiles}
-                  </div>
-                  <Footer>
-                    <div>
-                      <ProfilePic src={gist?.owner?.avatar_url} alt="profile" />
-                    </div>
-                    <Profile>
-                      <ProfileFooter>
-                        <h4>
-                          {gist?.owner?.login} / {Object.keys(gist?.files)[0]}{" "}
-                        </h4>
-                        <span>{gist?.created_at}</span>
-                        <br />
-                      </ProfileFooter>
-                    </Profile>
-                  </Footer>
-                </Grid>
-              </Col>
-            ))
-          : privateGistsDisplay.map((gist, index) => (
-            <Col xs={{ span: 12, offset: 1 }} lg={{ span: 6, offset: 1 }}  key={index}>
-              <Grid
-                key={index}
-                onClick={() => showUniqueGistRecord(gist?.id)}
-              >
-                <div>
-                {dispPrivateFiles}
-                </div>
-                <Footer>
-                  <div>
-                    <ProfilePic src={gist?.owner?.avatar_url} alt="profile" />
-                  </div>
-                  <Profile>
-                    <ProfileFooter>
-                      <h4>
-                        {gist?.owner?.login} / {Object.keys(gist.files)[0]}{" "}
-                      </h4>
-                      <span>{gist?.created_at}</span>
-                      <br />
-                    </ProfileFooter>
-                  </Profile>
-                </Footer>
-              </Grid>
-              </Col>
-            ))}
+        {publicGistsDisplay ? (
+          <PublicGistsGrid
+            publicGistsDisplay={publicGistsDisplay}
+            showUniqueGistRecord={showUniqueGistRecord}
+            publicFiles={publicFiles}
+          />
+        ) : (
+          <PrivateGistsGrid
+            privateGistsDisplay={privateGistsDisplay}
+            showUniqueGistRecord={showUniqueGistRecord}
+            privateFiles={privateFiles}
+          />
+        )}
       </Row>
     </>
   );

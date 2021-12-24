@@ -95,7 +95,6 @@ const UniqueGist = () => {
   },[dispatch]);
 
   const checkGist = useCallback(() => {
-    // if()
     checkGistStared(gistID).then(() => setGistStarValue(1));
   },[checkGistStared]);
 

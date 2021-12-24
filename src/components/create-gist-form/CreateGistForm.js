@@ -3,7 +3,8 @@ import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Form, Input, Select, Button } from "antd";
-import {  formInputRules } from "../../utils/createGistUtilis";
+import {  formInputRules, openNotification } from "../../utils/createGistUtilis";
+
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -12,7 +13,7 @@ const CreateAGist = () => {
   // const [description, setDescription] = useState("");
   // const [fileName, setFileName] = useState("");
   // const [content, setContent] = useState("");
-  const [privacy, setPrivacy] = useState(null);
+  const [form] = Form.useForm();
 
   const [gistFormData, setGistFormData] = useState({
     description: "" ,
@@ -23,18 +24,19 @@ const CreateAGist = () => {
 
   const changeDescription = e => {
     setGistFormData({
-      ...gistFormData ,
+      ...gistFormData,
       description: e.target.value
       });
  };
   const changeFileName = e => {
     setGistFormData({
-      ...gistFormData ,
+      ...gistFormData,
       fileName: e.target.value
       });
   };
   const changeContent = e => {
     setGistFormData({
+      ...gistFormData,
       content: e.target.value
       });
   };
@@ -42,20 +44,21 @@ const CreateAGist = () => {
   const getStatus = (value) => {
     if (value === "public") {
       setGistFormData({
+        ...gistFormData,
         privacy:"public"
       });
-    } else if (value === "private") {
+    } else 
+    {
       setGistFormData({
+        ...gistFormData,
        privacy: "private"
       });
-    } else {
-      return privacy;
     }
-  };
+  }
 
   const { dispatch } = useContext(GistContext);
   const creatGist = useCallback(() => {
-    let gistData = {
+    const gistData = {
       description: gistFormData.description,
       privacy : gistFormData.privacy,
       files: {
@@ -64,57 +67,53 @@ const CreateAGist = () => {
         },
       },
     }
-    console.log({...gistFormData})
-    // createAGist(gistData);
-    // openNotification();
-    // dispatch({
-    //   type: "VISIBLESCREEN",
-    //   payload: {
-    //     tab: 3,
-    //     gistID: null,
-    //   },
-    // });
+    createAGist(gistData);
+    openNotification();
+    dispatch({
+      type: "VISIBLESCREEN",
+      payload: {
+        tab: 3,
+        gistID: null,
+      },
+    });
   }, []);
 
 
 
   return (
     <FormDiv>
-      <Form onFinish={creatGist} autoComplete="off">
+      <Form onFinish={creatGist} autoComplete="off" form={form}>
         <Heading>Create A Gist</Heading>
         <Form.Item
           rules={formInputRules(true, "description")}
           name="description"
-
         >
           <Input
             size="large"
             placeholder="Enter gist Discription..."
             onChange={changeDescription}
-            value={gistFormData.description}
           />
         </Form.Item>
-        <Form.Item  rules={formInputRules(true, "filename")}>
+        <Form.Item  name="filename" rules={formInputRules(true, "filename")} >
           <Input
             placeholder="Enter File name..."
-            onChange={changeFileName}
             size="large"
-            name="filename"
+            onChange={changeFileName}
           />
         </Form.Item>
-        <Form.Item  rules={formInputRules(true, "content")}>
+        <Form.Item  name="content" rules={formInputRules(true, "content")} >
           <TextArea
             rows={4}
             placeholder="Enter File Content..."
-            onChange={changeContent}
             size="large"
-            name="content"
+            onChange={changeContent}
+            
           />
         </Form.Item>
         <Form.Item>
           <Select
-            size="large"
-            onChange={(value) => getStatus(value)}
+           size="large"
+           onChange={(value) => getStatus(value)}
           >
             <Option value="public"> Public</Option>
             <Option value="private">Private</Option>

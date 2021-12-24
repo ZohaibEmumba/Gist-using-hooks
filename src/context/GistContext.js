@@ -1,10 +1,11 @@
 import { createContext } from "react";
+import { UserName , PAT } from "../constants/Constants";
 
 export const GistContext = createContext();
 
 export const initialState = {
-  userName: "",
-  PAT: "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",
+  userName: UserName,
+  PAT: PAT,
   isLoggedin: false,
   tab: 1,
   gistID: null,

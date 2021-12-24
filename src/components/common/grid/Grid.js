@@ -19,7 +19,7 @@ const GridDisplay = ({ publicGistsDisplay, privateGistsDisplay }) => {
       (files) => Object.keys(files.files)[0]
     );
 
-  const showUniqueGistRecord = (id) => {
+  const showUniqueGistRecord = id => {
     dispatch({
       type: "VISIBLESCREEN",
       payload: {

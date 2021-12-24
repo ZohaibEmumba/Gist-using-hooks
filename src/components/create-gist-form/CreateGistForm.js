@@ -10,11 +10,6 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 const CreateAGist = () => {
-  // const [description, setDescription] = useState("");
-  // const [fileName, setFileName] = useState("");
-  // const [content, setContent] = useState("");
-  const [form] = Form.useForm();
-
   const [gistFormData, setGistFormData] = useState({
     description: "" ,
     fileName : "" ,

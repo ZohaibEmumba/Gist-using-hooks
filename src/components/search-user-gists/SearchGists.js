@@ -1,9 +1,12 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect ,useCallback} from "react";
 import { GistContext } from "../../context/GistContext";
 import { searchRecords } from "../../utils/fetchAPIs";
 import { Section } from "./style";
 import Spinner from "../common/spinner/Spinner";
-import { Table, Th } from "../common/table/style";
+import {
+  Table,
+  Th,
+} from "../common/table/style";
 import { Input } from "antd";
 import SearchedData from "./SearchedData";
 
@@ -23,14 +26,15 @@ const SearchGists = () => {
       },
     });
   };
-
-  const getFilterData = useCallback(() => {
+  const getFilterData = useCallback (() => {
     setLoading(true);
-    const resp = searchRecords(searchValue).then((response) => {
+    const resp = searchRecords(searchValue).then(response => {
       setLoading(false);
       setSearchRecordsData(response);
-    });
+    }).catch(err => err);
+    
   }, [searchRecords]);
+
 
   useEffect(() => {
     getFilterData();
@@ -56,9 +60,9 @@ const SearchGists = () => {
             </tr>
           </thead>
           <tbody>
-            <SearchedData
-              searchRecordsData={searchRecordsData}
-              showUniqueGistRecord={showUniqueGistRecord}
+           <SearchedData 
+            searchRecordsData={searchRecordsData}
+            showUniqueGistRecord={showUniqueGistRecord}
             />
           </tbody>
         </Table>

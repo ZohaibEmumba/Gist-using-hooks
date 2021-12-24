@@ -18,35 +18,53 @@ const CreateAGist = () => {
     description: "" ,
     fileName : "" ,
     content : "" ,
+    privacy: ""
   })
 
-  const changeDescription = (e) => {
+  const changeDescription = e => {
     setGistFormData({
+      ...gistFormData ,
       description: e.target.value
       });
  };
-  const changeFileName = (e) => {
+  const changeFileName = e => {
     setGistFormData({
-      [e.target.name]: e.target.value
+      ...gistFormData ,
+      fileName: e.target.value
       });
   };
-  const changeContent = (e) => {
+  const changeContent = e => {
     setGistFormData({
-      [e.target.name]: e.target.value
+      content: e.target.value
       });
+  };
+  
+  const getStatus = (value) => {
+    if (value === "public") {
+      setGistFormData({
+        privacy:"public"
+      });
+    } else if (value === "private") {
+      setGistFormData({
+       privacy: "private"
+      });
+    } else {
+      return privacy;
+    }
   };
 
   const { dispatch } = useContext(GistContext);
   const creatGist = useCallback(() => {
     let gistData = {
       description: gistFormData.description,
+      privacy : gistFormData.privacy,
       files: {
         [gistFormData.fileName]: {
           content: gistFormData.content,
         },
       },
     }
-    console.log(gistData)
+    console.log({...gistFormData})
     // createAGist(gistData);
     // openNotification();
     // dispatch({
@@ -59,15 +77,6 @@ const CreateAGist = () => {
   }, []);
 
 
-  const getStatus = (value) => {
-    if (value === "public") {
-      setPrivacy(false);
-    } else if (value === "private") {
-      setPrivacy(true);
-    } else {
-      return privacy;
-    }
-  };
 
   return (
     <FormDiv>
@@ -75,12 +84,14 @@ const CreateAGist = () => {
         <Heading>Create A Gist</Heading>
         <Form.Item
           rules={formInputRules(true, "description")}
+          name="description"
+
         >
           <Input
             size="large"
             placeholder="Enter gist Discription..."
             onChange={changeDescription}
-            name="description"
+            value={gistFormData.description}
           />
         </Form.Item>
         <Form.Item  rules={formInputRules(true, "filename")}>
@@ -102,11 +113,9 @@ const CreateAGist = () => {
         </Form.Item>
         <Form.Item>
           <Select
-            value={privacy}
             size="large"
             onChange={(value) => getStatus(value)}
           >
-            <Option value=""> </Option>
             <Option value="public"> Public</Option>
             <Option value="private">Private</Option>
           </Select>

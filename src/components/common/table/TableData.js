@@ -1,9 +1,8 @@
-import React, { useContext , useCallback} from "react";
+import React, { useContext, useCallback } from "react";
 import { GistContext } from "../../../context/GistContext";
 import { Col, Table, Row } from "antd";
 import { Section, UserNameSection, Username, Img } from "./style";
 import { StarOutlined, ForkOutlined } from "@ant-design/icons/lib/icons";
-import { checkGistStared } from "../../../utils/fetchAPIs";
 
 const columns = [
   {
@@ -66,9 +65,10 @@ const columns = [
 ];
 
 const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
-
   const { dispatch } = useContext(GistContext);
-  const dataSource = publicGistsDisplay ? [...publicGistsDisplay] : [...privateGistsDisplay];
+  const dataSource = publicGistsDisplay
+    ? [...publicGistsDisplay]
+    : [...privateGistsDisplay];
 
   const showUniqueGistRecord = useCallback(
     (id) => {
@@ -80,16 +80,8 @@ const TableData = ({ publicGistsDisplay, privateGistsDisplay }) => {
         },
       });
     },
-    [dispatch],
+    [dispatch]
   );
-
-  // const checkStarGist = async (id) => {
-  //   let value = await checkGistStared(id)
-  //     .then((data) => data)
-  //     .catch((err) => err);
-  //   return value;
-  // };
-
   return (
     <>
       <Section>

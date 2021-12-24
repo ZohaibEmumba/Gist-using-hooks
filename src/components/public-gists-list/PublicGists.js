@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { publicGistsRecord } from "../../utils/fetchAPIs";
 import TableData from "../common/table/TableData";
 import GridDisplay from "../common/grid/Grid";
@@ -12,12 +12,8 @@ const PublicGists = () => {
   const [isGridView, setIsGridView] = useState(false);
   const [layout, setLayout] = useState("list");
 
-  const listLayout =
-    layout === "list" ? "fas fa-list fa-2x list-active" : "fas fa-list fa-2x";
-  const gridLayout =
-    layout === "grid"
-      ? "fas fa-th-large fa-2x grid-active"
-      : "fas fa-th-large fa-2x";
+  const listLayout = useMemo(() => layout === "list" ? "fas fa-list fa-2x list-active" : "fas fa-list fa-2x",[layout]);
+  const gridLayout = useMemo(() => layout === "grid" ? "fas fa-th-large fa-2x grid-active" : "fas fa-th-large fa-2x",[layout]);
 
   const view = loading ? (
     <Loader />

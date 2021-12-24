@@ -4,6 +4,7 @@ import { loginAuthUser } from "../../utils/fetchAPIs";
 import { GistContext } from "../../context/GistContext";
 import { Button, Input, Form, Alert } from "antd";
 import { openNotification, loginInputFormRules } from "../../utils/loginUtils";
+import { UserName } from "../../constants/Constants";
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -24,8 +25,8 @@ const Login = () => {
 
     loginAuthUser(name)
       .then((resp) => {
-        if (resp?.login === name) {
-          localStorage.setItem("authUserName", JSON.stringify(resp?.login));
+        if (resp?.login === UserName) {
+          localStorage.setItem("authUserName", JSON.stringify(UserName));
           localStorage.setItem("token", JSON.stringify(PAT));
           openNotification();
           dispatch({

@@ -9,7 +9,8 @@ import { UserName } from "../../constants/Constants";
 
 const Navbar = () => {
   const { dispatch } = useContext(GistContext);
-  const checkUserName = JSON.parse(localStorage.getItem("authUserName")) === UserName;
+  const checkUserName =
+    JSON.parse(localStorage.getItem("authUserName")) === UserName;
 
   const GoToHomeScreen = () => {
     dispatch({
@@ -18,8 +19,8 @@ const Navbar = () => {
         tab: 1,
         gistID: null,
       },
-    })
-  }
+    });
+  };
   const GoToLoginScreen = () => {
     dispatch({
       type: "VISIBLESCREEN",
@@ -28,8 +29,7 @@ const Navbar = () => {
         gistID: null,
       },
     });
-  }
-  
+  };
 
   return (
     <Row>
@@ -46,10 +46,13 @@ const Navbar = () => {
           </Imgdiv>
           <SearchDiv>
             <SearchBar />
-            {checkUserName ?  <DropdownMenu /> : 
-            <Button type="primary" size="large" onClick={GoToLoginScreen}>
-              Login
-            </Button>}
+            {checkUserName ? (
+              <DropdownMenu />
+            ) : (
+              <Button type="primary" size="large" onClick={GoToLoginScreen}>
+                Login
+              </Button>
+            )}
           </SearchDiv>
         </Nav>
       </Col>

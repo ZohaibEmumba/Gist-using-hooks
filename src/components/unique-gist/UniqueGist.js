@@ -49,7 +49,7 @@ const UniqueGist = () => {
 
   const forkThisGist = async () => {
     let alreadyFork = 0;
-    let fork = await forkedGist(gistID)
+    await forkedGist(gistID)
       .then(() => (alreadyFork = 1))
       .catch(() => alreadyFork);
     if (alreadyFork) {

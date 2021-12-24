@@ -8,7 +8,7 @@ const { Search } = Input;
 const SearchBar = () => {
   const [value, setValue] = useState("");
   const { dispatch } = useContext(GistContext);
-  const searchGists = useCallback(() => {
+  const searchGists = () => {
     dispatch({
       type: "SEARCH",
       payload: {
@@ -16,8 +16,7 @@ const SearchBar = () => {
         tab: 10,
       },
     });
-    setValue("");
-  }, [dispatch]);
+  };
   return (
     <Div>
       <Tooltip placement="topLeft" title={"Search User"}>

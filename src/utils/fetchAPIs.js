@@ -42,7 +42,8 @@ export const searchRecords = async (UserName) => {
     .get(`${BASE_URL}/users/${UserName}/gists`, {
       UserName: UserName,
     })
-    .then((resp) => resp.data);
+    .then(resp => resp.data)
+    .catch(err => err);
   return searchedUserRecords;
 };
 

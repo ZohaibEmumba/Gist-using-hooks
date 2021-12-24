@@ -16,7 +16,7 @@ const App = () => {
   const [state, dispatch] = useReducer(GistReducer, initialState);
   const { tab } = state;
 
-  const displayScreenTabs = (() => {
+  const displayScreenTabs = ((tab) => {
             
     switch (tab) {
       case 1:

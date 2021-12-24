@@ -36,7 +36,7 @@ const SearchedData = ({ searchRecordsData, showUniqueGistRecord }) => {
           </tr>
         ))
       ) : (
-        <h1>{NoContent}</h1>
+        <p>{NoContent}</p>
       )}
     </>
   );

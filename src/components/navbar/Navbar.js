@@ -3,7 +3,7 @@ import { Nav, Imgdiv, SearchDiv } from "./style";
 import Logo from "../../assets/emumba-logo.png";
 import SearchBar from "./searchbar/SearchBar";
 import DropdownMenu from "./dropdown/DropdownMenu";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { Button, Col, Row } from "antd";
 import { UserName } from "../../constants/Constants";
 

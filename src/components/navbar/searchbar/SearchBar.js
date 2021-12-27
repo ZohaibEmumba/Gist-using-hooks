@@ -1,5 +1,5 @@
-import React, { useState, useContext, useCallback } from "react";
-import { GistContext } from "../../../context/GistContext";
+import React, { useState, useContext } from "react";
+import { GistContext } from "../../../App";
 import { Div } from "./style";
 import { Input, Tooltip } from "antd";
 

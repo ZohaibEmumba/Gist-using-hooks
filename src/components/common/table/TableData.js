@@ -1,5 +1,5 @@
 import React, { useContext, useCallback } from "react";
-import { GistContext } from "../../../context/GistContext";
+import { GistContext } from "../../../App";
 import { Col, Table, Row } from "antd";
 import { Section, UserNameSection, Username, Img } from "./style";
 import { StarOutlined, ForkOutlined } from "@ant-design/icons/lib/icons";

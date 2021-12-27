@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import { publicGistsRecord } from "../../utils/fetchAPIs";
-import TableData from "../common/table/TableData";
-import GridDisplay from "../common/grid/Grid";
-import Loader from "../common/spinner/Spinner";
+import TableData from "../common/Table/TableData";
+import GridDisplay from "../common/Grid/Grid";
+import Loader from "../common/Spinner/Spinner";
 import { Section, Div, SpanBorder } from "./style";
 
 const PublicGists = () => {

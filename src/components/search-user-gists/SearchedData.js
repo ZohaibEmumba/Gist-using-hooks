@@ -1,6 +1,6 @@
 import React from "react";
 import { NoContent } from "../../constants/Constants";
-import { Td, UserNameSection, Username, Img } from "../common/table/style";
+import { Td, UserNameSection, Username, Img } from "../common/Table/style";
 
 const SearchedData = ({ searchRecordsData, showUniqueGistRecord }) => {
   const date = new Date("2021-01-09T14:56:23");

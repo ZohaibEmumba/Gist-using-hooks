@@ -13,7 +13,7 @@ import {
   forkedGist,
   checkGistStared,
 } from "../../utils/fetchAPIs";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import ProfileSection from "./ProfileSection";

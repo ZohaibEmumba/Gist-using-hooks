@@ -1,10 +1,10 @@
 import { StarOutlined, ForkOutlined } from "@ant-design/icons/lib/icons";
 import { Table } from "antd";
 import React, { useState, useEffect, useContext, useCallback } from "react";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { getStaredGists } from "../../utils/fetchAPIs";
-import Loader from "../common/spinner/Spinner";
-import { UserNameSection, Img, Username } from "../common/table/style";
+import Loader from "../common/Spinner/Spinner";
+import { UserNameSection, Img, Username } from "../common/Table/style";
 import { Section } from "./style";
 
 const columns = [

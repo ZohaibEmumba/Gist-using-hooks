@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect ,useCallback} from "react";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { searchRecords } from "../../utils/fetchAPIs";
 import { Section } from "./style";
-import Spinner from "../common/spinner/Spinner";
+import Spinner from "../common/Spinner/Spinner";
 import {
   Table,
   Th,
-} from "../common/table/style";
+} from "../common/Table/style";
 import { Input } from "antd";
 import SearchedData from "./SearchedData";
 

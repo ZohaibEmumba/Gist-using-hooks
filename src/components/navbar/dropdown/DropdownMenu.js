@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Menu, Dropdown } from "antd";
 import Zohaib from "../../../assets/zohaib.png";
-import { GistContext } from "../../../context/GistContext";
+import { GistContext } from "../../../App";
 import {Img} from './style';
 
 const DropdownMenu = () => {

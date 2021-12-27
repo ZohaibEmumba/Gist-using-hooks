@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import { FormDiv } from "./style";
 import { loginAuthUser } from "../../utils/fetchAPIs";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { Button, Input, Form, Alert } from "antd";
 import { openNotification, loginInputFormRules } from "../../utils/loginUtils";
 import { UserName } from "../../constants/Constants";

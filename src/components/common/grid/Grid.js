@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { GistContext } from "../../../context/GistContext";
+import { GistContext } from "../../../App";
 import { Span1 } from "./style";
 import { Row } from "antd";
 import PublicGistsGrid from "./PublicGistsGrid";

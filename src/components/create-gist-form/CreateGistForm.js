@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback } from "react";
 import { FormDiv, Heading } from "./style";
 import { createAGist } from "../../utils/fetchAPIs";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { Form, Input, Select, Button } from "antd";
 import {  formInputRules, openNotification } from "../../utils/createGistUtilis";
 
@@ -77,7 +77,7 @@ const CreateAGist = () => {
 
   return (
     <FormDiv>
-      <Form onFinish={creatGist} autoComplete="off" form={form}>
+      <Form onFinish={creatGist} autoComplete="off" >
         <Heading>Create A Gist</Heading>
         <Form.Item
           rules={formInputRules(true, "description")}

@@ -15,7 +15,7 @@ import {
   ProfilePicSec,
   ProfileImage,
 } from "./style";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { UserName } from "../../constants/Constants";
 import CardData from "./CardData";
 

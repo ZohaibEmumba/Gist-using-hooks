@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer , createContext } from "react";
 import Navbar from "./components/navbar/Navbar";
 import CreateGistForm from "./pages/CreateGistScreen";
 import LoginScreen from "./pages/LoginScreen";
@@ -9,14 +9,17 @@ import GistProfileScreen from "./pages/GistProfileScreen";
 import ListPrivateGistsScreen from "./pages/ListPrivateGistsScreen";
 import SearchGistScreen from "./pages/SearchGistScreen";
 import ListsPublicGistScreen from "./pages/ListsPublicGistScreen";
-import { GistReducer, initialState, GistContext } from "./context/GistContext";
+import { GistReducer, initialState } from "./context/GistContext";
 import "./App.css";
+
+export const GistContext = createContext();
+
 
 const App = () => {
   const [state, dispatch] = useReducer(GistReducer, initialState);
   const { tab } = state;
 
-  const displayScreenTabs = ((tab) => {
+  const displayScreenTabs = (() => {
             
     switch (tab) {
       case 1:

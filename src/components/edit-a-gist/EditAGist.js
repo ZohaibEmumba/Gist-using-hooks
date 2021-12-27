@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { FormDiv, Heading } from "../create-gist-form/style";
 import { updateAGist, getGistObj } from "../../utils/fetchAPIs";
-import { GistContext } from "../../context/GistContext";
+import { GistContext } from "../../App";
 import { Form, Input, Button } from "antd";
 
 const EditAGist = () => {

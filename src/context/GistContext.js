@@ -1,7 +1,11 @@
-import { createContext } from "react";
-import { UserName , PAT } from "../constants/Constants";
+import { UserName, PAT } from "../constants/Constants";
 
-export const GistContext = createContext();
+const ActionTypes = {
+  Login: "LOGIN",
+  Logout: "LOGOUT",
+  VisibleScreen: "VISIBLESCREEN",
+  Search: "SEARCH",
+};
 
 export const initialState = {
   userName: UserName,
@@ -18,22 +22,22 @@ export const GistReducer = (state = initialState, action) => {
     payload: { user, gistID, searchValue, tab },
   } = action;
   switch (type) {
-    case "LOGIN":
+    case ActionTypes.Login:
       return {
         ...state,
         isLoggedin: true,
         userName: user,
       };
-    case "LOGOUT":
+    case ActionTypes.Logout:
       return initialState;
 
-    case "VISIBLESCREEN":
+    case ActionTypes.VisibleScreen:
       return {
         ...state,
         tab: tab,
         gistID: gistID,
       };
-    case "SEARCH":
+    case ActionTypes.Search:
       return {
         ...state,
         searchValue: searchValue,
